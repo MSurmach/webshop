@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+      https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+    <changeSet id="6" author="m.surmach">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="attribute"/>
+            </not>
+        </preConditions>
+        <createTable tableName="attribute">
+            <column name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="label" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="subcategoryId" type="BIGINT">
+                <constraints foreignKeyName="fk_attribute_subcategory" references="subcategory(id)"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,11 @@
+server:
+  port: 8093
+spring:
+  main:
+    banner-mode: off
+  liquibase:
+    change-log: db/changelog-master.xml
+  datasource:
+    url: jdbc:postgresql://localhost:5443/orderDB
+    username: m.surmach
+    password: orderservice
