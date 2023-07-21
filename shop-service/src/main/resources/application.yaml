@@ -6,6 +6,6 @@ spring:
   liquibase:
     change-log: db/changelog-master.xml
   datasource:
-    url: jdbc:postgresql://localhost:5441/shopDB
-    username: m.surmach
-    password: shopservice
+    url: ${SHOP_DATASOURCE_URL:jdbc:postgresql://localhost:5441/shopDB}
+    username: ${SHOP_DATASOURCE_USERNAME:postgres}
+    password: ${SHOP_DATASOURCE_PASSWORD:shopservice}

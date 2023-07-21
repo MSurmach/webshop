@@ -6,6 +6,6 @@ spring:
   liquibase:
     change-log: db/changelog-master.xml
   datasource:
-    url: jdbc:postgresql://localhost:5443/orderDB
-    username: m.surmach
-    password: orderservice
+    url: ${ORDER_DATASOURCE_URL:jdbc:postgresql://localhost:5443/orderDB}
+    username: ${ORDER_DATASOURCE_USERNAME:postgres}
+    password: ${ORDER_DATASOURCE_PASSWORD:orderservice}
