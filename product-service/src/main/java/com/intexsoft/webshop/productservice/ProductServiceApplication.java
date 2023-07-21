@@ -1,11 +1,11 @@
-package shopservice;
+package com.intexsoft.webshop.productservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ShopServiceApplication {
+public class ProductServiceApplication {
     public static void main(String[] args) {
-        SpringApplication.run(ShopServiceApplication.class, args);
+        SpringApplication.run(ProductServiceApplication.class, args);
     }
 }
