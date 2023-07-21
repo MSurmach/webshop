@@ -7,5 +7,5 @@ spring:
     change-log: db/changelog-master.xml
   datasource:
     url: ${USERS_DATASOURCE_URL:jdbc:postgresql://localhost:5440/usersDB}
-    username: ${USERS_DATASOURCE_URL:postgres}
+    username: ${USERS_DATASOURCE_USERNAME:postgres}
     password: ${USERS_DATASOURCE_PASSWORD:userservice}
