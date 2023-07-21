@@ -3,8 +3,8 @@
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
       https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
-    <include file="classpath:db/changelog/v.0.1/2023-21-07-create-table-shop.xml"/>
-    <include file="classpath:db/changelog/v.0.1/2023-21-07-create-table-feedback.xml"/>
-    <include file="classpath:db/changelog/v.0.1/2023-21-07-create-table-product-replica.xml"/>
-    <include file="classpath:db/changelog/v.0.1/2023-21-07-create-table-shop-product-link.xml"/>
+    <include file="v.0.1/2023-21-07-create-table-shop.xml" relativeToChangelogFile="true"/>
+    <include file="v.0.1/2023-21-07-create-table-feedback.xml" relativeToChangelogFile="true"/>
+    <include file="v.0.1/2023-21-07-create-table-product-replica.xml" relativeToChangelogFile="true"/>
+    <include file="v.0.1/2023-21-07-create-table-shop-product-link.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>
