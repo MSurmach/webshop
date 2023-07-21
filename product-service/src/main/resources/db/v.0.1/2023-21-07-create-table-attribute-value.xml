@@ -19,6 +19,9 @@
             <column name="productId" type="BIGINT">
                 <constraints foreignKeyName="fk_attribute_value_product" references="product(id)"/>
             </column>
+            <column name="attributeId" type="BIGINT">
+                <constraints foreignKeyName="fk_attr_value_attribute" references="attribute(id)"/>
+            </column>
         </createTable>
     </changeSet>
 </databaseChangeLog>

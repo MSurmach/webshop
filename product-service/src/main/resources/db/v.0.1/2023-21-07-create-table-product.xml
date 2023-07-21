@@ -20,7 +20,7 @@
                 <constraints foreignKeyName="fk_product_subcategory" references="subcategory(id)"/>
             </column>
             <column name="vendorId" type="BIGINT">
-                <constraints foreignKeyName="fk_product_vendor" references="order(id)"/>
+                <constraints foreignKeyName="fk_product_vendor" references="vendor(id)"/>
             </column>
         </createTable>
     </changeSet>

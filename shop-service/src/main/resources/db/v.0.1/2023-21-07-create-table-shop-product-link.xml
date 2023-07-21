@@ -16,6 +16,9 @@
             <column name="product_id" type="BIGINT">
                 <constraints foreignKeyName="fk_link_to_product" references="product_replica(id)"/>
             </column>
+            <column name="price" type="NUMERIC(7,2)">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
     </changeSet>
 </databaseChangeLog>

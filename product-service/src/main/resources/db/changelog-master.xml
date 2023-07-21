@@ -9,8 +9,8 @@
     <include file="v.0.1/2023-21-07-create-table-product.xml" relativeToChangelogFile="true"/>
     <include file="v.0.1/2023-21-07-create-table-feedback.xml" relativeToChangelogFile="true"/>
     <include file="v.0.1/2023-21-07-create-table-attribute.xml" relativeToChangelogFile="true"/>
-    <include file="v.0.1/2023-21-07-create-table-attribute_value.xml" relativeToChangelogFile="true"/>
+    <include file="v.0.1/2023-21-07-create-table-attribute-value.xml" relativeToChangelogFile="true"/>
     <include file="v.0.1/2023-21-07-create-table-image.xml" relativeToChangelogFile="true"/>
-    <include file="v.0.1/2023-21-07-create-table-shop_replica.xml" relativeToChangelogFile="true"/>
-    <include file="v.0.1/2023-21-07-create-table-product_shop_link.xml" relativeToChangelogFile="true"/>
+    <include file="v.0.1/2023-21-07-create-table-shop-replica.xml" relativeToChangelogFile="true"/>
+    <include file="v.0.1/2023-21-07-create-table-product-shop-link.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>
