@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+      https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+    <changeSet id="alter-column-names-table-detail" author="m.surmach">
+        <renameColumn tableName="detail" oldColumnName="productId" newColumnName="product_id"/>
+        <renameColumn tableName="detail" oldColumnName="productPrice" newColumnName="product_price"/>
+        <renameColumn tableName="detail" oldColumnName="totalPrice" newColumnName="total_price"/>
+        <renameColumn tableName="detail" oldColumnName="orderId" newColumnName="order_id"/>
+    </changeSet>
+</databaseChangeLog>
