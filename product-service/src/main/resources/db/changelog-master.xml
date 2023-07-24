@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+      https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+    <include file="v.0.1/2023-21-07-create-table-vendor.xml" relativeToChangelogFile="true"/>
+    <include file="v.0.1/2023-21-07-create-table-category.xml" relativeToChangelogFile="true"/>
+    <include file="v.0.1/2023-21-07-create-table-subcategory.xml" relativeToChangelogFile="true"/>
+    <include file="v.0.1/2023-21-07-create-table-product.xml" relativeToChangelogFile="true"/>
+    <include file="v.0.1/2023-21-07-create-table-feedback.xml" relativeToChangelogFile="true"/>
+    <include file="v.0.1/2023-21-07-create-table-attribute.xml" relativeToChangelogFile="true"/>
+    <include file="v.0.1/2023-21-07-create-table-attribute-value.xml" relativeToChangelogFile="true"/>
+    <include file="v.0.1/2023-21-07-create-table-image.xml" relativeToChangelogFile="true"/>
+    <include file="v.0.1/2023-21-07-create-table-shop-replica.xml" relativeToChangelogFile="true"/>
+    <include file="v.0.1/2023-21-07-create-table-product-shop-link.xml" relativeToChangelogFile="true"/>
+    <include file="v.0.2/2023-24-07-add_category_id_column_to_table_subcategory.xml" relativeToChangelogFile="true"/>
+</databaseChangeLog>

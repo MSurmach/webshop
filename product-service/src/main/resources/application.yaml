@@ -1,0 +1,11 @@
+server:
+  port: 8092
+spring:
+  main:
+    banner-mode: off
+  liquibase:
+    change-log: db/changelog-master.xml
+  datasource:
+    url: ${PRODUCT_DATASOURCE_URL:jdbc:postgresql://localhost:5442/productDB}
+    username: ${PRODUCT_DATASOURCE_USERNAME:postgres}
+    password: ${PRODUCT_DATASOURCE_PASSWORD:productservice}

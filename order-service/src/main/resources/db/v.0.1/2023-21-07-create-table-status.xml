@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+      https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+    <changeSet id="create_table_status" author="m.surmach">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="status"/>
+            </not>
+        </preConditions>
+        <createTable tableName="status">
+            <column name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+            <column name="orderId" type="BIGINT">
+                <constraints foreignKeyName="fk_status_order" references="order(id)"/>
+            </column>
+            <column name="createdAt" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

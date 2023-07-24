@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+      https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+    <changeSet id="create-table-shop-product-link" author="m.surmach">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="shop_product_link"/>
+            </not>
+        </preConditions>
+        <createTable tableName="shop_product_link">
+            <column name="shop_id" type="BIGINT">
+                <constraints foreignKeyName="fk_link_to_shop" references="shop(id)"/>
+            </column>
+            <column name="product_id" type="BIGINT">
+                <constraints foreignKeyName="fk_link_to_product" references="product_replica(id)"/>
+            </column>
+            <column name="price" type="NUMERIC(7,2)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>
