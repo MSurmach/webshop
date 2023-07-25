@@ -7,11 +7,12 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
 
-import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
+@Table(name = "shop")
 @Data
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -19,15 +20,16 @@ public class Shop {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
-    @Column(nullable = false, unique = true, length = 100)
+    @Column(name = "name", nullable = false, unique = true, length = 100)
     String name;
-    @Column(nullable = false, unique = true, length = 100)
+    @Column(name = "email", nullable = false, unique = true, length = 100)
     String email;
-    @Column(length = 50)
+    @Column(name = "phone_number", length = 50)
     String phoneNumber;
     @CreationTimestamp
-    @Column(nullable = false)
-    Instant registeredAt;
+    @Column(name = "registered_at", nullable = false)
+    LocalDateTime registeredAt;
+    @Column(name = "about")
     String about;
     @OneToMany(
             mappedBy = "shop",

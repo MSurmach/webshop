@@ -8,9 +8,10 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
 
-import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "status")
 @Data
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -19,11 +20,11 @@ public class Status {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     @CreationTimestamp
-    @Column(nullable = false)
-    Instant createdAt;
+    @Column(name = "created_at", nullable = false)
+    LocalDateTime createdAt;
     @Column(name = "name", nullable = false)
     @Enumerated(EnumType.STRING)
     StatusName statusName;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     Order order;
 }

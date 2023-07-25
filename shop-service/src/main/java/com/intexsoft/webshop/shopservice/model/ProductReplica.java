@@ -10,13 +10,14 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
+@Table(name = "product_replica")
 @Data
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ProductReplica {
     @Id
     Long id;
-    @Column(nullable = false)
+    @Column(name = "name", nullable = false)
     String name;
     @OneToMany(
             mappedBy = "product",

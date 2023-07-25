@@ -10,6 +10,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
+@Table(name = "product")
 @Data
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -17,11 +18,11 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
-    @Column(nullable = false)
+    @Column(name = "name", nullable = false)
     String name;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     Subcategory subcategory;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     Vendor vendor;
     @OneToMany(
             mappedBy = "product",

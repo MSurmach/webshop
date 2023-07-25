@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 @Entity
+@Table(name = "attribute_value")
 @Data
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -14,11 +15,10 @@ public class AttributeValue {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
-
-    @Column(nullable = false, length = 50)
+    @Column(name = "value", nullable = false, length = 50)
     String value;
     @OneToOne
     Attribute attribute;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     Product product;
 }

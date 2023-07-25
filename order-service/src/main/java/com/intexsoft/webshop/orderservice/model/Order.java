@@ -10,11 +10,12 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SourceType;
 
 import java.math.BigDecimal;
-import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
+@Table(name = "order")
 @Data
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -22,18 +23,19 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
-    @Column(nullable = false)
+    @Column(name = "shop_id", nullable = false)
     Long shopId;
-    @Column(nullable = false)
+    @Column(name = "user_id", nullable = false)
     Long userId;
     @CreationTimestamp(source = SourceType.DB)
-    @Column(nullable = false)
-    Instant createdAt;
-    @Column(nullable = false)
+    @Column(name = "created_at", nullable = false)
+    LocalDateTime createdAt;
+    @Column(name = "total_price", nullable = false)
     BigDecimal totalPrice;
-    @Column(nullable = false, length = 15)
+    @Column(name = "payment_method", nullable = false, length = 15)
     @Enumerated(EnumType.STRING)
     PaymentMethod paymentMethod;
+    @Column(name = "comment")
     String comment;
     @OneToMany(
             mappedBy = "order",

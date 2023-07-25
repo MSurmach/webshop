@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 @Entity
+@Table(name = "image")
 @Data
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -14,8 +15,8 @@ public class Image {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
-    @Column(nullable = false, length = 512, unique = true)
+    @Column(name = "filePath", nullable = false, length = 512, unique = true)
     String filePath;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     Product product;
 }

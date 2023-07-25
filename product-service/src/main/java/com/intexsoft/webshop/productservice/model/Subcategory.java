@@ -10,6 +10,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
+@Table(name = "subcategory")
 @Data
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -17,11 +18,11 @@ public class Subcategory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
-    @Column(nullable = false, unique = true)
+    @Column(name = "name", nullable = false, unique = true)
     String name;
-    @Column(nullable = false)
+    @Column(name = "description", nullable = false)
     String description;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     Category category;
     @OneToMany(
             mappedBy = "subcategory",

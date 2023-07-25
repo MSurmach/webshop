@@ -10,6 +10,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
+@Table(name = "vendor")
 @Data
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -17,8 +18,9 @@ public class Vendor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
-    @Column(nullable = false, unique = true)
+    @Column(name = "name", nullable = false, unique = true)
     String name;
+    @Column(name = "about")
     String about;
     @OneToMany(
             mappedBy = "vendor",

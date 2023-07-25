@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 @Entity
+@Table(name = "attribute")
 @Data
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -14,9 +15,9 @@ public class Attribute {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
-    @Column(nullable = false, length = 50)
+    @Column(name = "label", nullable = false, length = 50)
     String label;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     Subcategory subcategory;
     @OneToOne(
             mappedBy = "attribute",
