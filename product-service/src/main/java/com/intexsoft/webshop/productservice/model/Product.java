@@ -36,12 +36,16 @@ public class Product {
             cascade = CascadeType.ALL
     )
     Set<Feedback> feedbacks = new LinkedHashSet<>();
-    @OneToMany(
-            mappedBy = "product",
+    @ManyToMany(
             fetch = FetchType.LAZY,
-            cascade = {CascadeType.MERGE, CascadeType.PERSIST}
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE}
     )
-    Set<ProductShopLink> productShopLinks;
+    @JoinTable(
+            name = "product_shop_link",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "shop_id")
+    )
+    Set<ShopReplica> shops = new LinkedHashSet<>();
     @OneToMany(
             mappedBy = "product",
             fetch = FetchType.LAZY,

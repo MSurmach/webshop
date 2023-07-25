@@ -19,11 +19,9 @@ public class ShopReplica {
     Long id;
     @Column(name = "name", nullable = false, unique = true, length = 100)
     String name;
-
-    @OneToMany(
-            mappedBy = "shop",
-            fetch = FetchType.LAZY,
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE}
+    @ManyToMany(
+            mappedBy = "shops",
+            fetch = FetchType.LAZY
     )
-    Set<ProductShopLink> productShopLinks = new LinkedHashSet<>();
+    Set<Product> products = new LinkedHashSet<>();
 }
