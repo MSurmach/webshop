@@ -6,6 +6,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 @Entity
 @Table(name = "attribute")
 @Data
@@ -19,10 +22,10 @@ public class Attribute {
     String label;
     @ManyToOne(fetch = FetchType.LAZY)
     Subcategory subcategory;
-    @OneToOne(
+    @OneToMany(
             mappedBy = "attribute",
             fetch = FetchType.LAZY,
             cascade = CascadeType.ALL
     )
-    AttributeValue attributeValue;
+    Set<AttributeValue> attributeValues = new LinkedHashSet<>();
 }
