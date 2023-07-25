@@ -13,7 +13,7 @@
     <include file="v.0.1/2023-21-07-create-table-image.xml" relativeToChangelogFile="true"/>
     <include file="v.0.1/2023-21-07-create-table-shop-replica.xml" relativeToChangelogFile="true"/>
     <include file="v.0.1/2023-21-07-create-table-product-shop-link.xml" relativeToChangelogFile="true"/>
-    <include file="v.0.2/2023-24-07-add-category-id-column-to-table-subcategory.xml" relativeToChangelogFile="true"/>
+    <include file="v.0.2/2023-24-07-add_category_id_column_to_table_subcategory.xml" relativeToChangelogFile="true"/>
     <include file="v.0.2/2023-24-07-add-unique-for-name-table-subcategory.xml" relativeToChangelogFile="true"/>
     <include file="v.0.2/2023-24-07-alter-columns-table-image.xml" relativeToChangelogFile="true"/>
     <include file="v.0.2/2023-24-07-add-unique-for-file-path-table-image.xml" relativeToChangelogFile="true"/>
@@ -21,7 +21,7 @@
     <include file="v.0.2/2023-24-07-alter-column-names-table-attribute.xml" relativeToChangelogFile="true"/>
     <include file="v.0.2/2023-24-07-alter-column-names-table-attribute-value.xml" relativeToChangelogFile="true"/>
     <include file="v.0.2/2023-24-07-alter-column-names-table-feedback.xml" relativeToChangelogFile="true"/>
-    <include file="v.0.2/2023-24-07-alter-column-names-table-order.xml" relativeToChangelogFile="true"/>
     <include file="v.0.2/2023-24-07-alter-column-names-table-product.xml" relativeToChangelogFile="true"/>
     <include file="v.0.2/2023-24-07-alter-name-column-table-shop-replica.xml" relativeToChangelogFile="true"/>
+    <include file="v.0.2/2023-24-07-alter-column-names-table-subcategory.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

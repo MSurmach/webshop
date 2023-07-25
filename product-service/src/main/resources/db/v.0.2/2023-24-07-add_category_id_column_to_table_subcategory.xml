@@ -8,7 +8,7 @@
             <columnExists tableName="subcategory" columnName="categoryId"/>
         </preConditions>
         <addColumn tableName="subcategory">
-            <column name="category_id" type="BIGINT">
+            <column name="categoryId" type="BIGINT">
                 <constraints foreignKeyName="fk_subcategory_category" references="category(id)"/>
             </column>
         </addColumn>

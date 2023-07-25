@@ -3,8 +3,7 @@
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
       https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
-    <changeSet id="alter-column-names-table-image" author="m.surmach">
-        <renameColumn tableName="image" oldColumnName="pathToFile" newColumnName="file_path"/>
-        <renameColumn tableName="image" oldColumnName="productId" newColumnName="product_id"/>
+    <changeSet id="alter-column-names-table-subcategory" author="m.surmach">
+        <renameColumn tableName="subcategory" oldColumnName="categoryId" newColumnName="category_id"/>
     </changeSet>
 </databaseChangeLog>
