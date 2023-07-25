@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
@@ -21,7 +22,8 @@ public class Vendor {
     String about;
     @OneToMany(
             mappedBy = "vendor",
-            fetch = FetchType.LAZY
+            fetch = FetchType.LAZY,
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE}
     )
-    Set<Product> products;
+    Set<Product> products = new LinkedHashSet<>();
 }

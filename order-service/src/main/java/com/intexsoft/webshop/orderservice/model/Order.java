@@ -11,6 +11,7 @@ import org.hibernate.annotations.SourceType;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
@@ -36,15 +37,14 @@ public class Order {
     String comment;
     @OneToMany(
             mappedBy = "order",
-            orphanRemoval = true,
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY)
-    Set<Detail> orderDetails;
-    @OneToMany(
-            mappedBy = "order",
-            orphanRemoval = true,
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY
     )
-    Set<Status> statuses;
+    Set<Detail> orderDetails;
+    @OneToMany(
+            mappedBy = "order",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY
+    )
+    Set<Status> statuses = new LinkedHashSet<>();
 }

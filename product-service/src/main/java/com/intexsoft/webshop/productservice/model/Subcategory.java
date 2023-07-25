@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
@@ -24,13 +25,14 @@ public class Subcategory {
     Category category;
     @OneToMany(
             mappedBy = "subcategory",
-            fetch = FetchType.LAZY
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL
     )
-    Set<Attribute> attributes;
+    Set<Attribute> attributes = new LinkedHashSet<>();
 
     @OneToMany(
             mappedBy = "subcategory",
             fetch = FetchType.LAZY
     )
-    Set<Product> products;
+    Set<Product> products = new LinkedHashSet<>();
 }

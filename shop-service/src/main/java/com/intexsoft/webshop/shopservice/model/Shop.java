@@ -8,7 +8,7 @@ import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.Instant;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
@@ -31,14 +31,13 @@ public class Shop {
     String about;
     @OneToMany(
             mappedBy = "shop",
-            orphanRemoval = true,
             cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY)
-    Set<Feedback> feedbacks;
+            fetch = FetchType.LAZY
+    )
+    Set<Feedback> feedbacks = new LinkedHashSet<>();
     @OneToMany(
             mappedBy = "shop",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true,
-            fetch = FetchType.LAZY)
-    Set<ShopProductLink> shopProductLinks = new HashSet<>();
+            fetch = FetchType.LAZY
+    )
+    Set<ShopProductLink> shopProductLinks = new LinkedHashSet<>();
 }

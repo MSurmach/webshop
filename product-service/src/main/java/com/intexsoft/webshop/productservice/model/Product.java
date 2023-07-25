@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
@@ -24,22 +25,26 @@ public class Product {
     Vendor vendor;
     @OneToMany(
             mappedBy = "product",
-            fetch = FetchType.LAZY
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL
     )
-    Set<Image> images;
+    Set<Image> images = new LinkedHashSet<>();
     @OneToMany(
             mappedBy = "product",
-            fetch = FetchType.LAZY
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL
     )
-    Set<Feedback> feedbacks;
+    Set<Feedback> feedbacks = new LinkedHashSet<>();
     @OneToMany(
             mappedBy = "product",
-            fetch = FetchType.LAZY
+            fetch = FetchType.LAZY,
+            cascade = {CascadeType.MERGE, CascadeType.PERSIST}
     )
     Set<ProductShopLink> productShopLinks;
     @OneToMany(
             mappedBy = "product",
-            fetch = FetchType.LAZY
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL
     )
-    Set<AttributeValue> attributeValues;
+    Set<AttributeValue> attributeValues = new LinkedHashSet<>();
 }

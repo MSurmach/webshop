@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
@@ -22,8 +22,7 @@ public class Category {
     @OneToMany(
             mappedBy = "category",
             fetch = FetchType.LAZY,
-            orphanRemoval = true,
             cascade = CascadeType.ALL
     )
-    Set<Subcategory> subcategories;
+    Set<Subcategory> subcategories = new LinkedHashSet<>();
 }

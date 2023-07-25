@@ -20,6 +20,8 @@ public class Attribute {
     Subcategory subcategory;
     @OneToOne(
             mappedBy = "attribute",
-            fetch = FetchType.LAZY)
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL
+    )
     AttributeValue attributeValue;
 }
