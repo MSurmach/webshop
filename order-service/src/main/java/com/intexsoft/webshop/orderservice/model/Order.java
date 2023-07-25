@@ -23,6 +23,8 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
+    @Column(name = "pickup_point_id", nullable = false)
+    Long pickupPointId;
     @Column(name = "shop_id", nullable = false)
     Long shopId;
     @Column(name = "user_id", nullable = false)

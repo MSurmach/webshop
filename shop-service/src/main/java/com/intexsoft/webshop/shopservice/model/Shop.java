@@ -42,4 +42,10 @@ public class Shop {
             fetch = FetchType.LAZY
     )
     Set<ShopProductLink> shopProductLinks = new LinkedHashSet<>();
+    @OneToMany(
+            mappedBy = "shop",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL
+    )
+    Set<PickupPoint> pickupPoints = new LinkedHashSet<>();
 }
