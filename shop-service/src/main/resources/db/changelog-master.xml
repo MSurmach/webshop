@@ -10,4 +10,5 @@
     <include file="v.0.2/2023-24-07-alter-column-names-table-feedback.xml" relativeToChangelogFile="true"/>
     <include file="v.0.2/2023-24-07-alter-columns-table-shop.xml" relativeToChangelogFile="true"/>
     <include file="v.0.3/2023-25-07-create-table-pickup-point.xml" relativeToChangelogFile="true"/>
+    <include file="v.0.3/2023-25-07-drop-table-feedback.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

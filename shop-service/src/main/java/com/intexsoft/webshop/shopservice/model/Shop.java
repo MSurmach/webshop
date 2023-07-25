@@ -33,12 +33,6 @@ public class Shop {
     String about;
     @OneToMany(
             mappedBy = "shop",
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY
-    )
-    Set<Feedback> feedbacks = new LinkedHashSet<>();
-    @OneToMany(
-            mappedBy = "shop",
             fetch = FetchType.LAZY
     )
     Set<ShopProductLink> shopProductLinks = new LinkedHashSet<>();

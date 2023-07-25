@@ -30,12 +30,6 @@ public class Product {
             cascade = CascadeType.ALL
     )
     Set<Image> images = new LinkedHashSet<>();
-    @OneToMany(
-            mappedBy = "product",
-            fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL
-    )
-    Set<Feedback> feedbacks = new LinkedHashSet<>();
     @ManyToMany(
             fetch = FetchType.LAZY,
             cascade = {CascadeType.PERSIST, CascadeType.MERGE}

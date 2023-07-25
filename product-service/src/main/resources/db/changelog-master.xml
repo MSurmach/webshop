@@ -24,4 +24,5 @@
     <include file="v.0.2/2023-24-07-alter-column-names-table-product.xml" relativeToChangelogFile="true"/>
     <include file="v.0.2/2023-24-07-alter-name-column-table-shop-replica.xml" relativeToChangelogFile="true"/>
     <include file="v.0.2/2023-24-07-alter-column-names-table-subcategory.xml" relativeToChangelogFile="true"/>
+    <include file="v.0.3/2023-25-07-drop-table-feedback.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>
