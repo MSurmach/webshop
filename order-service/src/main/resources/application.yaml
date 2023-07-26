@@ -9,3 +9,14 @@ spring:
     url: ${ORDER_DATASOURCE_URL:jdbc:postgresql://localhost:5443/orderDB}
     username: ${ORDER_DATASOURCE_USERNAME:postgres}
     password: ${ORDER_DATASOURCE_PASSWORD:orderservice}
+  rabbitmq:
+    username: ${RABBITMQ_USERNAME:rmq_user}
+    password: ${RABBITMQ_PASSWORD:rmq_password}
+    port: ${RABBITMQ_PORT:5672}
+rmq:
+  event:
+    exchange: order.event.exchange
+  command:
+    queue: order.command.queue
+    exchange: order.command.
+    routing: routing.order.command.*
