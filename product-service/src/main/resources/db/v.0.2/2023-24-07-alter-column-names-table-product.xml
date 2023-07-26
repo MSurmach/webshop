@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+      https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+    <changeSet id="alter-column-names-table-product" author="m.surmach">
+        <renameColumn tableName="product" oldColumnName="subcategoryId" newColumnName="subcategory_id"/>
+        <renameColumn tableName="product" oldColumnName="vendorId" newColumnName="vendor_id"/>
+    </changeSet>
+</databaseChangeLog>

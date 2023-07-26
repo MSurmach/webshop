@@ -6,4 +6,8 @@
     <include file="v.0.1/2023-21-07-create-table-order.xml" relativeToChangelogFile="true"/>
     <include file="v.0.1/2023-21-07-create-table-detail.xml" relativeToChangelogFile="true"/>
     <include file="v.0.1/2023-21-07-create-table-status.xml" relativeToChangelogFile="true"/>
+    <include file="v.0.2/2023-24-07-alter-column-names-table-detail.xml" relativeToChangelogFile="true"/>
+    <include file="v.0.2/2023-24-07-alter-column-names-table-order.xml" relativeToChangelogFile="true"/>
+    <include file="v.0.2/2023-24-07-alter-column-names-table-status.xml" relativeToChangelogFile="true"/>
+    <include file="v.0.3/2023-25-07-add-pickup-point-id-column-table-order.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

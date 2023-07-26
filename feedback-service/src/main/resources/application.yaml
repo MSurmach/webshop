@@ -1,0 +1,11 @@
+server:
+  port: 8094
+spring:
+  main:
+    banner-mode: off
+  liquibase:
+    change-log: db/changelog-master.xml
+  datasource:
+    url: ${FEEDBACK_DATASOURCE_URL:jdbc:postgresql://localhost:5444/feedbackDB}
+    username: ${FEEDBACK_DATASOURCE_USERNAME:postgres}
+    password: ${FEEDBACK_DATASOURCE_PASSWORD:feedbackservice}

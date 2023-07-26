@@ -32,3 +32,11 @@ services:
     environment:
       - POSTGRES_PASSWORD=orderservice
       - POSTGRES_DB=orderDB
+  feedback-service-db:
+    image: postgres:14.2-alpine
+    container_name: feedback-service-postgres
+    ports:
+      - "5444:5432"
+    environment:
+      - POSTGRES_PASSWORD=feedbackservice
+      - POSTGRES_DB=feedbackDB
