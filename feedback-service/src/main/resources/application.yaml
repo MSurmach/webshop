@@ -20,4 +20,4 @@ rmq:
   command:
     queue: feedback.command.queue
     exchange: feedback.command.
-    routing: feedback.order.command.*
+    routing: routing.feedback.command.*

@@ -9,3 +9,15 @@ spring:
     url: ${PRODUCT_DATASOURCE_URL:jdbc:postgresql://localhost:5442/productDB}
     username: ${PRODUCT_DATASOURCE_USERNAME:postgres}
     password: ${PRODUCT_DATASOURCE_PASSWORD:productservice}
+  rabbitmq:
+    username: ${PRODUCT_RABBITMQ_USERNAME:rmq_user}
+    password: ${PRODUCT_RABBITMQ_PASSWORD:rmq_password}
+    port: ${PRODUCT_RABBITMQ_PORT:5672}
+rmq:
+  event:
+    product:
+      exchange: product.event.exchange
+  command:
+    queue: product.command.queue
+    exchange: product.command.
+    routing: routing.product.command.*
