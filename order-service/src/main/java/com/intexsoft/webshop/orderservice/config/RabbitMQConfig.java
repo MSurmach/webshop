@@ -10,13 +10,13 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class RabbitMQConfig {
-    @Value("${rmq.event.exchange}")
+    @Value("${rmq.event.order.exchange}")
     private String eventExchangeName;
     @Value("${rmq.command.queue}")
     private String commandQueueName;
     @Value("${rmq.command.exchange}")
     private String commandExchangeName;
-    @Value("${rmq.command.routing")
+    @Value("${rmq.command.routing}")
     private String commandRouting;
 
     @Bean
