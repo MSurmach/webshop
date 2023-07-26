@@ -9,3 +9,15 @@ spring:
     url: ${SHOP_DATASOURCE_URL:jdbc:postgresql://localhost:5441/shopDB}
     username: ${SHOP_DATASOURCE_USERNAME:postgres}
     password: ${SHOP_DATASOURCE_PASSWORD:shopservice}
+  rabbitmq:
+    username: ${SHOP_RABBITMQ_USERNAME:rmq_user}
+    password: ${SHOP_RABBITMQ_PASSWORD:rmq_password}
+    port: ${SHOP_RABBITMQ_PORT:5672}
+rmq:
+  event:
+    shop:
+      exchange: shop.event.exchange
+  command:
+    queue: shop.command.queue
+    exchange: shop.command.
+    routing: routing.shop.command.*
