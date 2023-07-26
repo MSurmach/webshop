@@ -43,7 +43,6 @@ services:
   rabbitmq:
     image: rabbitmq:3.10.25-management-alpine
     container_name: rabbitmq
-    hostname: rabbitmq
     restart: always
     environment:
       - RABBITMQ_DEFAULT_USER=rmq_user
@@ -51,4 +50,5 @@ services:
     volumes:
       - ./rabbitmq:/var/lib/rabbitmq
     ports:
+      - "5672:5672"
       - "15672:15672"
