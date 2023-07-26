@@ -9,3 +9,15 @@ spring:
     url: ${FEEDBACK_DATASOURCE_URL:jdbc:postgresql://localhost:5444/feedbackDB}
     username: ${FEEDBACK_DATASOURCE_USERNAME:postgres}
     password: ${FEEDBACK_DATASOURCE_PASSWORD:feedbackservice}
+  rabbitmq:
+    username: ${FEEDBACK_RABBITMQ_USERNAME:rmq_user}
+    password: ${FEEDBACK_RABBITMQ_PASSWORD:rmq_password}
+    port: ${FEEDBACK_RABBITMQ_PORT:5672}
+rmq:
+  event:
+    feedback:
+      exchange: feedback.event.exchange
+  command:
+    queue: feedback.command.queue
+    exchange: feedback.command.
+    routing: feedback.order.command.*
