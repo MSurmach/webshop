@@ -19,5 +19,5 @@ rmq:
       exchange: order.event.exchange
   command:
     queue: order.command.queue
-    exchange: order.command.
+    exchange: order.command.exchange
     routing: routing.order.command.*
