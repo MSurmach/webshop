@@ -16,8 +16,8 @@ public class RabbitMQConfig {
     private String commandQueueName;
     @Value("${rmq.command.exchange}")
     private String commandExchangeName;
-    @Value("${rmq.command.routing}")
-    private String commandRouting;
+    @Value("${rmq.command.binding}")
+    private String commandBinding;
 
     @Bean
     public TopicExchange eventExchange() {
@@ -39,6 +39,6 @@ public class RabbitMQConfig {
         return BindingBuilder
                 .bind(commandQueue())
                 .to(commandExchange())
-                .with(commandRouting);
+                .with(commandBinding);
     }
 }
