@@ -17,6 +17,9 @@ rmq:
   event:
     user:
       exchange: user.event.exchange
+      routing-prefix: routing.user.event.
+      routing-keys:
+        user_created: user_created
   command:
     queue: user.command.queue
     exchange: user.command.exchange

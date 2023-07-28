@@ -17,6 +17,9 @@ rmq:
   event:
     shop:
       exchange: shop.event.exchange
+      routing-prefix: routing.shop.event.
+      routing-keys:
+        shop_created: shop_created
   command:
     queue: shop.command.queue
     exchange: shop.command.exchange

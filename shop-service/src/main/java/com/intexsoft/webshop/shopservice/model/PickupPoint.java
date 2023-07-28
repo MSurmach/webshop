@@ -1,9 +1,7 @@
 package com.intexsoft.webshop.shopservice.model;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 @Entity
@@ -17,6 +15,8 @@ public class PickupPoint {
     Long id;
     @Column(name = "address", nullable = false, length = 512)
     String address;
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     Shop shop;
 }

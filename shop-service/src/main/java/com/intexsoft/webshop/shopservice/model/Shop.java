@@ -42,4 +42,9 @@ public class Shop {
             cascade = CascadeType.ALL
     )
     Set<PickupPoint> pickupPoints = new LinkedHashSet<>();
+
+    public void addPickupPoint(PickupPoint pickupPoint){
+        pickupPoints.add(pickupPoint);
+        pickupPoint.setShop(this);
+    }
 }

@@ -17,6 +17,10 @@ rmq:
   event:
     product:
       exchange: product.event.exchange
+    shop:
+      queue: shop.to.product.event.queue
+      exchange: shop.event.exchange
+      routing: routing.shop.event.#
   command:
     queue: product.command.queue
     exchange: product.command.exchange
