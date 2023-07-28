@@ -2,7 +2,7 @@ package com.intexsoft.webshop.feedbackservice.service.impl;
 
 import com.intexsoft.webshop.feedbackservice.service.UserEventConsumer;
 import com.intexsoft.webshop.feedbackservice.service.UsersReplicaService;
-import com.intexsoft.weshop.messagecommon.event.user.UserCreatedEvent;
+import com.intexsoft.webshop.messagecommon.event.user.UserCreatedEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.rabbit.annotation.*;
 import org.springframework.messaging.handler.annotation.Payload;

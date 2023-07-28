@@ -5,7 +5,7 @@ import com.intexsoft.webshop.feedbackservice.mapper.UserReplicaMapper;
 import com.intexsoft.webshop.feedbackservice.model.UsersReplica;
 import com.intexsoft.webshop.feedbackservice.repository.UsersReplicaRepository;
 import com.intexsoft.webshop.feedbackservice.service.UsersReplicaService;
-import com.intexsoft.weshop.messagecommon.event.user.UserCreatedEvent;
+import com.intexsoft.webshop.messagecommon.event.user.UserCreatedEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

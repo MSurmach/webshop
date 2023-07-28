@@ -32,12 +32,12 @@ public class UserServiceImpl implements UserService {
         String userEmail = userCreateDto.getEmail();
         List<UserDto> foundedUsers = findUserByLoginOrEmail(userLogin, userEmail);
         if (!foundedUsers.isEmpty()) {
-            StringBuilder exceptionMessageBuilder = new StringBuilder("Unable to save a new userEntity:");
+            StringBuilder exceptionMessageBuilder = new StringBuilder("Unable to save a new user:");
             foundedUsers.forEach(existedUser -> {
                 if (Objects.equals(existedUser.getLogin().toLowerCase(), userLogin.toLowerCase()))
-                    exceptionMessageBuilder.append(" such userEntity login exists;");
+                    exceptionMessageBuilder.append(" such user login exists;");
                 if (Objects.equals(existedUser.getEmail().toLowerCase(), userEmail.toLowerCase()))
-                    exceptionMessageBuilder.append(" such userEntity email exists;");
+                    exceptionMessageBuilder.append(" such user email exists;");
             });
             throw new SuchUserExistsException(exceptionMessageBuilder.toString());
         }

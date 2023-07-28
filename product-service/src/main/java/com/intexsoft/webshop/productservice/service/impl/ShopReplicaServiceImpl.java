@@ -5,7 +5,7 @@ import com.intexsoft.webshop.productservice.mapper.ShopReplicaMapper;
 import com.intexsoft.webshop.productservice.model.ShopReplica;
 import com.intexsoft.webshop.productservice.repository.ShopReplicaRepository;
 import com.intexsoft.webshop.productservice.service.ShopReplicaService;
-import com.intexsoft.weshop.messagecommon.event.shop.ShopCreatedEvent;
+import com.intexsoft.webshop.messagecommon.event.shop.ShopCreatedEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

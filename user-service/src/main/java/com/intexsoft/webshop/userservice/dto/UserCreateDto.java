@@ -30,6 +30,7 @@ public class UserCreateDto {
     String lastname;
     @NotBlank(message = "{user.password.notBlank}")
     @Size(min = 6, max = 16, message = "{user.password.size}")
+    @JsonProperty("password")
     String plainPassword;
     @Email
     @Size(max = 100, message = "{user.email.size}")

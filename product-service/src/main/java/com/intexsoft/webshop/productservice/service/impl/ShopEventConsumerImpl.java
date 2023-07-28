@@ -2,7 +2,7 @@ package com.intexsoft.webshop.productservice.service.impl;
 
 import com.intexsoft.webshop.productservice.service.ShopEventConsumer;
 import com.intexsoft.webshop.productservice.service.ShopReplicaService;
-import com.intexsoft.weshop.messagecommon.event.shop.ShopCreatedEvent;
+import com.intexsoft.webshop.messagecommon.event.shop.ShopCreatedEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.rabbit.annotation.*;
 import org.springframework.messaging.handler.annotation.Payload;

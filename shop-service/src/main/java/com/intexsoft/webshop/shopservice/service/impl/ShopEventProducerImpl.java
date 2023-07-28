@@ -1,7 +1,7 @@
 package com.intexsoft.webshop.shopservice.service.impl;
 
 import com.intexsoft.webshop.shopservice.service.ShopEventProducer;
-import com.intexsoft.weshop.messagecommon.event.shop.ShopCreatedEvent;
+import com.intexsoft.webshop.messagecommon.event.shop.ShopCreatedEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.core.TopicExchange;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
