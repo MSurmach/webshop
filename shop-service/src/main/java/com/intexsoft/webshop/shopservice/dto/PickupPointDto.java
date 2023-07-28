@@ -12,8 +12,6 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class PickupPointDto {
-    @JsonProperty("id")
     Long id;
-    @JsonProperty("address")
     String address;
 }

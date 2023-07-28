@@ -14,7 +14,6 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public abstract class BaseEvent {
-    @JsonProperty("createdAt")
     LocalDateTime createdAt;
 
     protected BaseEvent() {

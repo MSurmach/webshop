@@ -11,6 +11,5 @@ import lombok.experimental.FieldDefaults;
 @EqualsAndHashCode(callSuper = true)
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public abstract class UserEvent extends BaseEvent {
-    @JsonProperty("userId")
-    Long userid;
+    Long userId;
 }

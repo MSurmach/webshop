@@ -19,17 +19,12 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ShopDto {
-    @JsonProperty("id")
     Long id;
-    @JsonProperty("name")
     String name;
-    @JsonProperty("email")
     String email;
-    @JsonProperty("phoneNumber")
     String phoneNumber;
     @Nullable
     String about;
-    @JsonProperty("registeredAt")
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     LocalDateTime registeredAt;
     @JsonProperty("pickupPoints")

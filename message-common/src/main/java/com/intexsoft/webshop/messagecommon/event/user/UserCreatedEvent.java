@@ -10,6 +10,5 @@ import lombok.experimental.FieldDefaults;
 @EqualsAndHashCode(callSuper = true)
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserCreatedEvent extends UserEvent {
-    @JsonProperty("login")
     String login;
 }

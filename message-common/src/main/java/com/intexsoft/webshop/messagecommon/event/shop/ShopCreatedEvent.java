@@ -10,6 +10,5 @@ import lombok.experimental.FieldDefaults;
 @EqualsAndHashCode(callSuper = true)
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ShopCreatedEvent extends ShopEvent {
-    @JsonProperty("name")
     String name;
 }

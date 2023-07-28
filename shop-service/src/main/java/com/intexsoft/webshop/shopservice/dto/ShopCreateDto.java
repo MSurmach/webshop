@@ -20,16 +20,13 @@ import java.util.List;
 public class ShopCreateDto {
     @NotBlank(message = "{shop.name.notBlank}")
     @Size(max = 100, message = "{shop.name.size}")
-    @JsonProperty("name")
     String name;
     @Email
     @Size(max = 100, message = "{shop.email.size}")
-    @JsonProperty("email")
     String email;
     @Nullable
     @Pattern(regexp = "[+]?\\d+", message = "{shop.phoneNumber.pattern}")
     @Size(max = 50, message = "{shop.phoneNumber.size}")
-    @JsonProperty("phoneNumber")
     String phoneNumber;
     @Nullable
     String about;

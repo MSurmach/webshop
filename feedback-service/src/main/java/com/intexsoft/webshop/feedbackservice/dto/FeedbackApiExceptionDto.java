@@ -19,7 +19,6 @@ public class FeedbackApiExceptionDto {
     LocalDateTime exceptionTimestamp;
     @JsonProperty("message")
     String exceptionMessage;
-    @JsonProperty("status")
     HttpStatus status;
     @JsonProperty("code")
     int statusCode;

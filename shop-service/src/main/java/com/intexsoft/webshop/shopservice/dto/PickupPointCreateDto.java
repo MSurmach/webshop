@@ -16,6 +16,5 @@ import lombok.experimental.FieldDefaults;
 public class PickupPointCreateDto {
     @NotBlank(message = "{shop.pickupPoint.address.notBlank}")
     @Size(max = 512, message = "{shop.pickupPoint.address.size}")
-    @JsonProperty("address")
     String address;
 }
