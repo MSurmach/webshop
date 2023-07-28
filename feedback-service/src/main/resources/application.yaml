@@ -17,6 +17,10 @@ rmq:
   event:
     feedback:
       exchange: feedback.event.exchange
+    user:
+      queue: user.to.feedback.event.queue
+      exchange: user.event.exchange
+      routing: routing.user.event.#
   command:
     queue: feedback.command.queue
     exchange: feedback.command.exchange
