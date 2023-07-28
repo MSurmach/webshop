@@ -10,11 +10,13 @@ import org.mapstruct.ReportingPolicy;
 @Mapper(componentModel = "spring",
         injectionStrategy = InjectionStrategy.CONSTRUCTOR,
         unmappedTargetPolicy = ReportingPolicy.IGNORE)
-public interface FeedbackApiMapper {
+public interface UserReplicaMapper {
 
     UsersReplica toUsersReplica(UsersReplicaDto usersReplicaDto);
 
     UsersReplicaDto toUsersReplicaDto(UsersReplica usersReplica);
 
     UsersReplicaDto toUsersReplicaDto(UserCreatedEvent userCreatedEvent);
+
+    UsersReplica toUsersReplica(UserCreatedEvent userCreatedEvent);
 }

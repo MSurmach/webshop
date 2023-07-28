@@ -1,6 +1,7 @@
 package com.intexsoft.webshop.shopservice.service.impl;
 
 import com.intexsoft.webshop.shopservice.service.ShopEventProducer;
+import com.intexsoft.weshop.messagecommon.event.shop.ShopCreatedEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.core.TopicExchange;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -13,9 +14,13 @@ public class ShopEventProducerImpl implements ShopEventProducer {
     private final RabbitTemplate rabbitTemplate;
     private final TopicExchange eventExchange;
     @Value("${rmq.event.shop.routing-prefix}")
-    private String routingKeyPrefix;
+    private String routingPrefix;
+    @Value("${rmq.event.shop.routing-keys.shop_created}")
+    private String shopCreatedRoutingKey;
 
-    public void produceEvent(String routingKey, Object object) {
-        rabbitTemplate.convertAndSend(eventExchange.getName(), routingKeyPrefix + routingKey, object);
+    public void produceShopCreatedEvent(ShopCreatedEvent shopCreatedEvent) {
+        rabbitTemplate.convertAndSend(eventExchange.getName(),
+                routingPrefix + shopCreatedRoutingKey,
+                shopCreatedEvent);
     }
 }

@@ -1,5 +1,7 @@
 package com.intexsoft.webshop.shopservice.service;
 
+import com.intexsoft.weshop.messagecommon.event.shop.ShopCreatedEvent;
+
 public interface ShopEventProducer {
-    void produceEvent(String routingKey, Object object);
+    void produceShopCreatedEvent(ShopCreatedEvent shopCreatedEvent);
 }

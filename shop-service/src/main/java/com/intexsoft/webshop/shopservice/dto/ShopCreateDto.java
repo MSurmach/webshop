@@ -1,16 +1,15 @@
 package com.intexsoft.webshop.shopservice.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.annotation.Nullable;
+import jakarta.validation.constraints.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -18,20 +17,23 @@ import java.util.List;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ShopDto {
-    @JsonProperty("id")
-    Long id;
+public class ShopCreateDto {
+    @NotBlank(message = "{shop.name.notBlank}")
+    @Size(max = 100, message = "{shop.name.size}")
     @JsonProperty("name")
     String name;
+    @Email
+    @Size(max = 100, message = "{shop.email.size}")
     @JsonProperty("email")
     String email;
+    @Nullable
+    @Pattern(regexp = "[+]?\\d+", message = "{shop.phoneNumber.pattern}")
+    @Size(max = 50, message = "{shop.phoneNumber.size}")
     @JsonProperty("phoneNumber")
     String phoneNumber;
     @Nullable
     String about;
-    @JsonProperty("registeredAt")
-    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
-    LocalDateTime registeredAt;
+    @NotEmpty(message = "{shop.pickupPoints.notEmpty}")
     @JsonProperty("pickupPoints")
-    List<PickupPointDto> pickupPointDtos;
+    List<PickupPointCreateDto> pickupPointCreateDtos;
 }

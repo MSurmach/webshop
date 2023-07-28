@@ -1,5 +1,6 @@
 package com.intexsoft.webshop.userservice.controller;
 
+import com.intexsoft.webshop.userservice.dto.UserCreateDto;
 import com.intexsoft.webshop.userservice.dto.UserDto;
 import com.intexsoft.webshop.userservice.service.UserService;
 import jakarta.validation.Valid;
@@ -21,8 +22,8 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping
-    public ResponseEntity<UserDto> createUser(@RequestBody @Valid UserDto userDto) {
-        UserDto createdUserDto = userService.createUser(userDto);
+    public ResponseEntity<UserDto> createUser(@RequestBody @Valid UserCreateDto userCreateDto) {
+        UserDto createdUserDto = userService.createUser(userCreateDto);
         return ResponseEntity.ok(createdUserDto);
     }
 }

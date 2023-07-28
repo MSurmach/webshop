@@ -10,9 +10,11 @@ import org.mapstruct.ReportingPolicy;
 @Mapper(componentModel = "spring",
         injectionStrategy = InjectionStrategy.CONSTRUCTOR,
         unmappedTargetPolicy = ReportingPolicy.IGNORE)
-public interface ProductApiMapper {
+public interface ShopReplicaMapper {
 
     ShopReplica toShopReplica(ShopReplicaDto shopReplicaDto);
+
+    ShopReplica toShopReplica(ShopCreatedEvent shopCreatedEvent);
 
     ShopReplicaDto toShopReplicaDto(ShopReplica shopReplica);
 

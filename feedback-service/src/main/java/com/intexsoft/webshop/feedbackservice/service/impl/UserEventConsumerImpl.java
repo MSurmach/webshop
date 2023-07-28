@@ -1,6 +1,5 @@
 package com.intexsoft.webshop.feedbackservice.service.impl;
 
-import com.intexsoft.webshop.feedbackservice.mapper.FeedbackApiMapper;
 import com.intexsoft.webshop.feedbackservice.service.UserEventConsumer;
 import com.intexsoft.webshop.feedbackservice.service.UsersReplicaService;
 import com.intexsoft.weshop.messagecommon.event.user.UserCreatedEvent;
@@ -20,11 +19,10 @@ import static org.springframework.amqp.core.ExchangeTypes.TOPIC;
 )
 public class UserEventConsumerImpl implements UserEventConsumer {
     private final UsersReplicaService usersReplicaService;
-    private final FeedbackApiMapper feedbackApiMapper;
 
     @RabbitHandler
     @Override
-    public void receive(@Payload UserCreatedEvent userCreatedEvent) {
-        usersReplicaService.createUsersReplica(feedbackApiMapper.toUsersReplicaDto(userCreatedEvent));
+    public void receiveUserCreatedEvent(@Payload UserCreatedEvent userCreatedEvent) {
+        usersReplicaService.createUsersReplica(userCreatedEvent);
     }
 }

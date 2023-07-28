@@ -1,7 +1,9 @@
 package com.intexsoft.webshop.userservice.exception;
 
-public class SuchUserExistsException extends RuntimeException {
+import org.springframework.http.HttpStatus;
+
+public class SuchUserExistsException extends HttpStatusException {
     public SuchUserExistsException(String message) {
-        super(message);
+        super(message, HttpStatus.CONFLICT);
     }
 }

@@ -1,7 +1,9 @@
 package com.intexsoft.webshop.shopservice.exception;
 
-public class SuchShopExistsException extends RuntimeException {
+import org.springframework.http.HttpStatus;
+
+public class SuchShopExistsException extends HttpStatusException {
     public SuchShopExistsException(String message) {
-        super(message);
+        super(message, HttpStatus.CONFLICT);
     }
 }

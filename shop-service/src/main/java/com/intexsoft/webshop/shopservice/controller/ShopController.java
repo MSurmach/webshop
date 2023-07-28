@@ -1,5 +1,6 @@
 package com.intexsoft.webshop.shopservice.controller;
 
+import com.intexsoft.webshop.shopservice.dto.ShopCreateDto;
 import com.intexsoft.webshop.shopservice.dto.ShopDto;
 import com.intexsoft.webshop.shopservice.service.ShopService;
 import jakarta.validation.Valid;
@@ -21,8 +22,8 @@ public class ShopController {
     private final ShopService shopService;
 
     @PostMapping
-    public ResponseEntity<ShopDto> createUser(@RequestBody @Valid ShopDto shopDto) {
-        ShopDto createdShopDto = shopService.createShop(shopDto);
+    public ResponseEntity<ShopDto> createUser(@RequestBody @Valid ShopCreateDto shopCreateDto) {
+        ShopDto createdShopDto = shopService.createShop(shopCreateDto);
         return ResponseEntity.ok(createdShopDto);
     }
 }
