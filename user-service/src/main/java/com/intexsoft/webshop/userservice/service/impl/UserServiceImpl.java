@@ -1,11 +1,11 @@
-package com.intexsoft.webshop.userservice.service.imp;
+package com.intexsoft.webshop.userservice.service.impl;
 
 import com.intexsoft.webshop.userservice.dto.UserDto;
 import com.intexsoft.webshop.userservice.exception.SuchUserExistsException;
 import com.intexsoft.webshop.userservice.mapper.UserApiMapper;
 import com.intexsoft.webshop.userservice.model.User;
-import com.intexsoft.webshop.userservice.producer.RabbitMQEventProducer;
 import com.intexsoft.webshop.userservice.repository.UserRepository;
+import com.intexsoft.webshop.userservice.service.UserEventProducer;
 import com.intexsoft.webshop.userservice.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserApiMapper userApiMapper;
-    private final RabbitMQEventProducer rabbitMQEventProducer;
+    private final UserEventProducer userEventProducer;
     @Value("${rmq.event.user.routing-keys.user_created}")
     private String createdUserRoutingKey;
 
@@ -35,17 +35,18 @@ public class UserServiceImpl implements UserService {
             StringBuilder exceptionMessageBuilder = new StringBuilder("Unable to save a new user:");
             foundedUsers.forEach(existedUser -> {
                 if (Objects.equals(existedUser.getLogin().toLowerCase(), userDto.getLogin().toLowerCase()))
-                    exceptionMessageBuilder.append(" such login exists;");
+                    exceptionMessageBuilder.append(" such user login exists;");
                 if (Objects.equals(existedUser.getEmail().toLowerCase(), userDto.getEmail().toLowerCase()))
-                    exceptionMessageBuilder.append(" such email exists;");
+                    exceptionMessageBuilder.append(" such user email exists;");
             });
             throw new SuchUserExistsException(exceptionMessageBuilder.toString());
         }
         User savedUser = userRepository.save(userApiMapper.toUser(userDto));
-        rabbitMQEventProducer.produceEvent(createdUserRoutingKey, userApiMapper.toUserCreatedEvent(savedUser));
+        userEventProducer.produceEvent(createdUserRoutingKey, userApiMapper.toUserCreatedEvent(savedUser));
         return userApiMapper.toUserDto(savedUser);
     }
 
+    @Override
     public List<UserDto> findUserByLoginOrEmail(UserDto userDto) {
         List<UserDto> foundedUsers = userRepository.
                 findUserByLoginIgnoreCaseOrEmailIgnoreCase(userDto.getLogin(), userDto.getEmail())

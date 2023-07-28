@@ -17,10 +17,10 @@ rmq:
   event:
     user:
       exchange: user.event.exchange
-      routing-key-prefix: routing.user.event.
+      routing-prefix: routing.user.event.
       routing-keys:
         user_created: user_created
   command:
     queue: user.command.queue
     exchange: user.command.exchange
-    binding: routing.user.command.*
+    routing: routing.user.command.*

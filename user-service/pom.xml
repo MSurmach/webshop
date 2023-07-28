@@ -7,6 +7,7 @@
     <groupId>com.intexsoft.webshop</groupId>
     <artifactId>userservice</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
 
     <properties>
         <java.version>17</java.version>
@@ -127,6 +128,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring.boot.maven.plugin}</version>
                 <configuration>
                     <excludes>
                         <exclude>

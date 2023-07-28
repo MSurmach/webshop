@@ -1,4 +1,4 @@
-package com.intexsoft.webshop.userservice.exception.handler;
+package com.intexsoft.webshop.userservice.handler;
 
 import com.intexsoft.webshop.userservice.dto.UserApiExceptionDto;
 import com.intexsoft.webshop.userservice.exception.SuchUserExistsException;
