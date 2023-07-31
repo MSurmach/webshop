@@ -17,6 +17,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import static com.intexsoft.webshop.userservice.util.JsonUtils.getAsString;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -28,6 +30,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public UserDto createUser(UserCreateDto userCreateDto) {
+        log.info("IN: trying to save a new user. The user details = {}", getAsString(userCreateDto));
         String userLogin = userCreateDto.getLogin();
         String userEmail = userCreateDto.getEmail();
         List<UserDto> foundedUsers = findUserByLoginOrEmail(userLogin, userEmail);
@@ -42,16 +45,21 @@ public class UserServiceImpl implements UserService {
             throw new SuchUserExistsException(exceptionMessageBuilder.toString());
         }
         User savedUser = userRepository.save(userMapper.toUser(userCreateDto));
+        log.info("OUT: new user saved successfully. Saved user details = {}", getAsString(savedUser));
         userEventProducer.produceUserCreatedEvent(userMapper.toUserCreatedEvent(savedUser));
         return userMapper.toUserDto(savedUser);
     }
 
     private List<UserDto> findUserByLoginOrEmail(String login, String email) {
+        log.info("IN: trying to find the user by login = {}, and email = {}",
+                login, email);
         List<UserDto> foundedUsers = userRepository.
                 findUserByLoginIgnoreCaseOrEmailIgnoreCase(login, email)
                 .stream()
                 .map(userMapper::toUserDto)
                 .collect(Collectors.toList());
+        log.info("OUT: found {} users with login = {}, and email = {}",
+                foundedUsers.size(), login, email);
         return foundedUsers;
     }
 }
