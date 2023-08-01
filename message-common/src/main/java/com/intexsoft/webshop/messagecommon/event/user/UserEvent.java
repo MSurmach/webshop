@@ -1,6 +1,5 @@
 package com.intexsoft.webshop.messagecommon.event.user;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.intexsoft.webshop.messagecommon.event.BaseEvent;
 import lombok.*;
 import lombok.experimental.FieldDefaults;

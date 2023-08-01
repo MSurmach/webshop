@@ -25,3 +25,6 @@ rmq:
     queue: feedback.command.queue
     exchange: feedback.command.exchange
     routing: routing.feedback.command.*
+logging:
+  pattern:
+    console: "%d{dd-MM-yyyy HH:mm:ss.SSS} %-5level [%thread] %logger{36}.%M - %msg%n"

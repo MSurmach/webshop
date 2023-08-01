@@ -24,3 +24,6 @@ rmq:
     queue: shop.command.queue
     exchange: shop.command.exchange
     routing: routing.shop.command.*
+logging:
+  pattern:
+    console: "%d{dd-MM-yyyy HH:mm:ss.SSS} %-5level [%thread] %logger{36}.%M - %msg%n"

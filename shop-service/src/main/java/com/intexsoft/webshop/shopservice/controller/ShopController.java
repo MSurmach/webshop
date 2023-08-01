@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import static com.intexsoft.webshop.shopservice.util.JsonUtils.getAsString;
+
 @RestController
 @RequestMapping("/shop")
 @RequiredArgsConstructor
@@ -23,7 +25,11 @@ public class ShopController {
 
     @PostMapping
     public ResponseEntity<ShopDto> createUser(@RequestBody @Valid ShopCreateDto shopCreateDto) {
+        log.info("IN: request to create a new shop received. Request body = {}",
+                getAsString(shopCreateDto));
         ShopDto createdShopDto = shopService.createShop(shopCreateDto);
+        log.info("OUT: new shop created successfully. Response body = {}",
+                getAsString(createdShopDto));
         return ResponseEntity.ok(createdShopDto);
     }
 }

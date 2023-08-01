@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import static com.intexsoft.webshop.userservice.util.JsonUtils.getAsString;
+
 @RestController
 @RequestMapping("/user")
 @RequiredArgsConstructor
@@ -23,7 +25,11 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<UserDto> createUser(@RequestBody @Valid UserCreateDto userCreateDto) {
+        log.info("IN: request to create a new user received. Request body = {}",
+                getAsString(userCreateDto));
         UserDto createdUserDto = userService.createUser(userCreateDto);
+        log.info("OUT: new user created successfully. Response body = {}",
+                getAsString(createdUserDto));
         return ResponseEntity.ok(createdUserDto);
     }
 }
