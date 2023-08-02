@@ -40,7 +40,7 @@ public interface ProductMapper {
 
     List<ProductDto> toProductDtos(List<Product> productList);
 
-    Product updateProduct(@MappingTarget Product product, ProductUpdateDto productUpdateDto);
+    Product toProduct(ProductUpdateDto productUpdateDto);
 
     ProductUpdatedEvent toProductEventUpdated(Product product);
 }

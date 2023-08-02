@@ -13,9 +13,12 @@ import com.intexsoft.webshop.productservice.service.CategoryService;
 import com.intexsoft.webshop.productservice.service.SubcategoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+import static com.intexsoft.webshop.productservice.util.JsonUtils.getAsString;
 
 @Service
 @Slf4j
@@ -27,46 +30,64 @@ public class SubcategoryServiceImpl implements SubcategoryService {
     private final SubcategoryMapper subcategoryMapper;
 
     @Override
-    public SubcategoryDto createSubcategory(SubcategoryCreateDto subcategoryCreateDto, Long categoryId) {
-        String createSubcategoryDtoName = subcategoryCreateDto.getName();
-        subcategoryRepository.findByNameIgnoreCase(createSubcategoryDtoName)
+    public SubcategoryDto createSubcategory(SubcategoryCreateDto subcategoryCreateDto) {
+        String subcategoryName = subcategoryCreateDto.getName();
+        log.info("IN: trying to find a subcategory with name = {}", subcategoryName);
+        subcategoryRepository.findByNameIgnoreCase(subcategoryName)
                 .ifPresent(existedSubcategory -> {
                     throw new SuchResourceExistsException("Subcategory with the same name = "
-                            + createSubcategoryDtoName + " already exists");
+                            + subcategoryName + " already exists");
                 });
-        CategoryDto categoryDto = categoryService.findCategoryById(categoryId);
+        log.info("subcategory with the name = {} not found, trying to save a new subcategory. Subcategory details = {}",
+                subcategoryName, getAsString(subcategoryCreateDto));
+        CategoryDto categoryDto = categoryService.findCategoryById(subcategoryCreateDto.getCategoryId());
         Subcategory savedSubcategory = subcategoryRepository.save(
                 subcategoryMapper.toSubcategory(subcategoryCreateDto, categoryDto));
+        log.info("OUT: the subcategory saved successfully. The saved subcategory details = {}",
+                getAsString(savedSubcategory));
         return subcategoryMapper.toSubcategoryDto(savedSubcategory);
     }
 
     @Override
     public SubcategoryDto findSubcategoryById(Long subcategoryId) {
+        log.info("IN: trying to find a subcategory by id = {}", subcategoryId);
         Subcategory foundSubcategory = findById(subcategoryId);
+        log.info("OUT: the subcategory with id = {} found successfully. Found subcategory details = {}",
+                subcategoryId, getAsString(foundSubcategory));
         return subcategoryMapper.toSubcategoryDto(foundSubcategory);
     }
 
     @Override
-    public List<SubcategoryDto> findAllSubcategoriesBelongToCategory(Long categoryId) {
-        List<Subcategory> subcategoriesByCategoryId = subcategoryRepository.findSubcategoriesByCategoryId(categoryId);
-        return subcategoryMapper.toSubcategoryDtos(subcategoriesByCategoryId);
+    public List<SubcategoryDto> findSubcategories(Pageable pageable) {
+        log.info("IN: trying to find subcategories. Page size = {}, page number = {}",
+                pageable.getPageSize(), pageable.getPageNumber());
+        List<Subcategory> subcategories = subcategoryRepository.findAll(pageable).getContent();
+        log.info("OUT: {} subcategories found", subcategories.size());
+        return subcategoryMapper.toSubcategoryDtos(subcategories);
     }
 
     @Override
     public SubcategoryDto updateSubcategory(Long subcategoryId, SubcategoryUpdateDto subcategoryUpdateDto) {
-        findSubcategoryById(subcategoryId);
-        Subcategory updatedSubcategory = subcategoryRepository.save(subcategoryMapper.toSubcategory(subcategoryUpdateDto));
+        log.info("IN: trying to update a subcategory with id = {} by new details = {}",
+                subcategoryId, getAsString(subcategoryUpdateDto));
+        Subcategory existedSubcategory = findById(subcategoryId);
+        Subcategory updatedSubcategory = subcategoryRepository.save(
+                subcategoryMapper.updateSubcategory(existedSubcategory, subcategoryUpdateDto));
+        log.info("OUT: the subcategory updated successfully. The updated subcategory details = {}",
+                getAsString(updatedSubcategory));
         return subcategoryMapper.toSubcategoryDto(updatedSubcategory);
     }
 
     @Override
     public void deleteSubcategoryById(Long subcategoryId) {
+        log.info("IN: trying to delete a subcategory by id = {}", subcategoryId);
         subcategoryRepository.deleteById(subcategoryId);
+        log.info("OUT: the subcategory with id = {} deleted successfully", subcategoryId);
     }
 
     private Subcategory findById(Long subcategoryId) {
-        Subcategory foundSubcategory = subcategoryRepository.findById(subcategoryId).orElseThrow(
-                () -> new ResourceNotFoundException("The subcategory with id = " + subcategoryId + " not found"));
-        return foundSubcategory;
+        return subcategoryRepository.findById(subcategoryId)
+                .orElseThrow(() -> new ResourceNotFoundException("The subcategory with id = "
+                        + subcategoryId + " not found"));
     }
 }

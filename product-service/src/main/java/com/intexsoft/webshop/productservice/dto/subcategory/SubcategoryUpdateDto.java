@@ -2,6 +2,7 @@ package com.intexsoft.webshop.productservice.dto.subcategory;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,4 +19,6 @@ public class SubcategoryUpdateDto {
     String name;
     @NotBlank
     String description;
+    @NotNull
+    Long categoryId;
 }

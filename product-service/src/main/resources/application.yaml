@@ -22,10 +22,6 @@ rmq:
         product_created: product_created
         product_deleted: product_deleted
         product_updated: product_updated
-    shop:
-      queue: shop.to.product.event.queue
-      exchange: shop.event.exchange
-      routing: routing.shop.event.#
   command:
     queue: product.command.queue
     exchange: product.command.exchange

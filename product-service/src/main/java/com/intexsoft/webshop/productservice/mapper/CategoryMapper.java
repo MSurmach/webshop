@@ -1,7 +1,7 @@
 package com.intexsoft.webshop.productservice.mapper;
 
-import com.intexsoft.webshop.productservice.dto.category.CategoryDto;
 import com.intexsoft.webshop.productservice.dto.category.CategoryCreateDto;
+import com.intexsoft.webshop.productservice.dto.category.CategoryDto;
 import com.intexsoft.webshop.productservice.dto.category.CategoryUpdateDto;
 import com.intexsoft.webshop.productservice.model.Category;
 import org.mapstruct.*;

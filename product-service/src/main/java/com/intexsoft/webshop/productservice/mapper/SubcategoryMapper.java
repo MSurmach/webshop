@@ -19,7 +19,7 @@ public interface SubcategoryMapper {
     @Mapping(target = "id", ignore = true)
     Subcategory toSubcategory(SubcategoryCreateDto subcategoryCreateDto, CategoryDto categoryDto);
 
-    Subcategory toSubcategory(SubcategoryUpdateDto subcategoryUpdateDto);
+    Subcategory updateSubcategory(@MappingTarget Subcategory subcategory, SubcategoryUpdateDto subcategoryUpdateDto);
 
     @Mapping(target = "categoryDto", source = "category")
     SubcategoryDto toSubcategoryDto(Subcategory subcategory);

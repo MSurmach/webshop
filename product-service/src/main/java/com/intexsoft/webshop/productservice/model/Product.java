@@ -6,9 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
-import java.util.ArrayList;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -32,16 +30,6 @@ public class Product {
             cascade = CascadeType.ALL
     )
     Set<Image> images = new LinkedHashSet<>();
-    @ManyToMany(
-            fetch = FetchType.LAZY,
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE}
-    )
-    @JoinTable(
-            name = "product_shop_link",
-            joinColumns = @JoinColumn(name = "product_id"),
-            inverseJoinColumns = @JoinColumn(name = "shop_id")
-    )
-    Set<ShopReplica> shops = new LinkedHashSet<>();
     @OneToMany(
             mappedBy = "product",
             fetch = FetchType.LAZY,

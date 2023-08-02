@@ -1,8 +1,8 @@
 package com.intexsoft.webshop.productservice.service.impl;
 
-import com.intexsoft.webshop.productservice.dto.vendor.CreateVendorDto;
-import com.intexsoft.webshop.productservice.dto.vendor.UpdateVendorDto;
+import com.intexsoft.webshop.productservice.dto.vendor.VendorCreateDto;
 import com.intexsoft.webshop.productservice.dto.vendor.VendorDto;
+import com.intexsoft.webshop.productservice.dto.vendor.VendorUpdateDto;
 import com.intexsoft.webshop.productservice.exception.ResourceNotFoundException;
 import com.intexsoft.webshop.productservice.exception.SuchResourceExistsException;
 import com.intexsoft.webshop.productservice.mapper.VendorMapper;
@@ -11,12 +11,13 @@ import com.intexsoft.webshop.productservice.repository.VendorRepository;
 import com.intexsoft.webshop.productservice.service.VendorService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+
+import static com.intexsoft.webshop.productservice.util.JsonUtils.getAsString;
 
 @Service
 @RequiredArgsConstructor
@@ -27,42 +28,57 @@ public class VendorServiceImpl implements VendorService {
 
     @Override
     @Transactional
-    public VendorDto createVendor(CreateVendorDto createVendorDto) {
-        String name = createVendorDto.getName();
+    public VendorDto createVendor(VendorCreateDto vendorCreateDto) {
+        String name = vendorCreateDto.getName();
+        log.info("IN: trying to find the vendor with name = {}", name);
         if (vendorRepository.findByNameIgnoreCase(name).isPresent())
             throw new SuchResourceExistsException("Unable to save a new vendor," +
                     " because the vendor with the same name exists");
-        Vendor savedVendor = vendorRepository.save(vendorMapper.toVendor(createVendorDto));
+        log.info("vendor with the name = {} not found, trying to save a new vendor. Vendor details = {}",
+                name, getAsString(vendorCreateDto));
+        Vendor savedVendor = vendorRepository.save(vendorMapper.toVendor(vendorCreateDto));
+        log.info("OUT: the vendor saved successfully. The saved vendor details = {}", getAsString(savedVendor));
         return vendorMapper.toVendorDto(savedVendor);
     }
 
     @Override
-    public VendorDto findVendorById(Long id) {
-        Vendor foundVendor = findById(id);
+    public VendorDto findVendorById(Long vendorId) {
+        log.info("IN: trying to find a vendor by id = {}", vendorId);
+        Vendor foundVendor = findById(vendorId);
+        log.info("OUT: the vendor with id = {} found successfully. Found vendor details = {}",
+                vendorId, getAsString(foundVendor));
         return vendorMapper.toVendorDto(foundVendor);
     }
 
     @Override
     public List<VendorDto> findVendors(Pageable pageable) {
-        Page<Vendor> vendorPage = vendorRepository.findAll(pageable);
-        return vendorMapper.toVendorDtos(vendorPage.getContent());
+        log.info("IN: trying to find vendors. Page size = {}, page number = {}",
+                pageable.getPageSize(), pageable.getPageNumber());
+        List<Vendor> vendors = vendorRepository.findAll(pageable).getContent();
+        log.info("OUT: {} vendors found", vendors.size());
+        return vendorMapper.toVendorDtos(vendors);
     }
 
     @Override
-    public VendorDto updateVendor(Long id, UpdateVendorDto updateVendorDto) {
-        Vendor existedVendor = findById(id);
-        Vendor updatedVendor = vendorRepository.save(vendorMapper.updateVendor(existedVendor, updateVendorDto));
+    public VendorDto updateVendor(Long vendorId, VendorUpdateDto vendorUpdateDto) {
+        log.info("IN: trying to update a vendor with id = {} by new details = {}",
+                vendorId, getAsString(vendorUpdateDto));
+        Vendor existedVendor = findById(vendorId);
+        Vendor updatedVendor = vendorRepository.save(vendorMapper.updateVendor(existedVendor, vendorUpdateDto));
+        log.info("OUT: the vendor updated successfully. The updated vendor details = {}", getAsString(updatedVendor));
         return vendorMapper.toVendorDto(updatedVendor);
     }
 
     @Override
-    public void deleteVendorById(Long id) {
-        vendorRepository.deleteById(id);
+    public void deleteVendorById(Long vendorId) {
+        log.info("IN: trying to delete a vendor by id = {}", vendorId);
+        vendorRepository.deleteById(vendorId);
+        log.info("OUT: the vendor with id = {} deleted successfully", vendorId);
     }
 
-    private Vendor findById(Long id) {
-        Vendor foundVendor = vendorRepository.findById(id).orElseThrow(
-                () -> new ResourceNotFoundException("Vendor with id= " + id + " not found"));
+    private Vendor findById(Long vendorId) {
+        Vendor foundVendor = vendorRepository.findById(vendorId).orElseThrow(
+                () -> new ResourceNotFoundException("Vendor with vendorId= " + vendorId + " not found"));
         return foundVendor;
     }
 }
