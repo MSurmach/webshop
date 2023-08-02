@@ -17,6 +17,11 @@ rmq:
   event:
     product:
       exchange: product.event.exchange
+      routing-prefix: routing.product.event.
+      routing-keys:
+        product_created: product_created
+        product_deleted: product_deleted
+        product_updated: product_updated
     shop:
       queue: shop.to.product.event.queue
       exchange: shop.event.exchange

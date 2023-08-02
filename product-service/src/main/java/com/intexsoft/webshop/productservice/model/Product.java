@@ -6,7 +6,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -46,4 +48,14 @@ public class Product {
             cascade = CascadeType.ALL
     )
     Set<AttributeValue> attributeValues = new LinkedHashSet<>();
+
+    public void addImage(Image image) {
+        images.add(image);
+        image.setProduct(this);
+    }
+
+    public void addAttributeValue(AttributeValue attributeValue) {
+        attributeValues.add(attributeValue);
+        attributeValue.setProduct(this);
+    }
 }

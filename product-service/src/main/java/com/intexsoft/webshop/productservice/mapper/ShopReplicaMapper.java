@@ -3,12 +3,9 @@ package com.intexsoft.webshop.productservice.mapper;
 import com.intexsoft.webshop.messagecommon.event.shop.ShopCreatedEvent;
 import com.intexsoft.webshop.productservice.dto.ShopReplicaDto;
 import com.intexsoft.webshop.productservice.model.ShopReplica;
-import org.mapstruct.InjectionStrategy;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.ReportingPolicy;
+import org.mapstruct.*;
 
-@Mapper(componentModel = "spring",
+@Mapper(componentModel = MappingConstants.ComponentModel.SPRING,
         injectionStrategy = InjectionStrategy.CONSTRUCTOR,
         unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface ShopReplicaMapper {

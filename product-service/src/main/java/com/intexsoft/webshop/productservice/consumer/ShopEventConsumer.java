@@ -1,4 +1,4 @@
-package com.intexsoft.webshop.productservice.service;
+package com.intexsoft.webshop.productservice.consumer;
 
 import com.intexsoft.webshop.messagecommon.event.shop.ShopCreatedEvent;
 

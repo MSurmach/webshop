@@ -28,4 +28,9 @@ public class Vendor {
             cascade = {CascadeType.PERSIST, CascadeType.MERGE}
     )
     Set<Product> products = new LinkedHashSet<>();
+
+    public void addProduct(Product product) {
+        products.add(product);
+        product.setVendor(this);
+    }
 }

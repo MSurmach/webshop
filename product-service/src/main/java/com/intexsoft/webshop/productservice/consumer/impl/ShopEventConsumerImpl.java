@@ -1,7 +1,7 @@
-package com.intexsoft.webshop.productservice.service.impl;
+package com.intexsoft.webshop.productservice.consumer.impl;
 
 import com.intexsoft.webshop.messagecommon.event.shop.ShopCreatedEvent;
-import com.intexsoft.webshop.productservice.service.ShopEventConsumer;
+import com.intexsoft.webshop.productservice.consumer.ShopEventConsumer;
 import com.intexsoft.webshop.productservice.service.ShopReplicaService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
