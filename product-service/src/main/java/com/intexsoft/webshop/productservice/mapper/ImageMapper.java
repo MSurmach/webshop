@@ -18,4 +18,6 @@ public interface ImageMapper {
     ImageDto toImageDto(Image image);
 
     List<ImageDto> toImageDtoList(Set<Image> set);
+
+    Set<Image> imageCreateDtoListToImageSet(List<ImageCreateDto> list);
 }

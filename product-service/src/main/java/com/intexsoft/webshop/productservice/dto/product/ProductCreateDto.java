@@ -2,6 +2,7 @@ package com.intexsoft.webshop.productservice.dto.product;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.intexsoft.webshop.productservice.dto.attributevalue.AttributeValueCreateDto;
 import com.intexsoft.webshop.productservice.dto.image.ImageCreateDto;
 import jakarta.validation.constraints.*;
 import lombok.AccessLevel;
@@ -32,5 +33,5 @@ public class ProductCreateDto {
     List<ImageCreateDto> imageCreateDtos;
     @NotEmpty
     @JsonProperty("attributeValues")
-    List<ProductAttributeValueCreateDto> productAttributeValueCreateDtos;
+    List<AttributeValueCreateDto> attributeValueCreateDtos;
 }

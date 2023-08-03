@@ -28,9 +28,4 @@ public class Attribute {
             cascade = CascadeType.ALL
     )
     Set<AttributeValue> attributeValues = new LinkedHashSet<>();
-
-    public void addAttributeValue(AttributeValue attributeValue) {
-        attributeValues.add(attributeValue);
-        attributeValue.setAttribute(this);
-    }
 }

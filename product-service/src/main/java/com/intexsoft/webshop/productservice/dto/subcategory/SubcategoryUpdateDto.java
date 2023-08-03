@@ -1,24 +1,38 @@
 package com.intexsoft.webshop.productservice.dto.subcategory;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import jakarta.validation.constraints.NotBlank;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.intexsoft.webshop.productservice.dto.attribute.AttributeUpdateDto;
+import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Positive;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class SubcategoryUpdateDto {
-    @NotBlank
+    @Nullable
+    @Pattern(regexp = "^(?!\\s*$).+")
     String name;
-    @NotBlank
+    @Nullable
+    @Pattern(regexp = "^(?!\\s*$).+")
     String description;
     @NotNull
+    @Positive
     Long categoryId;
+    @Nullable
+    @JsonProperty("attributes")
+    List<AttributeUpdateDto> attributeUpdateDtos;
 }

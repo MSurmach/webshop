@@ -1,7 +1,7 @@
 package com.intexsoft.webshop.productservice.dto.product;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.intexsoft.webshop.productservice.dto.attribute.AttributeValueDto;
+import com.intexsoft.webshop.productservice.dto.attributevalue.AttributeValueDto;
 import com.intexsoft.webshop.productservice.dto.image.ImageDto;
 import com.intexsoft.webshop.productservice.dto.subcategory.SubcategoryDto;
 import com.intexsoft.webshop.productservice.dto.vendor.VendorDto;

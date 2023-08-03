@@ -1,12 +1,15 @@
 package com.intexsoft.webshop.productservice.dto.subcategory;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.intexsoft.webshop.productservice.dto.attribute.AttributeDto;
 import com.intexsoft.webshop.productservice.dto.category.CategoryDto;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
+
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -18,4 +21,6 @@ public class SubcategoryDto {
     String description;
     @JsonProperty("category")
     CategoryDto categoryDto;
+    @JsonProperty("attributes")
+    List<AttributeDto> attributeDtos;
 }
