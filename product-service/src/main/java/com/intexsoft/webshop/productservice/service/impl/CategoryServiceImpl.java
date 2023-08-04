@@ -3,8 +3,8 @@ package com.intexsoft.webshop.productservice.service.impl;
 import com.intexsoft.webshop.productservice.dto.category.CategoryCreateDto;
 import com.intexsoft.webshop.productservice.dto.category.CategoryDto;
 import com.intexsoft.webshop.productservice.dto.category.CategoryUpdateDto;
-import com.intexsoft.webshop.productservice.exception.ResourceNotFoundException;
-import com.intexsoft.webshop.productservice.exception.SuchResourceExistsException;
+import com.intexsoft.webshop.productservice.exception.conflict409.CategoryExistsException;
+import com.intexsoft.webshop.productservice.exception.notfound404.CategoryNotFoundException;
 import com.intexsoft.webshop.productservice.mapper.CategoryMapper;
 import com.intexsoft.webshop.productservice.model.Category;
 import com.intexsoft.webshop.productservice.repository.CategoryRepository;
@@ -31,8 +31,7 @@ public class CategoryServiceImpl implements CategoryService {
         log.info("IN: trying to find a category with name = {}", categoryName);
         categoryRepository.findByNameIgnoreCase(categoryName)
                 .ifPresent(existedCategory -> {
-                    throw new SuchResourceExistsException("Category with the same name = "
-                            + categoryName + " already exists");
+                    throw new CategoryExistsException(existedCategory.getName());
                 });
         log.info("category with the name = {} not found, trying to save a new category. Category details = {}",
                 categoryName, getAsString(categoryCreateDto));
@@ -45,7 +44,8 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public CategoryDto findCategoryById(Long categoryId) {
         log.info("IN: trying to find a category by id = {}", categoryId);
-        Category foundCategory = findById(categoryId);
+        Category foundCategory = categoryRepository.findById(categoryId)
+                .orElseThrow(() -> new CategoryNotFoundException(categoryId));
         log.info("OUT: the category with id = {} found successfully. Found category details = {}",
                 categoryId, getAsString(foundCategory));
         return categoryMapper.toCategoryDto(foundCategory);
@@ -64,7 +64,8 @@ public class CategoryServiceImpl implements CategoryService {
     public CategoryDto updateCategory(Long categoryId, CategoryUpdateDto categoryUpdateDto) {
         log.info("IN: trying to update a category with id = {} by new details = {}",
                 categoryId, getAsString(categoryUpdateDto));
-        Category existedCategory = findById(categoryId);
+        Category existedCategory = categoryRepository.findById(categoryId)
+                .orElseThrow(() -> new CategoryNotFoundException(categoryId));
         Category updatedCategory = categoryRepository.save(
                 categoryMapper.updateCategory(existedCategory, categoryUpdateDto));
         log.info("OUT: the category updated successfully. The updated category details = {}",
@@ -77,10 +78,5 @@ public class CategoryServiceImpl implements CategoryService {
         log.info("IN: trying to delete a category by id = {}", categoryId);
         categoryRepository.deleteById(categoryId);
         log.info("OUT: the category with id = {} deleted successfully", categoryId);
-    }
-
-    private Category findById(Long categoryId) {
-        return categoryRepository.findById(categoryId).orElseThrow(
-                () -> new ResourceNotFoundException("The category with id = " + categoryId + " not found"));
     }
 }

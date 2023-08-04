@@ -8,6 +8,7 @@ import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -33,6 +34,7 @@ public class SubcategoryUpdateDto {
     @Positive
     Long categoryId;
     @Nullable
+    @Size(min = 1)
     @JsonProperty("attributes")
     List<AttributeUpdateDto> attributeUpdateDtos;
 }

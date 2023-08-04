@@ -17,7 +17,7 @@ public class AttributeValue {
     String value;
     @ManyToOne(
             fetch = FetchType.LAZY,
-            cascade = {CascadeType.MERGE, CascadeType.PERSIST}
+            cascade = {CascadeType.MERGE}
     )
     @ToString.Exclude
     @EqualsAndHashCode.Exclude

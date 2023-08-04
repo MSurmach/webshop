@@ -3,8 +3,11 @@ package com.intexsoft.webshop.productservice.dto.product;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.intexsoft.webshop.productservice.dto.attributevalue.AttributeValueUpdateDto;
-import com.intexsoft.webshop.productservice.dto.image.ImageCreateDto;
-import jakarta.validation.constraints.*;
+import com.intexsoft.webshop.productservice.dto.image.ImageUpdateDto;
+import jakarta.annotation.Nullable;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,19 +22,22 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ProductUpdateDto {
-    @NotBlank
+    @Nullable
     @Size(max = 255)
+    @Pattern(regexp = "^(?!\\s*$).+")
     String name;
-    @NotNull
+    @Nullable
     @Positive
     Long subcategoryId;
-    @NotNull
+    @Nullable
     @Positive
     Long vendorId;
-    @NotEmpty
+    @Nullable
+    @Size(min = 1)
     @JsonProperty("images")
-    List<ImageCreateDto> imageCreateDtos;
-    @NotEmpty
+    List<ImageUpdateDto> imageUpdateDtos;
+    @Nullable
+    @Size(min = 1)
     @JsonProperty("attributeValues")
     List<AttributeValueUpdateDto> attributeValueUpdateDtos;
 }

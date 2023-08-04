@@ -1,6 +1,5 @@
 package com.intexsoft.webshop.productservice.dto.attributevalue;
 
-import com.intexsoft.webshop.productservice.dto.attribute.AttributeDto;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,5 +13,5 @@ import lombok.experimental.FieldDefaults;
 public class AttributeValueDto {
     Long id;
     String value;
-    AttributeDto attributeDto;
+    Long attributeId;
 }

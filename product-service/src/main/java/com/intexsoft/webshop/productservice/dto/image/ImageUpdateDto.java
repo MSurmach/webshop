@@ -1,8 +1,7 @@
-package com.intexsoft.webshop.productservice.dto.attributevalue;
+package com.intexsoft.webshop.productservice.dto.image;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.annotation.Nullable;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
@@ -17,12 +16,12 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class AttributeValueUpdateDto {
-    @NotNull
-    @Positive
-    Long attributeId;
+public class ImageUpdateDto {
     @Nullable
+    @Positive
+    Long id;
+    @Nullable
+    @Size(max = 512)
     @Pattern(regexp = "^(?!\\s*$).+")
-    @Size(max = 50)
-    String value;
+    String filePath;
 }

@@ -4,7 +4,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.intexsoft.webshop.productservice.dto.attributevalue.AttributeValueCreateDto;
 import com.intexsoft.webshop.productservice.dto.image.ImageCreateDto;
-import jakarta.validation.constraints.*;
+import jakarta.annotation.Nullable;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,10 +32,12 @@ public class ProductCreateDto {
     @NotNull
     @Positive
     Long vendorId;
-    @NotEmpty
+    @Nullable
+    @Size(min = 1)
     @JsonProperty("images")
     List<ImageCreateDto> imageCreateDtos;
-    @NotEmpty
+    @Nullable
+    @Size(min = 1)
     @JsonProperty("attributeValues")
     List<AttributeValueCreateDto> attributeValueCreateDtos;
 }

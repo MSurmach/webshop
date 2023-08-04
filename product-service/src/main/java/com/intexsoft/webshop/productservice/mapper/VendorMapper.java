@@ -17,8 +17,6 @@ public interface VendorMapper {
 
     VendorDto toVendorDto(Vendor vendor);
 
-    Vendor toVendor(VendorDto vendorDto);
-
     List<VendorDto> toVendorDtos(List<Vendor> vendors);
 
     Vendor updateVendor(@MappingTarget Vendor vendor, VendorUpdateDto vendorUpdateDto);

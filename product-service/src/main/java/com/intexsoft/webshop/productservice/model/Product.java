@@ -27,7 +27,8 @@ public class Product {
     @OneToMany(
             mappedBy = "product",
             fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
     )
     Set<Image> images = new LinkedHashSet<>();
     @OneToMany(
@@ -42,8 +43,18 @@ public class Product {
         image.setProduct(this);
     }
 
+    public void removeImage(Image image) {
+        images.remove(image);
+        image.setProduct(null);
+    }
+
     public void addAttributeValue(AttributeValue attributeValue) {
         attributeValues.add(attributeValue);
         attributeValue.setProduct(this);
+    }
+
+    public void removeAttributeValue(AttributeValue attributeValue) {
+        attributeValues.remove(attributeValue);
+        attributeValue.setProduct(null);
     }
 }
