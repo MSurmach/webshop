@@ -1,9 +1,7 @@
 package com.intexsoft.webshop.productservice.model;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 @Entity
@@ -17,8 +15,15 @@ public class AttributeValue {
     Long id;
     @Column(name = "value", nullable = false, length = 50)
     String value;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(
+            fetch = FetchType.LAZY,
+            cascade = {CascadeType.MERGE}
+    )
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     Attribute attribute;
     @ManyToOne(fetch = FetchType.LAZY)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     Product product;
 }

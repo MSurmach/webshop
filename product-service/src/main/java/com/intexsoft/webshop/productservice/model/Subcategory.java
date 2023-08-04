@@ -36,4 +36,9 @@ public class Subcategory {
             fetch = FetchType.LAZY
     )
     Set<Product> products = new LinkedHashSet<>();
+
+    public void addAttribute(Attribute attribute) {
+        attributes.add(attribute);
+        attribute.setSubcategory(this);
+    }
 }

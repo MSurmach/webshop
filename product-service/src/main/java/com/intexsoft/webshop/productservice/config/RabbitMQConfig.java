@@ -1,7 +1,6 @@
 package com.intexsoft.webshop.productservice.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Queue;
@@ -48,21 +47,9 @@ public class RabbitMQConfig {
     }
 
     @Bean
-    public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
+    public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory, ObjectMapper objectMapper) {
         RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
-        rabbitTemplate.setMessageConverter(jackson2MessageConverter());
+        rabbitTemplate.setMessageConverter(new Jackson2JsonMessageConverter(objectMapper));
         return rabbitTemplate;
-    }
-
-    @Bean
-    public Jackson2JsonMessageConverter jackson2MessageConverter() {
-        return new Jackson2JsonMessageConverter(jacksonObjectMapper());
-    }
-
-    @Bean
-    public ObjectMapper jacksonObjectMapper() {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModule(new JavaTimeModule());
-        return mapper;
     }
 }

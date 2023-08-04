@@ -1,9 +1,7 @@
 package com.intexsoft.webshop.productservice.model;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.util.LinkedHashSet;
@@ -21,6 +19,8 @@ public class Attribute {
     @Column(name = "label", nullable = false, length = 50)
     String label;
     @ManyToOne(fetch = FetchType.LAZY)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     Subcategory subcategory;
     @OneToMany(
             mappedBy = "attribute",

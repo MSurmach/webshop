@@ -1,9 +1,7 @@
 package com.intexsoft.webshop.productservice.model;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 @Entity
@@ -17,6 +15,8 @@ public class Image {
     Long id;
     @Column(name = "filePath", nullable = false, length = 512, unique = true)
     String filePath;
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     Product product;
 }

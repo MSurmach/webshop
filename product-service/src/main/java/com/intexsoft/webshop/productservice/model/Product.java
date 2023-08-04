@@ -27,23 +27,34 @@ public class Product {
     @OneToMany(
             mappedBy = "product",
             fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
     )
     Set<Image> images = new LinkedHashSet<>();
-    @ManyToMany(
-            fetch = FetchType.LAZY,
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE}
-    )
-    @JoinTable(
-            name = "product_shop_link",
-            joinColumns = @JoinColumn(name = "product_id"),
-            inverseJoinColumns = @JoinColumn(name = "shop_id")
-    )
-    Set<ShopReplica> shops = new LinkedHashSet<>();
     @OneToMany(
             mappedBy = "product",
             fetch = FetchType.LAZY,
             cascade = CascadeType.ALL
     )
     Set<AttributeValue> attributeValues = new LinkedHashSet<>();
+
+    public void addImage(Image image) {
+        images.add(image);
+        image.setProduct(this);
+    }
+
+    public void removeImage(Image image) {
+        images.remove(image);
+        image.setProduct(null);
+    }
+
+    public void addAttributeValue(AttributeValue attributeValue) {
+        attributeValues.add(attributeValue);
+        attributeValue.setProduct(this);
+    }
+
+    public void removeAttributeValue(AttributeValue attributeValue) {
+        attributeValues.remove(attributeValue);
+        attributeValue.setProduct(null);
+    }
 }
