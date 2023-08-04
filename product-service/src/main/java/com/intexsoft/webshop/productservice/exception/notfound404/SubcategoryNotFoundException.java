@@ -1,10 +1,10 @@
 package com.intexsoft.webshop.productservice.exception.notfound404;
 
-import static com.intexsoft.webshop.productservice.exception.Resource.SUBCATEGORY;
+import com.intexsoft.webshop.productservice.exception.Resource;
 
 public class SubcategoryNotFoundException extends ResourceNotFoundException {
 
     public SubcategoryNotFoundException(Long subcategoryId) {
-        super(SUBCATEGORY, subcategoryId);
+        super(Resource.SUBCATEGORY, subcategoryId);
     }
 }

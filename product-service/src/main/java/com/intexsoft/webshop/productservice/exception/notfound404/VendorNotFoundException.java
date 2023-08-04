@@ -1,10 +1,10 @@
 package com.intexsoft.webshop.productservice.exception.notfound404;
 
-import static com.intexsoft.webshop.productservice.exception.Resource.VENDOR;
+import com.intexsoft.webshop.productservice.exception.Resource;
 
 public class VendorNotFoundException extends ResourceNotFoundException {
 
     public VendorNotFoundException(Long vendorId) {
-        super(VENDOR, vendorId);
+        super(Resource.VENDOR, vendorId);
     }
 }

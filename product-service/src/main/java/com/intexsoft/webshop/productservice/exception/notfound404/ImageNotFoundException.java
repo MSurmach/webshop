@@ -1,9 +1,9 @@
 package com.intexsoft.webshop.productservice.exception.notfound404;
 
-import static com.intexsoft.webshop.productservice.exception.Resource.IMAGE;
+import com.intexsoft.webshop.productservice.exception.Resource;
 
 public class ImageNotFoundException extends ResourceNotFoundException {
     public ImageNotFoundException(Long imageId) {
-        super(IMAGE, imageId);
+        super(Resource.IMAGE, imageId);
     }
 }

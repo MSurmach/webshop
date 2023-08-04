@@ -16,6 +16,7 @@ import com.intexsoft.webshop.productservice.repository.ProductRepository;
 import com.intexsoft.webshop.productservice.repository.SubcategoryRepository;
 import com.intexsoft.webshop.productservice.repository.VendorRepository;
 import com.intexsoft.webshop.productservice.service.ProductService;
+import com.intexsoft.webshop.productservice.util.JsonUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
@@ -24,11 +25,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.function.Function;
 import java.util.stream.Collectors;
-
-import static com.intexsoft.webshop.productservice.util.JsonUtils.getAsString;
-import static java.util.Objects.isNull;
-import static java.util.function.Function.identity;
 
 @Service
 @RequiredArgsConstructor
@@ -46,7 +45,7 @@ public class ProductServiceImpl implements ProductService {
     @Transactional
     public ProductDto createProduct(ProductCreateDto productCreateDto) {
         log.info("IN: trying to save a new product. Product details = {}",
-                getAsString(productCreateDto));
+                JsonUtils.getAsString(productCreateDto));
         Long vendorId = productCreateDto.getVendorId();
         Vendor vendor = vendorRepository.findById(vendorId)
                 .orElseThrow(() -> new VendorNotFoundException(vendorId));
@@ -57,7 +56,7 @@ public class ProductServiceImpl implements ProductService {
         Product product = productMapper.toProduct(productCreateDto, vendor, subcategory, attributeValues);
         Product savedProduct = productRepository.save(product);
         log.info("OUT: the product saved successfully. The saved product details = {}",
-                getAsString(savedProduct));
+                JsonUtils.getAsString(savedProduct));
         productEventProducer.produceProductEventCreated(productMapper.toProductEventCreated(savedProduct));
         return productMapper.toProductDto(savedProduct);
     }
@@ -68,7 +67,7 @@ public class ProductServiceImpl implements ProductService {
         Product foundProduct = productRepository.findById(productId).orElseThrow(
                 () -> new ProductNotFoundException(productId));
         log.info("OUT: the product with id = {} found successfully. Found product details = {}",
-                productId, getAsString(foundProduct));
+                productId, JsonUtils.getAsString(foundProduct));
         return productMapper.toProductDto(foundProduct);
     }
 
@@ -85,7 +84,7 @@ public class ProductServiceImpl implements ProductService {
     @Transactional
     public ProductDto updateProduct(Long productId, ProductUpdateDto productUpdateDto) {
         log.info("IN: trying to update a product with id = {} by new details = {}",
-                productId, getAsString(productUpdateDto));
+                productId, JsonUtils.getAsString(productUpdateDto));
         Product existedProduct = productRepository.findById(productId)
                 .orElseThrow(() -> new ProductNotFoundException(productId));
         Vendor vendorForUpdate = getVendorForUpdate(productUpdateDto);
@@ -95,7 +94,8 @@ public class ProductServiceImpl implements ProductService {
         product = updateProductImages(product, productUpdateDto);
         product = updateAttributeValues(product, productUpdateDto);
         Product updatedProduct = productRepository.save(product);
-        log.info("OUT: the product updated successfully. The updated product details = {}", getAsString(updatedProduct));
+        log.info("OUT: the product updated successfully. The updated product details = {}",
+                JsonUtils.getAsString(updatedProduct));
         if (!existedProduct.getName().equals(updatedProduct.getName()))
             productEventProducer.produceProductEventUpdated(productMapper.toProductEventUpdated(updatedProduct));
         return productMapper.toProductDto(updatedProduct);
@@ -112,7 +112,7 @@ public class ProductServiceImpl implements ProductService {
 
     private List<AttributeValue> createAttributeValues(ProductCreateDto productCreateDto) {
         List<AttributeValueCreateDto> attributeValueCreateDtos = productCreateDto.getAttributeValueCreateDtos();
-        if (isNull(attributeValueCreateDtos)) return null;
+        if (Objects.isNull(attributeValueCreateDtos)) return null;
         List<Long> attributeIds = getAttributeIds(attributeValueCreateDtos);
         List<Attribute> attributes = attributeRepository.findAllById(attributeIds);
         return toAttributeValues(attributes,
@@ -127,16 +127,13 @@ public class ProductServiceImpl implements ProductService {
 
     private List<AttributeValue> toAttributeValues(List<Attribute> attributes,
                                                    List<AttributeValueCreateDto> attributeValueCreateDtos) {
-        Map<Long, String> attributeIdLabelMap = attributes.stream()
-                .collect(Collectors.toMap(Attribute::getId, Attribute::getLabel));
+        Map<Long, Attribute> attributeIdLabelMap = attributes.stream()
+                .collect(Collectors.toMap(Attribute::getId, Function.identity()));
         return attributeValueCreateDtos.stream()
                 .map(attributeValueCreateDto -> {
-                    Attribute attribute = new Attribute();
-                    attribute.setId(attributeValueCreateDto.getAttributeId());
-                    attribute.setLabel(attributeIdLabelMap.get(attributeValueCreateDto.getAttributeId()));
                     AttributeValue attributeValue = new AttributeValue();
                     attributeValue.setValue(attributeValueCreateDto.getValue());
-                    attributeValue.setAttribute(attribute);
+                    attributeValue.setAttribute(attributeIdLabelMap.get(attributeValueCreateDto.getAttributeId()));
                     return attributeValue;
                 })
                 .toList();
@@ -144,33 +141,33 @@ public class ProductServiceImpl implements ProductService {
 
     private Vendor getVendorForUpdate(ProductUpdateDto productUpdateDto) {
         Long vendorId = productUpdateDto.getVendorId();
-        return isNull(vendorId) ?
+        return Objects.isNull(vendorId) ?
                 null :
                 vendorRepository.findById(vendorId).orElseThrow(() -> new VendorNotFoundException(vendorId));
     }
 
     private Subcategory getSubcategoryForUpdate(ProductUpdateDto productUpdateDto) {
         Long subcategoryId = productUpdateDto.getSubcategoryId();
-        return isNull(subcategoryId) ? null :
+        return Objects.isNull(subcategoryId) ? null :
                 subcategoryRepository.findById(subcategoryId)
                         .orElseThrow(() -> new SubcategoryNotFoundException(subcategoryId));
     }
 
     private Product updateProductImages(Product productForImagesUpdate, ProductUpdateDto productUpdateDto) {
         List<ImageUpdateDto> imageUpdateDtos = productUpdateDto.getImageUpdateDtos();
-        if (isNull(imageUpdateDtos)) return productForImagesUpdate;
-        Map<Long, Image> product_idImage_map = productForImagesUpdate.getImages().stream()
-                .collect(Collectors.toMap(Image::getId, identity()));
+        if (Objects.isNull(imageUpdateDtos)) return productForImagesUpdate;
+        Map<Long, Image> productImageIdImageMap = productForImagesUpdate.getImages().stream()
+                .collect(Collectors.toMap(Image::getId, Function.identity()));
         imageUpdateDtos.forEach(imageUpdateDto -> {
             Long imageId = imageUpdateDto.getId();
-            if (isNull(imageId)) {
+            if (Objects.isNull(imageId)) {
                 productForImagesUpdate.addImage(imageMapper.toImage(imageUpdateDto));
                 return;
             }
-            Image image = product_idImage_map.get(imageId);
-            if (isNull(image)) throw new ImageNotFoundException(imageId);
+            Image image = productImageIdImageMap.get(imageId);
+            if (Objects.isNull(image)) throw new ImageNotFoundException(imageId);
             productForImagesUpdate.removeImage(image);
-            if (!isNull(imageUpdateDto.getFilePath())) {
+            if (!Objects.isNull(imageUpdateDto.getFilePath())) {
                 image.setFilePath(imageUpdateDto.getFilePath());
                 productForImagesUpdate.addImage(image);
             }
@@ -180,13 +177,14 @@ public class ProductServiceImpl implements ProductService {
 
     private Product updateAttributeValues(Product productForAttributesUpdate, ProductUpdateDto productUpdateDto) {
         List<AttributeValueUpdateDto> attributeValueUpdateDtos = productUpdateDto.getAttributeValueUpdateDtos();
-        if (isNull(attributeValueUpdateDtos)) return productForAttributesUpdate;
-        Map<Long, AttributeValue> product_attributeIdAttributeValue_map = productForAttributesUpdate.getAttributeValues().stream()
-                .collect(Collectors.toMap(attributeValue -> attributeValue.getAttribute().getId(), identity()));
+        if (Objects.isNull(attributeValueUpdateDtos)) return productForAttributesUpdate;
+        Map<Long, AttributeValue> productAttributeIdAttributeValueMap = productForAttributesUpdate.getAttributeValues().stream()
+                .collect(Collectors.toMap(attributeValue -> attributeValue.getAttribute().getId(),
+                        Function.identity()));
         attributeValueUpdateDtos.forEach(attributeValueUpdateDto -> {
             Long attributeId = attributeValueUpdateDto.getAttributeId();
-            AttributeValue attributeValue = product_attributeIdAttributeValue_map.get(attributeId);
-            if (isNull(attributeValue)) {
+            AttributeValue attributeValue = productAttributeIdAttributeValueMap.get(attributeId);
+            if (Objects.isNull(attributeValue)) {
                 Attribute existedAttribute = attributeRepository.findById(attributeId)
                         .orElseThrow(() -> new AttributeNotFoundException(attributeId));
                 AttributeValue newAttributeValue = new AttributeValue();
@@ -196,7 +194,7 @@ public class ProductServiceImpl implements ProductService {
                 return;
             }
             productForAttributesUpdate.removeAttributeValue(attributeValue);
-            if (!isNull(attributeValueUpdateDto.getValue())) {
+            if (!Objects.isNull(attributeValueUpdateDto.getValue())) {
                 attributeValue.setValue(attributeValueUpdateDto.getValue());
                 productForAttributesUpdate.addAttributeValue(attributeValue);
             }
