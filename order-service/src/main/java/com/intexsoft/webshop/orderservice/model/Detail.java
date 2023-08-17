@@ -1,9 +1,7 @@
 package com.intexsoft.webshop.orderservice.model;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.math.BigDecimal;
@@ -23,8 +21,8 @@ public class Detail {
     BigDecimal productPrice;
     @Column(name = "quantity", nullable = false)
     Short quantity;
-    @Column(nullable = false)
-    BigDecimal totalPrice;
     @ManyToOne(fetch = FetchType.LAZY)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     Order order;
 }

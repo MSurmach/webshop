@@ -17,7 +17,13 @@ rmq:
   event:
     order:
       exchange: order.event.exchange
+      routing-prefix: routing.order.event.
+      routing-keys:
+        order_initialized: order_initialized
   command:
     queue: order.command.queue
     exchange: order.command.exchange
     routing: routing.order.command.*
+logging:
+  pattern:
+    console: "%d{dd-MM-yyyy HH:mm:ss.SSS} %-5level [%thread] %green(%logger{36}.%M) - %msg%n"

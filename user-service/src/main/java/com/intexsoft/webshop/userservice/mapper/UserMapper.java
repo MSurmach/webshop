@@ -1,9 +1,9 @@
 package com.intexsoft.webshop.userservice.mapper;
 
+import com.intexsoft.webshop.messagecommon.event.user.impl.UserCreatedEvent;
 import com.intexsoft.webshop.userservice.dto.UserCreateDto;
 import com.intexsoft.webshop.userservice.dto.UserDto;
 import com.intexsoft.webshop.userservice.model.User;
-import com.intexsoft.webshop.messagecommon.event.user.UserCreatedEvent;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

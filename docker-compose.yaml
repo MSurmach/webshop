@@ -40,6 +40,14 @@ services:
     environment:
       - POSTGRES_PASSWORD=feedbackservice
       - POSTGRES_DB=feedbackDB
+  camunda-db:
+    image: postgres:14.2-alpine
+    container_name: camunda-postgres
+    ports:
+      - "5500:5432"
+    environment:
+      - POSTGRES_PASSWORD=camunda
+      - POSTGRES_DB=camundaDB
   rabbitmq:
     image: rabbitmq:3.10.25-management-alpine
     container_name: rabbitmq

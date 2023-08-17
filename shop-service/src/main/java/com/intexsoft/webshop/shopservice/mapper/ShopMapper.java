@@ -1,9 +1,9 @@
 package com.intexsoft.webshop.shopservice.mapper;
 
+import com.intexsoft.webshop.messagecommon.event.shop.impl.ShopCreatedEvent;
 import com.intexsoft.webshop.shopservice.dto.ShopCreateDto;
 import com.intexsoft.webshop.shopservice.dto.ShopDto;
 import com.intexsoft.webshop.shopservice.model.Shop;
-import com.intexsoft.webshop.messagecommon.event.shop.ShopCreatedEvent;
 import org.mapstruct.*;
 
 @Mapper(componentModel = "spring",

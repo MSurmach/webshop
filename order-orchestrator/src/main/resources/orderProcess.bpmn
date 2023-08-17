@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1n4ovn8" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.13.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.19.0">
+  <bpmn:process id="orderProcess" name="Order Process" isExecutable="true" camunda:historyTimeToLive="3000">
+    <bpmn:startEvent id="Event_0t3ppv2">
+      <bpmn:extensionElements />
+      <bpmn:outgoing>Flow_0cjp32h</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:serviceTask id="checkShop" name="Check shop" camunda:delegateExpression="${checkShop}">
+      <bpmn:extensionElements />
+      <bpmn:incoming>Flow_0cjp32h</bpmn:incoming>
+      <bpmn:outgoing>Flow_19ayni2</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_0cjp32h" sourceRef="Event_0t3ppv2" targetRef="checkShop" />
+    <bpmn:userTask id="shopCheck" name="Wait and process check shop result">
+      <bpmn:extensionElements />
+      <bpmn:incoming>Flow_19ayni2</bpmn:incoming>
+      <bpmn:outgoing>Flow_0kcf8vn</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_0kcf8vn" sourceRef="shopCheck" targetRef="Gateway_0aa2eyo" />
+    <bpmn:serviceTask id="Activity_1rk5elk" name="Order failed" camunda:delegateExpression="${orderFailed}">
+      <bpmn:incoming>Flow_1dc9coe</bpmn:incoming>
+      <bpmn:incoming>Flow_0r79dj0</bpmn:incoming>
+      <bpmn:incoming>Flow_12xu65m</bpmn:incoming>
+      <bpmn:outgoing>Flow_1peb37u</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="Event_12a8w67">
+      <bpmn:incoming>Flow_1ngcmhk</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:endEvent id="Event_099pd79">
+      <bpmn:incoming>Flow_1peb37u</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1peb37u" sourceRef="Activity_1rk5elk" targetRef="Event_099pd79" />
+    <bpmn:exclusiveGateway id="Gateway_0aa2eyo" name="Is successful?">
+      <bpmn:incoming>Flow_0kcf8vn</bpmn:incoming>
+      <bpmn:outgoing>Flow_1dc9coe</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0oya2ej</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_1dc9coe" name="false" sourceRef="Gateway_0aa2eyo" targetRef="Activity_1rk5elk">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${!isShopValid}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_19ayni2" sourceRef="checkShop" targetRef="shopCheck" />
+    <bpmn:serviceTask id="checkPickupPoint" name="Check pickup point" camunda:delegateExpression="${checkShop}">
+      <bpmn:incoming>Flow_0oya2ej</bpmn:incoming>
+      <bpmn:outgoing>Flow_1m3ygzb</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:userTask id="pickupPointCheck" name="Wait and process check pickup point result">
+      <bpmn:incoming>Flow_1m3ygzb</bpmn:incoming>
+      <bpmn:outgoing>Flow_1f228qd</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_1m3ygzb" sourceRef="checkPickupPoint" targetRef="pickupPointCheck" />
+    <bpmn:sequenceFlow id="Flow_0oya2ej" name="true" sourceRef="Gateway_0aa2eyo" targetRef="checkPickupPoint">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${isShopValid}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:exclusiveGateway id="Gateway_0ej2d3y" name="Is successful?">
+      <bpmn:incoming>Flow_1f228qd</bpmn:incoming>
+      <bpmn:outgoing>Flow_0zp38gs</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0r79dj0</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_1f228qd" sourceRef="pickupPointCheck" targetRef="Gateway_0ej2d3y" />
+    <bpmn:serviceTask id="checkUser" name="Check user" camunda:delegateExpression="${checkShop}">
+      <bpmn:incoming>Flow_0zp38gs</bpmn:incoming>
+      <bpmn:outgoing>Flow_0xz3iuq</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:userTask id="userCheck" name="Wait and process check user result">
+      <bpmn:incoming>Flow_0xz3iuq</bpmn:incoming>
+      <bpmn:outgoing>Flow_0l2t66k</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_0xz3iuq" sourceRef="checkUser" targetRef="userCheck" />
+    <bpmn:sequenceFlow id="Flow_0zp38gs" name="true" sourceRef="Gateway_0ej2d3y" targetRef="checkUser">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${isPickupPointValid}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0r79dj0" name="false" sourceRef="Gateway_0ej2d3y" targetRef="Activity_1rk5elk">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${!isPickupPointValid}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:exclusiveGateway id="Gateway_06qzld4" name="Is successful?">
+      <bpmn:incoming>Flow_0l2t66k</bpmn:incoming>
+      <bpmn:outgoing>Flow_12xu65m</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1ngcmhk</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_0l2t66k" sourceRef="userCheck" targetRef="Gateway_06qzld4" />
+    <bpmn:sequenceFlow id="Flow_12xu65m" name="false" sourceRef="Gateway_06qzld4" targetRef="Activity_1rk5elk">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${!isUserValid}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_1ngcmhk" name="true" sourceRef="Gateway_06qzld4" targetRef="Event_12a8w67">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${isUserValid}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="orderProcess">
+      <bpmndi:BPMNShape id="Event_0t3ppv2_di" bpmnElement="Event_0t3ppv2">
+        <dc:Bounds x="152" y="142" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_00dmq4l_di" bpmnElement="checkShop">
+        <dc:Bounds x="240" y="120" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0hducla_di" bpmnElement="shopCheck">
+        <dc:Bounds x="390" y="120" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0aa2eyo_di" bpmnElement="Gateway_0aa2eyo" isMarkerVisible="true">
+        <dc:Bounds x="535" y="135" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="525" y="113" width="70" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0m5wnm8_di" bpmnElement="Activity_1rk5elk">
+        <dc:Bounds x="240" y="250" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_099pd79_di" bpmnElement="Event_099pd79">
+        <dc:Bounds x="152" y="272" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1mbhasn" bpmnElement="checkPickupPoint">
+        <dc:Bounds x="640" y="120" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0ewfp4f" bpmnElement="pickupPointCheck">
+        <dc:Bounds x="790" y="120" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_15hs6oy" bpmnElement="Gateway_0ej2d3y" isMarkerVisible="true">
+        <dc:Bounds x="945" y="135" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="935" y="113" width="70" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_10sow8n" bpmnElement="checkUser">
+        <dc:Bounds x="1040" y="120" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1e7w6qn" bpmnElement="userCheck">
+        <dc:Bounds x="1190" y="120" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_12buibs" bpmnElement="Gateway_06qzld4" isMarkerVisible="true">
+        <dc:Bounds x="1345" y="135" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1335" y="113" width="70" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_12a8w67_di" bpmnElement="Event_12a8w67">
+        <dc:Bounds x="1462" y="142" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0cjp32h_di" bpmnElement="Flow_0cjp32h">
+        <di:waypoint x="188" y="160" />
+        <di:waypoint x="240" y="160" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_19ayni2_di" bpmnElement="Flow_19ayni2">
+        <di:waypoint x="340" y="160" />
+        <di:waypoint x="390" y="160" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0kcf8vn_di" bpmnElement="Flow_0kcf8vn">
+        <di:waypoint x="490" y="160" />
+        <di:waypoint x="535" y="160" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1dc9coe_di" bpmnElement="Flow_1dc9coe">
+        <di:waypoint x="560" y="185" />
+        <di:waypoint x="560" y="290" />
+        <di:waypoint x="340" y="290" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="528" y="223" width="24" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1peb37u_di" bpmnElement="Flow_1peb37u">
+        <di:waypoint x="240" y="290" />
+        <di:waypoint x="188" y="290" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_1426qxc" bpmnElement="Flow_1m3ygzb">
+        <di:waypoint x="740" y="160" />
+        <di:waypoint x="790" y="160" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0oya2ej_di" bpmnElement="Flow_0oya2ej">
+        <di:waypoint x="585" y="160" />
+        <di:waypoint x="640" y="160" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="603" y="142" width="19" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1f228qd_di" bpmnElement="Flow_1f228qd">
+        <di:waypoint x="890" y="160" />
+        <di:waypoint x="945" y="160" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_1bd0n7y" bpmnElement="Flow_0xz3iuq">
+        <di:waypoint x="1140" y="160" />
+        <di:waypoint x="1190" y="160" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0zp38gs_di" bpmnElement="Flow_0zp38gs">
+        <di:waypoint x="995" y="160" />
+        <di:waypoint x="1040" y="160" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1010" y="142" width="19" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0r79dj0_di" bpmnElement="Flow_0r79dj0">
+        <di:waypoint x="970" y="185" />
+        <di:waypoint x="970" y="290" />
+        <di:waypoint x="340" y="290" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="973" y="235" width="24" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0l2t66k_di" bpmnElement="Flow_0l2t66k">
+        <di:waypoint x="1290" y="160" />
+        <di:waypoint x="1345" y="160" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_12xu65m_di" bpmnElement="Flow_12xu65m">
+        <di:waypoint x="1370" y="185" />
+        <di:waypoint x="1370" y="290" />
+        <di:waypoint x="340" y="290" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1373" y="235" width="24" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ngcmhk_di" bpmnElement="Flow_1ngcmhk">
+        <di:waypoint x="1395" y="160" />
+        <di:waypoint x="1462" y="160" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1419" y="142" width="19" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
