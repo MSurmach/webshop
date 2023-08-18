@@ -1,7 +1,6 @@
 package com.intexsoft.webshop.orderorchestrator.camunda.delegate;
 
 import com.intexsoft.webshop.messagecommon.event.order.OrderInitializedEvent;
-import com.intexsoft.webshop.orderorchestrator.enums.CommandType;
 import com.intexsoft.webshop.orderorchestrator.mapper.EventToCommandMapper;
 import com.intexsoft.webshop.orderorchestrator.producer.OrderOrchestratorCommandProducer;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +14,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class CheckPickupPoint implements JavaDelegate {
 
-    private final OrderOrchestratorCommandProducer orderOrchestratorCommandToShopProducer;
+    private final OrderOrchestratorCommandProducer orderOrchestratorCommandProducer;
     private final EventToCommandMapper eventToCommandMapper;
 
     @Override
@@ -23,8 +22,7 @@ public class CheckPickupPoint implements JavaDelegate {
         OrderInitializedEvent orderInitializedEvent =
                 (OrderInitializedEvent) delegateExecution.getVariable("orderInitializedEvent");
         log.info("IN: try to check pickup point with id = {}", orderInitializedEvent.getPickupPointId());
-        orderOrchestratorCommandToShopProducer.convertAndSendCommand(
-                eventToCommandMapper.toCheckPickupPointCommand(orderInitializedEvent),
-                CommandType.CHECK_PICKUP_POINT);
+        orderOrchestratorCommandProducer.produceCheckOrderPickupPointCommand(
+                eventToCommandMapper.toCheckPickupPointCommand(orderInitializedEvent));
     }
 }

@@ -12,6 +12,10 @@ import java.math.BigDecimal;
         nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface DetailMapper {
     @Mapping(target = "order", ignore = true)
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "productId", source = "productId")
+    @Mapping(target = "productPrice", source = "productPrice")
+    @Mapping(target = "quantity", source = "quantity")
     Detail toDetail(DetailCreateDto detailCreateDto);
 
     @Named("calculateTotalPrice")

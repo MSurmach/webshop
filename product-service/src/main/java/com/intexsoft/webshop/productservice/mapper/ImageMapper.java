@@ -13,12 +13,18 @@ import java.util.Set;
         injectionStrategy = InjectionStrategy.CONSTRUCTOR,
         unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface ImageMapper {
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "filePath", source = "filePath")
     @Mapping(target = "product", ignore = true)
     Image toImage(ImageCreateDto imageCreateDto);
 
+    @Mapping(target = "id", source = "id")
+    @Mapping(target = "filePath", source = "filePath")
     @Mapping(target = "product", ignore = true)
     Image toImage(ImageUpdateDto imageUpdateDto);
 
+    @Mapping(target = "id", source = "id")
+    @Mapping(target = "filePath", source = "filePath")
     ImageDto toImageDto(Image image);
 
     List<ImageDto> toImageDtoList(Set<Image> set);

@@ -11,10 +11,14 @@ import org.mapstruct.*;
         unmappedTargetPolicy = ReportingPolicy.IGNORE,
         nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface StatusMapper {
+    @Mapping(target = "id", source = "id")
+    @Mapping(target = "createdAt", source = "createdAt")
+    @Mapping(target = "statusName", source = "statusName")
     StatusDto toStatusDto(Status status);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "statusName", source = "statusName")
     @Mapping(target = "order", source = "order")
     Status toStatus(Order order, StatusName statusName);
 }

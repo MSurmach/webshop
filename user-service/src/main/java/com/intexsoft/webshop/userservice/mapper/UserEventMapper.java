@@ -11,5 +11,7 @@ import org.mapstruct.Mapping;
 public interface UserEventMapper {
     @Mapping(target = "orderId", source = "checkOrderUserCommand.orderId")
     @Mapping(target = "userId", source = "checkOrderUserCommand.userId")
+    @Mapping(target = "checkResult", source = "checkResult")
+    @Mapping(target = "createdAt", ignore = true)
     UserCheckedEvent toUserCheckedEvent(boolean checkResult, CheckOrderUserCommand checkOrderUserCommand);
 }

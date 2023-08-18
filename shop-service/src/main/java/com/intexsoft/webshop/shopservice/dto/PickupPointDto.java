@@ -1,6 +1,5 @@
 package com.intexsoft.webshop.shopservice.dto;
 
-import com.fasterxml.jackson.annotation.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;

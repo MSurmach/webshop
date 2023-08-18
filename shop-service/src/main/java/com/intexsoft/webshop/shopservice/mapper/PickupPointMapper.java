@@ -12,8 +12,12 @@ import org.mapstruct.ReportingPolicy;
         injectionStrategy = InjectionStrategy.CONSTRUCTOR,
         unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface PickupPointMapper {
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "address", source = "address")
     @Mapping(target = "shop", ignore = true)
     PickupPoint toPickupPoint(PickupPointCreateDto pickupPointCreateDto);
 
+    @Mapping(target = "id", source = "id")
+    @Mapping(target = "address", source = "address")
     PickupPointDto toPickupPointDto(PickupPoint pickupPoint);
 }

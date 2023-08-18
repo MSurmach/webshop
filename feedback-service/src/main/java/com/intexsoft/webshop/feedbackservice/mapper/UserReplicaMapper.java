@@ -12,14 +12,11 @@ import org.mapstruct.ReportingPolicy;
         injectionStrategy = InjectionStrategy.CONSTRUCTOR,
         unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface UserReplicaMapper {
-
-    UsersReplica toUsersReplica(UsersReplicaDto usersReplicaDto);
-
+    @Mapping(target = "id", source = "id")
+    @Mapping(target = "login", source = "login")
     UsersReplicaDto toUsersReplicaDto(UsersReplica usersReplica);
 
-    @Mapping(source = "userId", target = "id")
-    UsersReplicaDto toUsersReplicaDto(UserCreatedEvent userCreatedEvent);
-
-    @Mapping(source = "userId", target = "id")
+    @Mapping(target = "id", source = "userId")
+    @Mapping(target = "login", source = "login")
     UsersReplica toUsersReplica(UserCreatedEvent userCreatedEvent);
 }

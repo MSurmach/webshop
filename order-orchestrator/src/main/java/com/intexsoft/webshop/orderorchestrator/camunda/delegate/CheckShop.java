@@ -1,7 +1,6 @@
 package com.intexsoft.webshop.orderorchestrator.camunda.delegate;
 
 import com.intexsoft.webshop.messagecommon.event.order.OrderInitializedEvent;
-import com.intexsoft.webshop.orderorchestrator.enums.CommandType;
 import com.intexsoft.webshop.orderorchestrator.mapper.EventToCommandMapper;
 import com.intexsoft.webshop.orderorchestrator.producer.OrderOrchestratorCommandProducer;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +14,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class CheckShop implements JavaDelegate {
 
-    private final OrderOrchestratorCommandProducer orderOrchestratorCommandToShopProducer;
+    private final OrderOrchestratorCommandProducer orderOrchestratorCommandProducer;
     private final EventToCommandMapper eventToCommandMapper;
 
     @Override
@@ -23,8 +22,7 @@ public class CheckShop implements JavaDelegate {
         OrderInitializedEvent orderInitializedEvent =
                 (OrderInitializedEvent) delegateExecution.getVariable("orderInitializedEvent");
         log.info("IN: try to check shop with id = {}", orderInitializedEvent.getShopId());
-        orderOrchestratorCommandToShopProducer.convertAndSendCommand(
-                eventToCommandMapper.toCheckShopCommand(orderInitializedEvent),
-                CommandType.CHECK_SHOP);
+        orderOrchestratorCommandProducer.produceCheckOrderShopCommand(
+                eventToCommandMapper.toCheckShopCommand(orderInitializedEvent));
     }
 }

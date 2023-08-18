@@ -15,6 +15,8 @@ import java.util.Set;
 public interface AttributeValueMapper {
     List<AttributeValueDto> toAttributeDtoList(Set<AttributeValue> attributeValues);
 
-    @Mapping(target = "attributeId", source="attributeValue.attribute.id")
+    @Mapping(target = "id", source = "id")
+    @Mapping(target = "value", source = "value")
+    @Mapping(target = "attributeId", source = "attributeValue.attribute.id")
     AttributeValueDto attributeValueToAttributeValueDto(AttributeValue attributeValue);
 }

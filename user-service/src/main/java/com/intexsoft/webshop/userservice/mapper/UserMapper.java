@@ -21,13 +21,25 @@ public interface UserMapper {
         return ENCODER.encode(plainPassword);
     }
 
-    @Mapping(target = "encodedPassword", source = "plainPassword",
-            qualifiedByName = "encodePassword")
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "login", source = "login")
+    @Mapping(target = "firstname", source = "firstname")
+    @Mapping(target = "lastname", source = "lastname")
+    @Mapping(target = "encodedPassword", source = "plainPassword", qualifiedByName = "encodePassword")
+    @Mapping(target = "email", source = "email")
+    @Mapping(target = "phoneNumber", source = "phoneNumber")
     User toUser(UserCreateDto userCreateDto);
 
+    @Mapping(target = "id", source = "id")
+    @Mapping(target = "login", source = "login")
+    @Mapping(target = "firstname", source = "firstname")
+    @Mapping(target = "lastname", source = "lastname")
+    @Mapping(target = "email", source = "email")
+    @Mapping(target = "phoneNumber", source = "phoneNumber")
     UserDto toUserDto(User user);
 
     @Mapping(target = "userId", source = "id")
     @Mapping(target = "login", source = "login")
+    @Mapping(target = "createdAt", ignore = true)
     UserCreatedEvent toUserCreatedEvent(User user);
 }

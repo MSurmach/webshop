@@ -45,15 +45,22 @@ rmq:
     shop:
       exchange: shop.command.exchange
       routing-prefix: routing.shop.command.
+      routing-keys:
+        check_pickup_point: check_pickup_point
+        check_shop: check_shop
     product:
       exchange: product.command.exchange
       routing-prefix: routing.product.command.
     user:
       exchange: user.command.exchange
       routing-prefix: routing.user.command.
+      routing-keys:
+        check_user: check_user
     order:
       exchange: order.command.exchange
       routing-prefix: routing.order.command.
+      routing-keys:
+        fail_order: fail_order
 logging:
   pattern:
     console: "%clr(%d{ISO8601}){faint} %clr(%5p) %clr([%30.30t]){faint} %clr(%-40.40logger{36}.%M){cyan} %clr(:){faint} %m%n"
