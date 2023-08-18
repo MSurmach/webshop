@@ -40,7 +40,7 @@ public interface ProductMapper {
     ProductDto toProductDto(Product product);
 
     @Mapping(target = "name", source = "name")
-    @Mapping(target = "productId", source = "productId")
+    @Mapping(target = "productId", source = "id")
     @Mapping(target = "createdAt", ignore = true)
     ProductCreatedEvent toProductEventCreated(Product product);
 
@@ -60,7 +60,7 @@ public interface ProductMapper {
                           Subcategory subcategory);
 
     @Mapping(target = "name", source = "name")
-    @Mapping(target = "productId", source = "productId")
+    @Mapping(target = "productId", source = "id")
     @Mapping(target = "createdAt", ignore = true)
     ProductUpdatedEvent toProductEventUpdated(Product product);
 }
