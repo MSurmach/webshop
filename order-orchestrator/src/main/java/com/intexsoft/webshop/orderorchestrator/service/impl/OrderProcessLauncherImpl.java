@@ -19,13 +19,14 @@ public class OrderProcessLauncherImpl implements OrderProcessLauncher {
 
     @Override
     public void startOrderProcess(OrderInitializedEvent orderInitializedEvent) {
-        log.info("IN: trying to start a new order process, processKey = {}", processKey);
+        Long orderId = orderInitializedEvent.getOrderId();
+        log.info("IN: trying to start a new process = {}, business key = {} will be assigned", processKey, orderId);
         ProcessInstanceWithVariables orderProcess = runtimeService.createProcessInstanceByKey(processKey)
                 .setVariable("orderInitializedEvent", orderInitializedEvent)
-                .businessKey(orderInitializedEvent.getOrderId().toString())
+                .businessKey(orderId.toString())
                 .executeWithVariablesInReturn();
-        log.info("OUT: the new order process created successfully." +
-                        " ProcessId = {}, businessKey = {}, process variables = {}",
+        log.info("OUT: the new process created successfully. " +
+                        "ProcessId = {}, businessKey = {}, process variables = {}",
                 orderProcess.getProcessInstanceId(), orderProcess.getBusinessKey(), orderProcess.getVariables());
     }
 }

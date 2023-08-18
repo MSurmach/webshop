@@ -27,7 +27,7 @@ public class ShopCommandConsumerImpl implements ShopCommandConsumer {
     @RabbitHandler
     @Override
     public void receiveCheckOrderShopCommand(@Payload CheckOrderShopCommand checkOrderShopCommand) {
-        log.info("New event message {} received. Message payload = {}",
+        log.info("IN: new message {} received, payload = {}",
                 checkOrderShopCommand.getClass().getName(), JsonUtils.getAsString(checkOrderShopCommand));
         shopCheckerService.checkShop(checkOrderShopCommand);
     }
@@ -35,7 +35,7 @@ public class ShopCommandConsumerImpl implements ShopCommandConsumer {
     @RabbitHandler
     @Override
     public void receiveCheckOrderPickupPointCommand(@Payload CheckOrderPickupPointCommand checkOrderPickupPointCommand) {
-        log.info("New event message {} received. Message payload = {}",
+        log.info("IN: new message {} received, payload = {}",
                 checkOrderPickupPointCommand.getClass().getName(), JsonUtils.getAsString(checkOrderPickupPointCommand));
         shopCheckerService.checkPickupPoint(checkOrderPickupPointCommand);
     }

@@ -13,5 +13,8 @@ import org.mapstruct.*;
 public interface StatusMapper {
     StatusDto toStatusDto(Status status);
 
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "order", source = "order")
     Status toStatus(Order order, StatusName statusName);
 }

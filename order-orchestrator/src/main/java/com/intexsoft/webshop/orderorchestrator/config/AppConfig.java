@@ -1,4 +1,4 @@
-package com.intexsoft.webshop.orderservice.config;
+package com.intexsoft.webshop.orderorchestrator.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class AppConfig {
-
     @Bean
     public Jackson2JsonMessageConverter jackson2MessageConverter() {
         return new Jackson2JsonMessageConverter(jacksonObjectMapper());

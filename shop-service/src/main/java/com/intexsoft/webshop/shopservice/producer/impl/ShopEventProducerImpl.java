@@ -31,10 +31,10 @@ public class ShopEventProducerImpl implements ShopEventProducer {
     private String pickupPickupPointCheckedRoutingKey;
 
     public void produceShopCreatedEvent(ShopCreatedEvent shopCreatedEvent) {
-        log.info("IN: produce {} message. The event message = {}",
+        log.info("IN: try to produce {}, payload = {}",
                 shopCreatedEvent.getClass().getName(), getAsString(shopCreatedEvent));
         String routing = routingPrefix + shopCreatedRoutingKey;
-        log.debug("Message is producing to exchange = {}, with routing = {}", eventExchange.getName(), routing);
+        log.info("IN: message is producing to exchange = {}, with routing = {}", eventExchange.getName(), routing);
         rabbitTemplate.convertAndSend(eventExchange.getName(), routing, shopCreatedEvent);
     }
 
@@ -51,9 +51,9 @@ public class ShopEventProducerImpl implements ShopEventProducer {
     }
 
     private void produceCheckShopResultEvent(CheckShopResultEvent checkShopResultEvent, String routing) {
-        log.info("IN: produce {} message. The event message = {}",
+        log.info("IN: try to produce {}, payload = {}",
                 checkShopResultEvent.getClass().getName(), getAsString(checkShopResultEvent));
-        log.debug("Message is producing to exchange = {}, with routing = {}", eventExchange.getName(), routing);
+        log.info("IN: message is producing to exchange = {}, with routing = {}", eventExchange.getName(), routing);
         rabbitTemplate.convertAndSend(eventExchange.getName(), routing, checkShopResultEvent);
     }
 }

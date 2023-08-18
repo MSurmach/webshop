@@ -28,6 +28,7 @@ spring:
     port: ${ORDER_ORCHESTRATOR_RABBITMQ_PORT:5672}
 rmq:
   event:
+    exchange: order
     order:
       queue: order.to.order-orchestrator.event.queue
       exchange: order.event.exchange
@@ -55,4 +56,4 @@ rmq:
       routing-prefix: routing.order.command.
 logging:
   pattern:
-    console: "%d{dd-MM-yyyy HH:mm:ss.SSS} %-5level [%thread] %green(%logger{36}.%M) - %msg%n"
+    console: "%clr(%d{ISO8601}){faint} %clr(%5p) %clr([%30.30t]){faint} %clr(%-40.40logger{36}.%M){cyan} %clr(:){faint} %m%n"

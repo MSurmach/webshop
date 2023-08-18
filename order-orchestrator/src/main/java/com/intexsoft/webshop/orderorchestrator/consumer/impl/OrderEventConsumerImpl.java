@@ -26,7 +26,7 @@ public class OrderEventConsumerImpl implements OrderEventConsumer {
     @Override
     public void receiveOrderInitializedEvent(@Payload OrderInitializedEvent orderInitializedEvent) {
         log.info("New event message {} received. Message payload = {}",
-                orderInitializedEvent.getClass().getName(), JsonUtils.getAsString(orderInitializedEvent));
+                orderInitializedEvent.getClass().getSimpleName(), JsonUtils.getAsString(orderInitializedEvent));
         orderProcessLauncher.startOrderProcess(orderInitializedEvent);
     }
 }

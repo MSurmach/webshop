@@ -26,7 +26,7 @@ public class UserEventConsumerImpl implements UserEventConsumer {
     @Override
     public void receiveUserCheckedEvent(@Payload UserCheckedEvent userCheckedEvent) {
         log.info("New event message {} received. Message payload = {}",
-                userCheckedEvent.getClass().getName(), JsonUtils.getAsString(userCheckedEvent));
+                userCheckedEvent.getClass().getSimpleName(), JsonUtils.getAsString(userCheckedEvent));
         orderOrchestratorUserTaskProcessor.processAndCompleteCheckUserResult(userCheckedEvent);
     }
 }

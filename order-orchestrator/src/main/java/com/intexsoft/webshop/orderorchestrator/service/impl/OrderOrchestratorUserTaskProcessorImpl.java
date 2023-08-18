@@ -4,15 +4,16 @@ import com.intexsoft.webshop.messagecommon.event.shop.impl.PickupPointCheckedEve
 import com.intexsoft.webshop.messagecommon.event.shop.impl.ShopCheckedEvent;
 import com.intexsoft.webshop.messagecommon.event.user.impl.UserCheckedEvent;
 import com.intexsoft.webshop.orderorchestrator.service.OrderOrchestratorUserTaskProcessor;
-import com.intexsoft.webshop.orderorchestrator.util.JsonUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.camunda.bpm.engine.TaskService;
 import org.camunda.bpm.engine.task.Task;
+import org.camunda.bpm.engine.task.TaskQuery;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -28,41 +29,57 @@ public class OrderOrchestratorUserTaskProcessorImpl implements OrderOrchestrator
 
     @Override
     public void processAndCompleteCheckShopResult(ShopCheckedEvent shopCheckedEvent) {
-        log.info("IN: the new message {} received. Message body = {}",
-                shopCheckedEvent.getClass().getName(), JsonUtils.getAsString(shopCheckedEvent));
+        log.info("IN: trying to process and complete task with definition key = {}",
+                waitAndProcessCheckShopResultDefKey);
         boolean isShopValid = shopCheckedEvent.isCheckResult();
         Task foundTask = findTaskByDefKeyAndProcessBusinessKey(
                 waitAndProcessCheckShopResultDefKey,
                 shopCheckedEvent.getOrderId().toString());
-        taskService.complete(foundTask.getId(), Map.of("isShopValid", isShopValid));
+        Map<String, Object> variableMap = Map.of("isShopValid", isShopValid);
+        log.info("OUT: trying to complete task with definition key = {}, variables will be assigned = {}",
+                foundTask.getTaskDefinitionKey(), variableMap);
+        taskService.complete(foundTask.getId(), variableMap);
     }
 
     @Override
     public void processAndCompleteCheckPickupPointResult(PickupPointCheckedEvent pickupPointCheckedEvent) {
-        log.info("IN: the new message {} received. Message body = {}",
-                pickupPointCheckedEvent.getClass().getName(), JsonUtils.getAsString(pickupPointCheckedEvent));
+        log.info("IN: trying to process task with definition key = {}",
+                waitAndProcessCheckPickupPointResultDefKey);
         boolean isPickupPointValid = pickupPointCheckedEvent.isCheckResult();
         Task foundTask = findTaskByDefKeyAndProcessBusinessKey(
                 waitAndProcessCheckPickupPointResultDefKey,
                 pickupPointCheckedEvent.getOrderId().toString());
-        taskService.complete(foundTask.getId(), Map.of("isPickupPointValid", isPickupPointValid));
+        Map<String, Object> variableMap = Map.of("isPickupPointValid", isPickupPointValid);
+        log.info("OUT: trying to complete task with definition key = {}, variables will be assigned = {}",
+                foundTask.getTaskDefinitionKey(), variableMap);
+        taskService.complete(foundTask.getId(), variableMap);
     }
 
     @Override
     public void processAndCompleteCheckUserResult(UserCheckedEvent userCheckedEvent) {
-        log.info("IN: the new message {} received. Message body = {}",
-                userCheckedEvent.getClass().getName(), JsonUtils.getAsString(userCheckedEvent));
+        log.info("IN: trying to process task with definition key = {}",
+                waitAndProcessCheckUserResultDefKey);
         boolean isUserValid = userCheckedEvent.isCheckResult();
         Task foundTask = findTaskByDefKeyAndProcessBusinessKey(
                 waitAndProcessCheckUserResultDefKey,
                 userCheckedEvent.getOrderId().toString());
-        taskService.complete(foundTask.getId(), Map.of("isUserValid", isUserValid));
+        Map<String, Object> variableMap = Map.of("isUserValid", isUserValid);
+        log.info("OUT: trying to complete task with definition key = {}, variables will be assigned = {}",
+                foundTask.getTaskDefinitionKey(), variableMap);
+        taskService.complete(foundTask.getId(), variableMap);
     }
 
     private Task findTaskByDefKeyAndProcessBusinessKey(String taskDefKey, String processBusinessKey) {
-        return taskService.createTaskQuery()
+        log.info("IN: trying to find a task with definition key = {}, that belongs to process with business key = {}",
+                taskDefKey, processBusinessKey);
+        TaskQuery taskQuery = taskService.createTaskQuery()
                 .processInstanceBusinessKey(processBusinessKey)
-                .processDefinitionKey(taskDefKey).
-                singleResult();
+                .taskDefinitionKey(taskDefKey);
+        Task task;
+        while (Objects.isNull(task = taskQuery.singleResult())) {
+        }
+        log.info("OUT: the task with name = {} and definition key = {} FOUND", task.getName(),
+                task.getTaskDefinitionKey());
+        return task;
     }
 }

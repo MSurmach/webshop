@@ -37,10 +37,10 @@ public class ShopCheckerServiceImpl implements ShopCheckerService {
     public void checkPickupPoint(CheckOrderPickupPointCommand checkOrderPickupPointCommand) {
         Long pickupPointId = checkOrderPickupPointCommand.getPickupPointId();
         Long shopId = checkOrderPickupPointCommand.getShopId();
-        log.info("IN: try to pickup point with id = {} for shop with id = {}. Message payload = {}",
+        log.info("IN: try to check pickup point with id = {} for shop with id = {}. Message payload = {}",
                 pickupPointId, shopId, JsonUtils.getAsString(checkOrderPickupPointCommand));
         boolean isPickupPointExists = pickupPointRepository.existsShopByIdAndByPickupPointId(shopId, pickupPointId);
-        log.info("OUT: check pickupPoint with id = {} result is {}",
+        log.info("OUT: check pickup point with id = {} result is {}",
                 pickupPointId, isPickupPointExists);
         shopEventProducer.producePickupPointCheckedEvent(shopEventMapper.toPickupPointCheckedEvent(isPickupPointExists,
                 checkOrderPickupPointCommand));

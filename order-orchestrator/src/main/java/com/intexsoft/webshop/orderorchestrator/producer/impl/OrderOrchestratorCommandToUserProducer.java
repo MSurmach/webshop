@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class OrderOrchestratorCommandToUserProducer extends AbstractOrderOrchestratorCommandProducer {
     public OrderOrchestratorCommandToUserProducer(RabbitTemplate rabbitTemplate,
-                                                  @Value("${rmq.command.shop.exchange}") String exchangeToUser,
-                                                  @Value("${rmq.command.shop.routing-prefix}") String routingPrefixToUser) {
+                                                  @Value("${rmq.command.user.exchange}") String exchangeToUser,
+                                                  @Value("${rmq.command.user.routing-prefix}") String routingPrefixToUser) {
         super(rabbitTemplate);
         exchange = exchangeToUser;
         routingPrefix = routingPrefixToUser;

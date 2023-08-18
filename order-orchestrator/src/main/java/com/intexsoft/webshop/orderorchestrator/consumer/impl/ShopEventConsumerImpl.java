@@ -26,15 +26,15 @@ public class ShopEventConsumerImpl implements ShopEventConsumer {
     @RabbitHandler
     @Override
     public void receiveShopCheckedEvent(@Payload ShopCheckedEvent shopCheckedEvent) {
-        log.info("New event message {} received. Message payload = {}",
-                shopCheckedEvent.getClass().getName(), JsonUtils.getAsString(shopCheckedEvent));
+        log.info("IN: New message {} received, payload = {}",
+                shopCheckedEvent.getClass().getSimpleName(), JsonUtils.getAsString(shopCheckedEvent));
         orderOrchestratorUserTaskProcessor.processAndCompleteCheckShopResult(shopCheckedEvent);
     }
 
     @RabbitHandler
     @Override
     public void receivePickupPointCheckedEvent(@Payload PickupPointCheckedEvent pickupPointCheckedEvent) {
-        log.info("New event message {} received. Message payload = {}",
+        log.info("IN: new message {} received, payload = {}",
                 pickupPointCheckedEvent.getClass().getName(), JsonUtils.getAsString(pickupPointCheckedEvent));
         orderOrchestratorUserTaskProcessor.processAndCompleteCheckPickupPointResult(pickupPointCheckedEvent);
     }

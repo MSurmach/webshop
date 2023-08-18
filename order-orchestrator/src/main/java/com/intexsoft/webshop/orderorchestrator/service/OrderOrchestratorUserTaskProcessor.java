@@ -10,6 +10,5 @@ public interface OrderOrchestratorUserTaskProcessor {
 
     void processAndCompleteCheckPickupPointResult(PickupPointCheckedEvent pickupPointCheckedEvent);
 
-
     void processAndCompleteCheckUserResult(UserCheckedEvent userCheckedEvent);
 }
