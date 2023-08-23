@@ -7,11 +7,9 @@ import com.intexsoft.webshop.messagecommon.event.shop.impl.ShopCheckedEvent;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.ReportingPolicy;
 
 @Mapper(componentModel = "spring",
-        injectionStrategy = InjectionStrategy.CONSTRUCTOR,
-        unmappedTargetPolicy = ReportingPolicy.IGNORE)
+        injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 public interface ShopEventMapper {
     @Mapping(target = "orderId", source = "checkOrderShopCommand.orderId")
     @Mapping(target = "shopId", source = "checkOrderShopCommand.shopId")

@@ -1,14 +1,21 @@
 package com.intexsoft.webshop.shopservice.mapper;
 
 import com.intexsoft.webshop.messagecommon.event.shop.impl.ShopCreatedEvent;
+import com.intexsoft.webshop.shopservice.dto.PickupPointDto;
 import com.intexsoft.webshop.shopservice.dto.ShopCreateDto;
 import com.intexsoft.webshop.shopservice.dto.ShopDto;
+import com.intexsoft.webshop.shopservice.model.PickupPoint;
 import com.intexsoft.webshop.shopservice.model.Shop;
-import org.mapstruct.*;
+import org.mapstruct.CollectionMappingStrategy;
+import org.mapstruct.InjectionStrategy;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+
+import java.util.List;
+import java.util.Set;
 
 @Mapper(componentModel = "spring",
         injectionStrategy = InjectionStrategy.CONSTRUCTOR,
-        unmappedTargetPolicy = ReportingPolicy.IGNORE,
         collectionMappingStrategy = CollectionMappingStrategy.ADDER_PREFERRED,
         uses = PickupPointMapper.class)
 public interface ShopMapper {
@@ -35,4 +42,6 @@ public interface ShopMapper {
     @Mapping(target = "name", source = "name")
     @Mapping(target = "createdAt", ignore = true)
     ShopCreatedEvent toShopCreatedEvent(Shop shop);
+
+    List<PickupPointDto> toPickupPointDtoList(Set<PickupPoint> pickupPoints);
 }

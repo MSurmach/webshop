@@ -9,8 +9,7 @@ import org.mapstruct.*;
 import java.util.List;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING,
-        injectionStrategy = InjectionStrategy.CONSTRUCTOR,
-        unmappedTargetPolicy = ReportingPolicy.IGNORE)
+        injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 public interface CategoryMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "name", source = "name")

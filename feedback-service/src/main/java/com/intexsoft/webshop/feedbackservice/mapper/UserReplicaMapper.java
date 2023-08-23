@@ -6,11 +6,9 @@ import com.intexsoft.webshop.messagecommon.event.user.impl.UserCreatedEvent;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.ReportingPolicy;
 
 @Mapper(componentModel = "spring",
-        injectionStrategy = InjectionStrategy.CONSTRUCTOR,
-        unmappedTargetPolicy = ReportingPolicy.IGNORE)
+        injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 public interface UserReplicaMapper {
     @Mapping(target = "id", source = "id")
     @Mapping(target = "login", source = "login")

@@ -6,11 +6,9 @@ import com.intexsoft.webshop.shopservice.model.PickupPoint;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.ReportingPolicy;
 
 @Mapper(componentModel = "spring",
-        injectionStrategy = InjectionStrategy.CONSTRUCTOR,
-        unmappedTargetPolicy = ReportingPolicy.IGNORE)
+        injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 public interface PickupPointMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "address", source = "address")
