@@ -1,4 +1,4 @@
-package com.intexsoft.webshop.messagecommon.event.user;
+package com.intexsoft.webshop.messagecommon.event.shop;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -8,6 +8,7 @@ import lombok.experimental.FieldDefaults;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class UserCreatedEvent extends UserEvent {
-    String login;
+public abstract class CheckShopResultEvent extends ShopEvent {
+    boolean checkResult;
+    Long orderId;
 }

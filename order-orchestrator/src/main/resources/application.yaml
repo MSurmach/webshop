@@ -1,0 +1,66 @@
+server:
+  port: 8100
+camunda:
+  bpm:
+    database:
+      type: postgres
+    admin-user:
+      password: demo
+      id: demo
+    filter:
+      create: All tasks
+    default-serialization-format: application/json
+orchestrator:
+  processKey: orderProcess
+  waitAndProcessCheckShopResultDefKey: shopCheck
+  waitAndProcessCheckPickupPointResultDefKey: pickupPointCheck
+  waitAndProcessCheckUserResultDefKey: userCheck
+spring:
+  main:
+    banner-mode: off
+  datasource:
+    url: ${CAMUNDA_DATASOURCE_URL:jdbc:postgresql://localhost:5500/camundaDB}
+    username: ${CAMUNDA_DATASOURCE_USERNAME:postgres}
+    password: ${CAMUNDA_DATASOURCE_PASSWORD:camunda}
+  rabbitmq:
+    username: ${ORDER_ORCHESTRATOR_RABBITMQ_USERNAME:rmq_user}
+    password: ${ORDER_ORCHESTRATOR_PASSWORD:rmq_password}
+    port: ${ORDER_ORCHESTRATOR_RABBITMQ_PORT:5672}
+rmq:
+  event:
+    exchange: order
+    order:
+      queue: order.to.order-orchestrator.event.queue
+      exchange: order.event.exchange
+      routing: routing.order.event.#
+    shop:
+      queue: shop.to.order-orchestrator.event.queue
+      exchange: shop.event.exchange
+      routing: routing.shop.event.#
+    user:
+      queue: user.to.order-orchestrator.event.queue
+      exchange: user.event.exchange
+      routing: routing.user.event.#
+  command:
+    shop:
+      exchange: shop.command.exchange
+      routing-prefix: routing.shop.command.
+      routing-keys:
+        check_pickup_point: check_pickup_point
+        check_shop: check_shop
+    product:
+      exchange: product.command.exchange
+      routing-prefix: routing.product.command.
+    user:
+      exchange: user.command.exchange
+      routing-prefix: routing.user.command.
+      routing-keys:
+        check_user: check_user
+    order:
+      exchange: order.command.exchange
+      routing-prefix: routing.order.command.
+      routing-keys:
+        fail_order: fail_order
+logging:
+  pattern:
+    console: "%clr(%d{ISO8601}){faint} %clr(%5p) %clr([%30.30t]){faint} %clr(%-40.40logger{36}.%M){cyan} %clr(:){faint} %m%n"

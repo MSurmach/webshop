@@ -14,17 +14,28 @@ import java.util.List;
         unmappedTargetPolicy = ReportingPolicy.IGNORE,
         collectionMappingStrategy = CollectionMappingStrategy.ADDER_PREFERRED,
         nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
-        uses = AttributeMapper.class)
+        uses = {AttributeMapper.class, CategoryMapper.class})
 public interface SubcategoryMapper {
 
-    @Mapping(target = "name", source = "subcategoryCreateDto.name")
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "name", source = "subcategoryCreateDto.name")
+    @Mapping(target = "description", source = "subcategoryCreateDto.description")
+    @Mapping(target = "category", source = "category")
     @Mapping(target = "attributes", source = "subcategoryCreateDto.attributeCreateDtos")
+    @Mapping(target = "products", ignore = true)
     Subcategory toSubcategory(SubcategoryCreateDto subcategoryCreateDto, Category category);
 
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "name", source = "subcategoryUpdateDto.name")
+    @Mapping(target = "description", source = "subcategoryUpdateDto.description")
+    @Mapping(target = "category", ignore = true)
     @Mapping(target = "attributes", source = "attributeUpdateDtos")
+    @Mapping(target = "products", ignore = true)
     Subcategory updateSubcategory(@MappingTarget Subcategory subcategory, SubcategoryUpdateDto subcategoryUpdateDto);
 
+    @Mapping(target = "id", source = "id")
+    @Mapping(target = "name", source = "name")
+    @Mapping(target = "description", source = "description")
     @Mapping(target = "categoryDto", source = "category")
     @Mapping(target = "attributeDtos", source = "attributes")
     SubcategoryDto toSubcategoryDto(Subcategory subcategory);

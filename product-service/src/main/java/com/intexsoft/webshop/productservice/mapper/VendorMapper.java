@@ -10,14 +10,23 @@ import java.util.List;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING,
         injectionStrategy = InjectionStrategy.CONSTRUCTOR,
-        unmappedTargetPolicy = ReportingPolicy.IGNORE,
         nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface VendorMapper {
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "name", source = "name")
+    @Mapping(target = "about", source = "about")
+    @Mapping(target = "products", ignore = true)
     Vendor toVendor(VendorCreateDto vendorCreateDto);
 
+    @Mapping(target = "id", source = "id")
+    @Mapping(target = "name", source = "name")
+    @Mapping(target = "about", source = "about")
     VendorDto toVendorDto(Vendor vendor);
 
     List<VendorDto> toVendorDtos(List<Vendor> vendors);
-
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "name", source = "name")
+    @Mapping(target = "about", source = "about")
+    @Mapping(target = "products", ignore = true)
     Vendor updateVendor(@MappingTarget Vendor vendor, VendorUpdateDto vendorUpdateDto);
 }

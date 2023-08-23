@@ -40,7 +40,7 @@ public class ProductController {
         log.info("IN: request to find products received. Page size = {}, page number = {}",
                 pageable.getPageSize(), pageable.getPageNumber());
         List<ProductDto> productDtos = productService.findProducts(pageable);
-        log.info("OUT: {} products found", productDtos.size());
+        log.info("OUT: response will return {} products", productDtos.size());
         return ResponseEntity.ok(productDtos);
     }
 

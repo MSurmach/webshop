@@ -20,10 +20,12 @@ rmq:
       routing-prefix: routing.shop.event.
       routing-keys:
         shop_created: shop_created
+        shop_checked: shop_checked
+        pickup_point_checked: pickup_point_checked
   command:
     queue: shop.command.queue
     exchange: shop.command.exchange
     routing: routing.shop.command.*
 logging:
   pattern:
-    console: "%d{dd-MM-yyyy HH:mm:ss.SSS} %-5level [%thread] %logger{36}.%M - %msg%n"
+    console: "%clr(%d{ISO8601}){faint} %clr(%5p) %clr([%30.30t]){faint} %clr(%-40.40logger{36}.%M){cyan} %clr(:){faint} %m%n"

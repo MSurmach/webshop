@@ -15,7 +15,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "order")
+@Table(name = "\"order\"")
 @Data
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -42,13 +42,35 @@ public class Order {
     @OneToMany(
             mappedBy = "order",
             cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY
+            fetch = FetchType.LAZY,
+            orphanRemoval = true
     )
-    Set<Detail> orderDetails;
+    Set<Detail> orderDetails = new LinkedHashSet<>();
     @OneToMany(
             mappedBy = "order",
             cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY
+            fetch = FetchType.LAZY,
+            orphanRemoval = true
     )
     Set<Status> statuses = new LinkedHashSet<>();
+
+    public void addDetail(Detail detail) {
+        orderDetails.add(detail);
+        detail.setOrder(this);
+    }
+
+    public void removeDetail(Detail detail) {
+        orderDetails.remove(detail);
+        detail.setOrder(null);
+    }
+
+    public void addStatus(Status status) {
+        statuses.add(status);
+        status.setOrder(this);
+    }
+
+    public void removeStatus(Status status) {
+        statuses.remove(status);
+        status.setOrder(this);
+    }
 }

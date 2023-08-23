@@ -20,10 +20,11 @@ rmq:
       routing-prefix: routing.user.event.
       routing-keys:
         user_created: user_created
+        user_checked: user_checked
   command:
     queue: user.command.queue
     exchange: user.command.exchange
     routing: routing.user.command.*
 logging:
   pattern:
-    console: "%d{dd-MM-yyyy HH:mm:ss.SSS} %-5level [%thread] %logger{36}.%M - %msg%n"
+    console: "%clr(%d{ISO8601}){faint} %clr(%5p) %clr([%30.30t]){faint} %clr(%-40.40logger{36}.%M){cyan} %clr(:){faint} %m%n"

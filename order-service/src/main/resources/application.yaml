@@ -17,7 +17,13 @@ rmq:
   event:
     order:
       exchange: order.event.exchange
+      routing-prefix: routing.order.event.
+      routing-keys:
+        order_initialized: order_initialized
   command:
     queue: order.command.queue
     exchange: order.command.exchange
     routing: routing.order.command.*
+logging:
+  pattern:
+    console: "%clr(%d{ISO8601}){faint} %clr(%5p) %clr([%30.30t]){faint} %clr(%-40.40logger{36}.%M){cyan} %clr(:){faint} %m%n"
