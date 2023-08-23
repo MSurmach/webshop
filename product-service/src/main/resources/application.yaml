@@ -1,6 +1,13 @@
 server:
   port: 8092
 spring:
+  jpa:
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+        use_sql_comments: true
+        generate_statistics: true
   main:
     banner-mode: off
   liquibase:
@@ -29,3 +36,5 @@ rmq:
 logging:
   pattern:
     console: "%clr(%d{ISO8601}){faint} %clr(%5p) %clr([%30.30t]){faint} %clr(%-40.40logger{36}.%M){cyan} %clr(:){faint} %m%n"
+  level:
+    org.hibernate: INFO

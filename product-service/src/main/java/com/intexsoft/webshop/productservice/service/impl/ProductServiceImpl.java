@@ -15,6 +15,7 @@ import com.intexsoft.webshop.productservice.repository.AttributeRepository;
 import com.intexsoft.webshop.productservice.repository.ProductRepository;
 import com.intexsoft.webshop.productservice.repository.SubcategoryRepository;
 import com.intexsoft.webshop.productservice.repository.VendorRepository;
+import com.intexsoft.webshop.productservice.repository.spec.ProductSpecifications;
 import com.intexsoft.webshop.productservice.service.ProductService;
 import com.intexsoft.webshop.productservice.util.JsonUtils;
 import lombok.RequiredArgsConstructor;
@@ -75,7 +76,9 @@ public class ProductServiceImpl implements ProductService {
     public List<ProductDto> findProducts(Pageable pageable) {
         log.info("IN: trying to find products. Page size = {}, page number = {}",
                 pageable.getPageSize(), pageable.getPageNumber());
-        List<Product> products = productRepository.findAll(pageable).getContent();
+        List<Product> products = productRepository
+                .findAll(ProductSpecifications.findAllProducts(), pageable)
+                .getContent();
         log.info("OUT: {} products found", products.size());
         return productMapper.toProductDtos(products);
     }
