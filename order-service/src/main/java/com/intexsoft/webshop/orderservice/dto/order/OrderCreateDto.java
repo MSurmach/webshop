@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.intexsoft.webshop.orderservice.dto.detail.DetailCreateDto;
 import com.intexsoft.webshop.orderservice.model.enums.PaymentMethod;
-import com.intexsoft.webshop.orderservice.validation.ValueOfEnum;
 import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.*;
 import lombok.AccessLevel;
@@ -31,8 +30,7 @@ public class OrderCreateDto {
     @Positive
     Long userId;
     @NotBlank
-    @ValueOfEnum(enumClass = PaymentMethod.class)
-    String paymentMethod;
+    PaymentMethod paymentMethod;
     @Nullable
     @Pattern(regexp = "^(?!\\s*$).+")
     String comment;
