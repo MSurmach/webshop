@@ -1,8 +1,8 @@
 package com.intexsoft.webshop.productservice.mapper;
 
-import com.intexsoft.webshop.messagecommon.event.product.ProductCreatedEvent;
-import com.intexsoft.webshop.messagecommon.event.product.ProductDeletedEvent;
-import com.intexsoft.webshop.messagecommon.event.product.ProductUpdatedEvent;
+import com.intexsoft.webshop.messagecommon.event.product.impl.ProductCreatedEvent;
+import com.intexsoft.webshop.messagecommon.event.product.impl.ProductDeletedEvent;
+import com.intexsoft.webshop.messagecommon.event.product.impl.ProductUpdatedEvent;
 import com.intexsoft.webshop.productservice.dto.product.ProductCreateDto;
 import com.intexsoft.webshop.productservice.dto.product.ProductDto;
 import com.intexsoft.webshop.productservice.dto.product.ProductUpdateDto;
@@ -16,7 +16,6 @@ import java.util.List;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING,
         injectionStrategy = InjectionStrategy.CONSTRUCTOR,
-        unmappedTargetPolicy = ReportingPolicy.IGNORE,
         collectionMappingStrategy = CollectionMappingStrategy.ADDER_PREFERRED,
         uses = {SubcategoryMapper.class, VendorMapper.class, ImageMapper.class, AttributeValueMapper.class})
 public interface ProductMapper {
@@ -38,15 +37,6 @@ public interface ProductMapper {
     @Mapping(target = "attributeValueDtos", source = "attributeValues")
     ProductDto toProductDto(Product product);
 
-    @Mapping(target = "name", source = "name")
-    @Mapping(target = "productId", source = "id")
-    @Mapping(target = "createdAt", ignore = true)
-    ProductCreatedEvent toProductEventCreated(Product product);
-
-    @Mapping(target = "productId", source = "productId")
-    @Mapping(target = "createdAt", ignore = true)
-    ProductDeletedEvent toProductEventDeleted(Long productId);
-
     List<ProductDto> toProductDtos(List<Product> productList);
 
     @Mapping(target = "id", ignore = true)
@@ -57,9 +47,4 @@ public interface ProductMapper {
     @Mapping(target = "attributeValues",ignore = true)
     Product updateProduct(@MappingTarget Product product, ProductUpdateDto productUpdateDto, Vendor vendor,
                           Subcategory subcategory);
-
-    @Mapping(target = "name", source = "name")
-    @Mapping(target = "productId", source = "id")
-    @Mapping(target = "createdAt", ignore = true)
-    ProductUpdatedEvent toProductEventUpdated(Product product);
 }

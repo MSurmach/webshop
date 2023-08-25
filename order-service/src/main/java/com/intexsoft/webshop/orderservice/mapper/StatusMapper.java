@@ -6,6 +6,9 @@ import com.intexsoft.webshop.orderservice.model.Status;
 import com.intexsoft.webshop.orderservice.model.enums.StatusName;
 import org.mapstruct.*;
 
+import java.util.List;
+import java.util.Set;
+
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING,
         injectionStrategy = InjectionStrategy.CONSTRUCTOR,
         nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
@@ -20,4 +23,6 @@ public interface StatusMapper {
     @Mapping(target = "statusName", source = "statusName")
     @Mapping(target = "order", source = "order")
     Status toStatus(Order order, StatusName statusName);
+
+    List<StatusDto> toStatusDtoList(Set<Status> statuses);
 }

@@ -1,8 +1,9 @@
 package com.intexsoft.webshop.productservice.producer.impl;
 
-import com.intexsoft.webshop.messagecommon.event.product.ProductCreatedEvent;
-import com.intexsoft.webshop.messagecommon.event.product.ProductDeletedEvent;
-import com.intexsoft.webshop.messagecommon.event.product.ProductUpdatedEvent;
+import com.intexsoft.webshop.messagecommon.event.product.impl.ProductCreatedEvent;
+import com.intexsoft.webshop.messagecommon.event.product.impl.ProductDeletedEvent;
+import com.intexsoft.webshop.messagecommon.event.product.impl.ProductOrderQuantityIncrementedEvent;
+import com.intexsoft.webshop.messagecommon.event.product.impl.ProductUpdatedEvent;
 import com.intexsoft.webshop.productservice.producer.ProductEventProducer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,11 +30,13 @@ public class ProductEventProducerImpl implements ProductEventProducer {
 
     @Value("${rmq.event.product.routing-keys.product_updated}")
     private String productUpdatedRoutingKey;
+    @Value("${rmq.event.product.routing-keys.product_order_quantity_incremented}")
+    private String productOrderQuantityIncrementedRoutingKey;
 
     @Override
     public void produceProductEventCreated(ProductCreatedEvent productCreatedEvent) {
         log.info("IN: produce {} message. The event message = {}",
-                productCreatedEvent.getClass().getName(), getAsString(productCreatedEvent));
+                productCreatedEvent.getClass().getSimpleName(), getAsString(productCreatedEvent));
         String routing = routingPrefix + productCreatedRoutingKey;
         log.debug("Message is producing to exchange = {}, with routing = {}", eventExchange.getName(), routing);
         rabbitTemplate.convertAndSend(eventExchange.getName(), routing, productCreatedEvent);
@@ -42,7 +45,7 @@ public class ProductEventProducerImpl implements ProductEventProducer {
     @Override
     public void produceProductEventDeleted(ProductDeletedEvent productDeletedEvent) {
         log.info("IN: produce {} message. The event message = {}",
-                productDeletedEvent.getClass().getName(), getAsString(productDeletedEvent));
+                productDeletedEvent.getClass().getSimpleName(), getAsString(productDeletedEvent));
         String routing = routingPrefix + productDeletedRoutingKey;
         log.debug("Message is producing to exchange = {}, with routing = {}", eventExchange.getName(), routing);
         rabbitTemplate.convertAndSend(eventExchange.getName(), routing, productDeletedEvent);
@@ -51,9 +54,18 @@ public class ProductEventProducerImpl implements ProductEventProducer {
     @Override
     public void produceProductEventUpdated(ProductUpdatedEvent productUpdatedEvent) {
         log.info("IN: produce {} message. The event message = {}",
-                productUpdatedEvent.getClass().getName(), getAsString(productUpdatedEvent));
+                productUpdatedEvent.getClass().getSimpleName(), getAsString(productUpdatedEvent));
         String routing = routingPrefix + productUpdatedRoutingKey;
         log.debug("Message is producing to exchange = {}, with routing = {}", eventExchange.getName(), routing);
         rabbitTemplate.convertAndSend(eventExchange.getName(), routing, productUpdatedEvent);
+    }
+
+    @Override
+    public void produceProductOrderQuantityIncremented(ProductOrderQuantityIncrementedEvent productOrderQuantityIncrementedEvent) {
+        log.info("IN: produce {} message. The event message = {}",
+                productOrderQuantityIncrementedEvent.getClass().getSimpleName(), getAsString(productOrderQuantityIncrementedEvent));
+        String routing = routingPrefix + productOrderQuantityIncrementedRoutingKey;
+        log.debug("Message is producing to exchange = {}, with routing = {}", eventExchange.getName(), routing);
+        rabbitTemplate.convertAndSend(eventExchange.getName(), routing, productOrderQuantityIncrementedEvent);
     }
 }

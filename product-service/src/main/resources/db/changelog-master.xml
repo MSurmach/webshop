@@ -27,4 +27,5 @@
     <include file="v.0.3/2023-25-07-drop-table-feedback.xml" relativeToChangelogFile="true"/>
     <include file="v.0.4/2023-02-08-drop-table-product-shop-link.xml" relativeToChangelogFile="true"/>
     <include file="v.0.4/2023-02-08-drop-table-shop-replica.xml" relativeToChangelogFile="true"/>
+    <include file="v.0.5/2023-24-08-add-column-ordered-quantity-table-product.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

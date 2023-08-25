@@ -1,9 +1,7 @@
 package com.intexsoft.webshop.shopservice.producer.impl;
 
-import com.intexsoft.webshop.messagecommon.event.shop.CheckShopResultEvent;
-import com.intexsoft.webshop.messagecommon.event.shop.impl.PickupPointCheckedEvent;
-import com.intexsoft.webshop.messagecommon.event.shop.impl.ShopCheckedEvent;
-import com.intexsoft.webshop.messagecommon.event.shop.impl.ShopCreatedEvent;
+import com.intexsoft.webshop.messagecommon.event.shop.ShopCommandResultEvent;
+import com.intexsoft.webshop.messagecommon.event.shop.impl.*;
 import com.intexsoft.webshop.shopservice.producer.ShopEventProducer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +27,10 @@ public class ShopEventProducerImpl implements ShopEventProducer {
 
     @Value("${rmq.event.shop.routing-keys.pickup_point_checked}")
     private String pickupPickupPointCheckedRoutingKey;
+    @Value("${rmq.event.shop.routing-keys.order_product_checked}")
+    private String orderProductCheckedRoutingKey;
+    @Value("${rmq.event.shop.routing-keys.order_request_added}")
+    private String orderRequestToShopAddedRoutingKey;
 
     public void produceShopCreatedEvent(ShopCreatedEvent shopCreatedEvent) {
         log.info("IN: try to produce {}, payload = {}",
@@ -41,19 +43,31 @@ public class ShopEventProducerImpl implements ShopEventProducer {
     @Override
     public void produceShopCheckedEvent(ShopCheckedEvent shopCheckedEvent) {
         String routing = routingPrefix + shopCheckedRoutingKey;
-        produceCheckShopResultEvent(shopCheckedEvent, routing);
+        produceCommandShopResultEvent(shopCheckedEvent, routing);
     }
 
     @Override
     public void producePickupPointCheckedEvent(PickupPointCheckedEvent pickupPointCheckedEvent) {
         String routing = routingPrefix + pickupPickupPointCheckedRoutingKey;
-        produceCheckShopResultEvent(pickupPointCheckedEvent, routing);
+        produceCommandShopResultEvent(pickupPointCheckedEvent, routing);
     }
 
-    private void produceCheckShopResultEvent(CheckShopResultEvent checkShopResultEvent, String routing) {
+    @Override
+    public void produceOrderProductCheckedEvent(ProductCheckedEvent productCheckedEvent) {
+        String routing = routingPrefix + orderProductCheckedRoutingKey;
+        produceCommandShopResultEvent(productCheckedEvent, routing);
+    }
+
+    @Override
+    public void produceOrderRequestToShopAddedEvent(OrderRequestToShopAddedEvent orderRequestToShopAddedEvent) {
+        String routing = routingPrefix + orderRequestToShopAddedRoutingKey;
+        produceCommandShopResultEvent(orderRequestToShopAddedEvent, routing);
+    }
+
+    private void produceCommandShopResultEvent(ShopCommandResultEvent shopCommandResultEvent, String routing) {
         log.info("IN: try to produce {}, payload = {}",
-                checkShopResultEvent.getClass().getName(), getAsString(checkShopResultEvent));
+                shopCommandResultEvent.getClass().getName(), getAsString(shopCommandResultEvent));
         log.info("IN: message is producing to exchange = {}, with routing = {}", eventExchange.getName(), routing);
-        rabbitTemplate.convertAndSend(eventExchange.getName(), routing, checkShopResultEvent);
+        rabbitTemplate.convertAndSend(eventExchange.getName(), routing, shopCommandResultEvent);
     }
 }

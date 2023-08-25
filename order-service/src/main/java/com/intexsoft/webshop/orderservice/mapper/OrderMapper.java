@@ -13,7 +13,7 @@ import java.math.BigDecimal;
         injectionStrategy = InjectionStrategy.CONSTRUCTOR,
         nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
         collectionMappingStrategy = CollectionMappingStrategy.ADDER_PREFERRED,
-        uses = DetailMapper.class)
+        uses = {DetailMapper.class, StatusMapper.class})
 public interface OrderMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "pickupPointId", source = "orderCreateDto.pickupPointId")
@@ -43,5 +43,7 @@ public interface OrderMapper {
     @Mapping(target = "pickupPointId", source = "pickupPointId")
     @Mapping(target = "shopId", source = "shopId")
     @Mapping(target = "userId", source = "userId")
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "initOrderProductDetails", source = "orderDetails")
     OrderInitializedEvent toOrderInitializedEvent(Order order);
 }

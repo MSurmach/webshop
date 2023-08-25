@@ -24,7 +24,7 @@ public class ShopController {
     private final ShopService shopService;
 
     @PostMapping
-    public ResponseEntity<ShopDto> createUser(@RequestBody @Valid ShopCreateDto shopCreateDto) {
+    public ResponseEntity<ShopDto> createShop(@RequestBody @Valid ShopCreateDto shopCreateDto) {
         log.info("IN: request to create a new shop received. Request body = {}",
                 getAsString(shopCreateDto));
         ShopDto createdShopDto = shopService.createShop(shopCreateDto);

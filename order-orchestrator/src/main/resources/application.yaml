@@ -15,6 +15,9 @@ orchestrator:
   waitAndProcessCheckShopResultDefKey: shopCheck
   waitAndProcessCheckPickupPointResultDefKey: pickupPointCheck
   waitAndProcessCheckUserResultDefKey: userCheck
+  waitAndProcessIncrementResultDefKey: productOrderQuantityIncrement
+  waitAndProcessCheckProductResultDefKey: productCheck
+  waitAndProcessOrderRequestResultDefKey: orderRequestResult
 spring:
   main:
     banner-mode: off
@@ -28,7 +31,6 @@ spring:
     port: ${ORDER_ORCHESTRATOR_RABBITMQ_PORT:5672}
 rmq:
   event:
-    exchange: order
     order:
       queue: order.to.order-orchestrator.event.queue
       exchange: order.event.exchange
@@ -41,6 +43,10 @@ rmq:
       queue: user.to.order-orchestrator.event.queue
       exchange: user.event.exchange
       routing: routing.user.event.#
+    product:
+      queue: product.to.order-orchestrator.event.queue
+      exchange: product.event.exchange
+      routing: routing.product.event.#
   command:
     shop:
       exchange: shop.command.exchange
@@ -48,9 +54,13 @@ rmq:
       routing-keys:
         check_pickup_point: check_pickup_point
         check_shop: check_shop
+        check_product: check_product
+        request_order: request_order
     product:
       exchange: product.command.exchange
       routing-prefix: routing.product.command.
+      routing-keys:
+        increment_order_quantity: increment_order_quantity
     user:
       exchange: user.command.exchange
       routing-prefix: routing.user.command.
