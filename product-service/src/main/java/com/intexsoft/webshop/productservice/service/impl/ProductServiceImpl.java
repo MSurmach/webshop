@@ -8,6 +8,7 @@ import com.intexsoft.webshop.productservice.dto.product.ProductDto;
 import com.intexsoft.webshop.productservice.dto.product.ProductUpdateDto;
 import com.intexsoft.webshop.productservice.exception.notfound404.*;
 import com.intexsoft.webshop.productservice.mapper.ImageMapper;
+import com.intexsoft.webshop.productservice.mapper.ProductEventMapper;
 import com.intexsoft.webshop.productservice.mapper.ProductMapper;
 import com.intexsoft.webshop.productservice.model.*;
 import com.intexsoft.webshop.productservice.producer.ProductEventProducer;
@@ -24,9 +25,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -36,6 +35,7 @@ import java.util.stream.Collectors;
 public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
+    private final ProductEventMapper productEventMapper;
     private final ImageMapper imageMapper;
     private final ProductEventProducer productEventProducer;
     private final VendorRepository vendorRepository;
@@ -58,7 +58,7 @@ public class ProductServiceImpl implements ProductService {
         Product savedProduct = productRepository.save(product);
         log.info("OUT: the product saved successfully. The saved product details = {}",
                 JsonUtils.getAsString(savedProduct));
-        productEventProducer.produceProductEventCreated(productMapper.toProductEventCreated(savedProduct));
+        productEventProducer.produceProductEventCreated(productEventMapper.toProductEventCreated(savedProduct));
         return productMapper.toProductDto(savedProduct);
     }
 
@@ -100,7 +100,7 @@ public class ProductServiceImpl implements ProductService {
         log.info("OUT: the product updated successfully. The updated product details = {}",
                 JsonUtils.getAsString(updatedProduct));
         if (!existedProduct.getName().equals(updatedProduct.getName()))
-            productEventProducer.produceProductEventUpdated(productMapper.toProductEventUpdated(updatedProduct));
+            productEventProducer.produceProductEventUpdated(productEventMapper.toProductEventUpdated(updatedProduct));
         return productMapper.toProductDto(updatedProduct);
     }
 
@@ -110,7 +110,7 @@ public class ProductServiceImpl implements ProductService {
         log.info("IN: trying to delete a product by id = {}", productId);
         productRepository.deleteById(productId);
         log.info("OUT: the product with id = {} deleted successfully", productId);
-        productEventProducer.produceProductEventDeleted(productMapper.toProductEventDeleted(productId));
+        productEventProducer.produceProductEventDeleted(productEventMapper.toProductEventDeleted(productId));
     }
 
     private List<AttributeValue> createAttributeValues(ProductCreateDto productCreateDto) {

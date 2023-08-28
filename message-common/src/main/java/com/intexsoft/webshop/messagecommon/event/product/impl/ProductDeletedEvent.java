@@ -1,5 +1,6 @@
-package com.intexsoft.webshop.messagecommon.event.product;
+package com.intexsoft.webshop.messagecommon.event.product.impl;
 
+import com.intexsoft.webshop.messagecommon.event.product.ProductEvent;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 

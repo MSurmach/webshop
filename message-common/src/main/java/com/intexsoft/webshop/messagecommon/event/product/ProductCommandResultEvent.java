@@ -1,4 +1,4 @@
-package com.intexsoft.webshop.messagecommon.event.shop;
+package com.intexsoft.webshop.messagecommon.event.product;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -8,7 +8,7 @@ import lombok.experimental.FieldDefaults;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public abstract class CheckShopResultEvent extends ShopEvent {
-    boolean checkResult;
+public abstract class ProductCommandResultEvent extends BatchProductEvent {
+    boolean result;
     Long orderId;
 }

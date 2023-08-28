@@ -1,9 +1,6 @@
 package com.intexsoft.webshop.orderorchestrator.producer.impl;
 
-import com.intexsoft.webshop.messagecommon.command.orderorchestrator.CheckOrderPickupPointCommand;
-import com.intexsoft.webshop.messagecommon.command.orderorchestrator.CheckOrderShopCommand;
-import com.intexsoft.webshop.messagecommon.command.orderorchestrator.CheckOrderUserCommand;
-import com.intexsoft.webshop.messagecommon.command.orderorchestrator.FailOrderCommand;
+import com.intexsoft.webshop.messagecommon.command.orderorchestrator.*;
 import com.intexsoft.webshop.orderorchestrator.producer.OrderOrchestratorCommandProducer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,6 +30,10 @@ public class OrderOrchestratorCommandProducerImpl implements OrderOrchestratorCo
     private String checkPickupPointPrefixKey;
     @Value("${rmq.command.shop.routing-keys.check_shop}")
     private String checkShopPrefixKey;
+    @Value("${rmq.command.shop.routing-keys.check_product}")
+    private String checkProductPrefixKey;
+    @Value("${rmq.command.shop.routing-keys.request_order}")
+    private String requestOrderPrefixKey;
     //to user-service
     @Value("${rmq.command.user.exchange}")
     private String exchangeToUser;
@@ -40,6 +41,13 @@ public class OrderOrchestratorCommandProducerImpl implements OrderOrchestratorCo
     private String routingPrefixToUser;
     @Value("${rmq.command.user.routing-keys.check_user}")
     private String checkUserPrefixKey;
+    //to product-service
+    @Value("${rmq.command.product.exchange}")
+    private String exchangeToProduct;
+    @Value("${rmq.command.product.routing-prefix}")
+    private String routingPrefixToProduct;
+    @Value("${rmq.command.product.routing-keys.increment_order_quantity}")
+    private String incrementProductOrderQuantityPrefixKey;
 
     @Override
     public void produceCheckOrderPickupPointCommand(CheckOrderPickupPointCommand checkOrderPickupPointCommand) {
@@ -71,5 +79,29 @@ public class OrderOrchestratorCommandProducerImpl implements OrderOrchestratorCo
         String routing = routingPrefixToOrder + failOrderRoutingKey;
         log.info("OUT: the message is producing to exchange = {}, with routing = {}", exchangeToOrder, routing);
         rabbitTemplate.convertAndSend(exchangeToOrder, routing, failOrderCommand);
+    }
+
+    @Override
+    public void produceCheckOrderProductCommand(CheckOrderProductCommand checkOrderProductCommand) {
+        log.info("IN: try to produce a message = {}", checkOrderProductCommand.getClass().getSimpleName());
+        String routing = routingPrefixToShop + checkProductPrefixKey;
+        log.info("OUT: the message is producing to exchange = {}, with routing = {}", exchangeToShop, routing);
+        rabbitTemplate.convertAndSend(exchangeToShop, routing, checkOrderProductCommand);
+    }
+
+    @Override
+    public void produceChangeProductOrderQuantityCommand(ChangeProductOrderQuantityCommand changeProductOrderQuantityCommand) {
+        log.info("IN: try to produce a message = {}", changeProductOrderQuantityCommand.getClass().getSimpleName());
+        String routing = routingPrefixToProduct + incrementProductOrderQuantityPrefixKey;
+        log.info("OUT: the message is producing to exchange = {}, with routing = {}", exchangeToProduct, routing);
+        rabbitTemplate.convertAndSend(exchangeToProduct, routing, changeProductOrderQuantityCommand);
+    }
+
+    @Override
+    public void produceOrderRequestToShopCommand(OrderRequestToShopCommand orderRequestToShopCommand) {
+        log.info("IN: try to produce a message = {}", orderRequestToShopCommand.getClass().getSimpleName());
+        String routing = routingPrefixToShop + requestOrderPrefixKey;
+        log.info("OUT: the message is producing to exchange = {}, with routing = {}", exchangeToShop, routing);
+        rabbitTemplate.convertAndSend(exchangeToShop, routing, orderRequestToShopCommand);
     }
 }

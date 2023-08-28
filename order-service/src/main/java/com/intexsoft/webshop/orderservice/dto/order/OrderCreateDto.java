@@ -29,7 +29,7 @@ public class OrderCreateDto {
     @NotNull
     @Positive
     Long userId;
-    @NotBlank
+    @NotNull
     PaymentMethod paymentMethod;
     @Nullable
     @Pattern(regexp = "^(?!\\s*$).+")

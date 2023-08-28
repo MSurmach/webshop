@@ -1,7 +1,10 @@
 package com.intexsoft.webshop.orderorchestrator.service.impl;
 
 import com.intexsoft.webshop.messagecommon.command.orderorchestrator.FailOrderCommand;
+import com.intexsoft.webshop.messagecommon.event.product.impl.ProductOrderQuantityIncrementedEvent;
+import com.intexsoft.webshop.messagecommon.event.shop.impl.OrderRequestToShopAddedEvent;
 import com.intexsoft.webshop.messagecommon.event.shop.impl.PickupPointCheckedEvent;
+import com.intexsoft.webshop.messagecommon.event.shop.impl.ProductCheckedEvent;
 import com.intexsoft.webshop.messagecommon.event.shop.impl.ShopCheckedEvent;
 import com.intexsoft.webshop.messagecommon.event.user.impl.UserCheckedEvent;
 import com.intexsoft.webshop.orderorchestrator.exception.RetryCountExceedException;
@@ -35,13 +38,18 @@ public class OrderOrchestratorUserTaskProcessorImpl implements OrderOrchestrator
     private String waitAndProcessCheckPickupPointResultDefKey;
     @Value("${orchestrator.waitAndProcessCheckUserResultDefKey}")
     private String waitAndProcessCheckUserResultDefKey;
+    @Value("${orchestrator.waitAndProcessIncrementResultDefKey}")
+    private String waitAndProcessIncrementResultDefKey;
+    @Value("${orchestrator.waitAndProcessCheckProductResultDefKey}")
+    private String waitAndProcessCheckProductResultDefKey;
+    @Value("${orchestrator.waitAndProcessOrderRequestResultDefKey}")
+    private String waitAndProcessOrderRequestResultDefKey;
 
     @Override
     public void processAndCompleteCheckShopResult(ShopCheckedEvent shopCheckedEvent) {
-        log.info("IN: trying to process and complete task with definition key = {}",
-                waitAndProcessCheckShopResultDefKey);
+        log.info("IN: trying to process and complete task with definition key = {}", waitAndProcessCheckShopResultDefKey);
         String processBusinessKey = shopCheckedEvent.getOrderId().toString();
-        boolean isShopValid = shopCheckedEvent.isCheckResult();
+        boolean isShopValid = shopCheckedEvent.isResult();
         Map<String, Object> variableMap = Map.of("isShopValid", isShopValid);
         try {
             processAndCompleteTaskWithRetry(waitAndProcessCheckShopResultDefKey, processBusinessKey, variableMap);
@@ -53,9 +61,8 @@ public class OrderOrchestratorUserTaskProcessorImpl implements OrderOrchestrator
 
     @Override
     public void processAndCompleteCheckPickupPointResult(PickupPointCheckedEvent pickupPointCheckedEvent) {
-        log.info("IN: trying to process task with definition key = {}",
-                waitAndProcessCheckPickupPointResultDefKey);
-        boolean isPickupPointValid = pickupPointCheckedEvent.isCheckResult();
+        log.info("IN: trying to process task with definition key = {}", waitAndProcessCheckPickupPointResultDefKey);
+        boolean isPickupPointValid = pickupPointCheckedEvent.isResult();
         String processBusinessKey = pickupPointCheckedEvent.getOrderId().toString();
         Map<String, Object> variableMap = Map.of("isPickupPointValid", isPickupPointValid);
         try {
@@ -68,13 +75,54 @@ public class OrderOrchestratorUserTaskProcessorImpl implements OrderOrchestrator
 
     @Override
     public void processAndCompleteCheckUserResult(UserCheckedEvent userCheckedEvent) {
-        log.info("IN: trying to process task with definition key = {}",
-                waitAndProcessCheckUserResultDefKey);
+        log.info("IN: trying to process task with definition key = {}", waitAndProcessCheckUserResultDefKey);
         boolean isUserValid = userCheckedEvent.isCheckResult();
         String processBusinessKey = userCheckedEvent.getOrderId().toString();
         Map<String, Object> variableMap = Map.of("isUserValid", isUserValid);
         try {
             processAndCompleteTaskWithRetry(waitAndProcessCheckUserResultDefKey, processBusinessKey, variableMap);
+        } catch (RetryCountExceedException exception) {
+            log.error("Impossible to process task, reason: {}", exception.getMessage());
+            failProcess(processBusinessKey);
+        }
+    }
+
+    @Override
+    public void processAndCompleteProductOrderQuantityIncrementedResult(ProductOrderQuantityIncrementedEvent productOrderQuantityIncrementedEvent) {
+        log.info("IN: trying to process task with definition key = {}", waitAndProcessIncrementResultDefKey);
+        boolean isProductOrderQuantityIncremented = productOrderQuantityIncrementedEvent.isResult();
+        String processBusinessKey = productOrderQuantityIncrementedEvent.getOrderId().toString();
+        Map<String, Object> variableMap = Map.of("isProductOrderQuantityIncremented", isProductOrderQuantityIncremented);
+        try {
+            processAndCompleteTaskWithRetry(waitAndProcessIncrementResultDefKey, processBusinessKey, variableMap);
+        } catch (RetryCountExceedException exception) {
+            log.error("Impossible to process task, reason: {}", exception.getMessage());
+            failProcess(processBusinessKey);
+        }
+    }
+
+    @Override
+    public void processAndCompleteCheckProductResult(ProductCheckedEvent productCheckedEvent) {
+        log.info("IN: trying to process task with definition key = {}", waitAndProcessCheckProductResultDefKey);
+        boolean isProductValid = productCheckedEvent.isResult();
+        String processBusinessKey = productCheckedEvent.getOrderId().toString();
+        Map<String, Object> variableMap = Map.of("isProductValid", isProductValid);
+        try {
+            processAndCompleteTaskWithRetry(waitAndProcessCheckProductResultDefKey, processBusinessKey, variableMap);
+        } catch (RetryCountExceedException exception) {
+            log.error("Impossible to process task, reason: {}", exception.getMessage());
+            failProcess(processBusinessKey);
+        }
+    }
+
+    @Override
+    public void processAndCompleteOrderRequestResult(OrderRequestToShopAddedEvent orderRequestToShopAddedEvent) {
+        log.info("IN: trying to process task with definition key = {}", waitAndProcessOrderRequestResultDefKey);
+        boolean isOrderRequested = orderRequestToShopAddedEvent.isResult();
+        String processBusinessKey = orderRequestToShopAddedEvent.getOrderId().toString();
+        Map<String, Object> variableMap = Map.of("isOrderRequested", isOrderRequested);
+        try {
+            processAndCompleteTaskWithRetry(waitAndProcessOrderRequestResultDefKey, processBusinessKey, variableMap);
         } catch (RetryCountExceedException exception) {
             log.error("Impossible to process task, reason: {}", exception.getMessage());
             failProcess(processBusinessKey);
@@ -90,7 +138,8 @@ public class OrderOrchestratorUserTaskProcessorImpl implements OrderOrchestrator
                 completeTaskByDefKeyAndProcessBusinessKey(taskDefKey, processBusinessKey, variableMap);
                 return;
             } catch (RuntimeException exception) {
-                logRetryCase(taskDefKey, retryAttempt, exception.getMessage());
+                log.warn("Unable to complete task with definition key = {}. Retry count = {}. Reason is : {}",
+                        taskDefKey, retryAttempt, exception.getMessage());
                 retryAttempt++;
                 try {
                     Thread.sleep(DELAY_RETRY_MS);
@@ -119,11 +168,6 @@ public class OrderOrchestratorUserTaskProcessorImpl implements OrderOrchestrator
         log.info("OUT: trying to complete task with definition key = {}, variables will be assigned = {}",
                 taskDefKey, variables);
         taskService.complete(task.getId(), variables);
-    }
-
-    private void logRetryCase(String taskDefKey, int retryAttempt, String reason) {
-        log.warn("Unable to complete task with definition key = {}. Retry count = {}. Reason is : {}",
-                waitAndProcessCheckShopResultDefKey, retryAttempt, reason);
     }
 
     private void failProcess(String processBusinessKey) {

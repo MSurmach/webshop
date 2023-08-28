@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class OrderFailed implements JavaDelegate {
+public class FailOrder implements JavaDelegate {
     private final OrderOrchestratorCommandProducer orderOrchestratorCommandProducer;
     private final EventToCommandMapper eventToCommandMapper;
 

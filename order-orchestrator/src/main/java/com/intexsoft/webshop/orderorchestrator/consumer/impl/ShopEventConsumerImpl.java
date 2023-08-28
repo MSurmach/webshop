@@ -1,5 +1,7 @@
 package com.intexsoft.webshop.orderorchestrator.consumer.impl;
 
+import com.intexsoft.webshop.messagecommon.event.shop.impl.OrderRequestToShopAddedEvent;
+import com.intexsoft.webshop.messagecommon.event.shop.impl.ProductCheckedEvent;
 import com.intexsoft.webshop.messagecommon.event.shop.impl.PickupPointCheckedEvent;
 import com.intexsoft.webshop.messagecommon.event.shop.impl.ShopCheckedEvent;
 import com.intexsoft.webshop.orderorchestrator.consumer.ShopEventConsumer;
@@ -35,7 +37,22 @@ public class ShopEventConsumerImpl implements ShopEventConsumer {
     @Override
     public void receivePickupPointCheckedEvent(@Payload PickupPointCheckedEvent pickupPointCheckedEvent) {
         log.info("IN: new message {} received, payload = {}",
-                pickupPointCheckedEvent.getClass().getName(), JsonUtils.getAsString(pickupPointCheckedEvent));
+                pickupPointCheckedEvent.getClass().getSimpleName(), JsonUtils.getAsString(pickupPointCheckedEvent));
         orderOrchestratorUserTaskProcessor.processAndCompleteCheckPickupPointResult(pickupPointCheckedEvent);
+    }
+
+    @RabbitHandler
+    @Override
+    public void receiveProductCheckedEvent(@Payload ProductCheckedEvent productCheckedEvent) {
+        log.info("IN: new message {} received, payload = {}",
+                productCheckedEvent.getClass().getSimpleName(), JsonUtils.getAsString(productCheckedEvent));
+        orderOrchestratorUserTaskProcessor.processAndCompleteCheckProductResult(productCheckedEvent);
+    }
+    @RabbitHandler
+    @Override
+    public void receiveOrderRequestToShopAddedEvent(@Payload OrderRequestToShopAddedEvent orderRequestToShopAddedEvent) {
+        log.info("IN: new message {} received, payload = {}",
+                orderRequestToShopAddedEvent.getClass().getSimpleName(), JsonUtils.getAsString(orderRequestToShopAddedEvent));
+        orderOrchestratorUserTaskProcessor.processAndCompleteOrderRequestResult(orderRequestToShopAddedEvent);
     }
 }

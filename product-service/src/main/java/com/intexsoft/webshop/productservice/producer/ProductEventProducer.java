@@ -1,8 +1,9 @@
 package com.intexsoft.webshop.productservice.producer;
 
-import com.intexsoft.webshop.messagecommon.event.product.ProductCreatedEvent;
-import com.intexsoft.webshop.messagecommon.event.product.ProductDeletedEvent;
-import com.intexsoft.webshop.messagecommon.event.product.ProductUpdatedEvent;
+import com.intexsoft.webshop.messagecommon.event.product.impl.ProductCreatedEvent;
+import com.intexsoft.webshop.messagecommon.event.product.impl.ProductDeletedEvent;
+import com.intexsoft.webshop.messagecommon.event.product.impl.ProductOrderQuantityIncrementedEvent;
+import com.intexsoft.webshop.messagecommon.event.product.impl.ProductUpdatedEvent;
 
 public interface ProductEventProducer {
     void produceProductEventCreated(ProductCreatedEvent productCreatedEvent);
@@ -10,4 +11,6 @@ public interface ProductEventProducer {
     void produceProductEventDeleted(ProductDeletedEvent productDeletedEvent);
 
     void produceProductEventUpdated(ProductUpdatedEvent productUpdatedEvent);
+
+    void produceProductOrderQuantityIncremented(ProductOrderQuantityIncrementedEvent productOrderQuantityIncrementedEvent);
 }

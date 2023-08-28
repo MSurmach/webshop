@@ -29,6 +29,7 @@ rmq:
         product_created: product_created
         product_deleted: product_deleted
         product_updated: product_updated
+        product_order_quantity_incremented: product_order_quantity_incremented
   command:
     queue: product.command.queue
     exchange: product.command.exchange
