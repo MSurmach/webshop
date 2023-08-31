@@ -4,6 +4,7 @@ import com.intexsoft.webshop.messagecommon.event.product.impl.ProductCreatedEven
 import com.intexsoft.webshop.messagecommon.event.product.impl.ProductDeletedEvent;
 import com.intexsoft.webshop.messagecommon.event.product.impl.ProductOrderQuantityIncrementedEvent;
 import com.intexsoft.webshop.messagecommon.event.product.impl.ProductUpdatedEvent;
+import com.intexsoft.webshop.productservice.model.AttributeValue;
 import com.intexsoft.webshop.productservice.model.Product;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
@@ -17,8 +18,17 @@ import java.util.Set;
 public interface ProductEventMapper {
     @Mapping(target = "name", source = "name")
     @Mapping(target = "productId", source = "id")
+    @Mapping(target = "subcategory", source = "subcategory")
+    @Mapping(target = "vendor", source = "vendor")
+    @Mapping(target = "images", source = "images")
+    @Mapping(target = "attributeValues", source = "attributeValues")
     @Mapping(target = "createdAt", ignore = true)
     ProductCreatedEvent toProductEventCreated(Product product);
+
+    @Mapping(target = "id", source = "id")
+    @Mapping(target = "value", source = "value")
+    @Mapping(target = "attributeId", source = "attribute.id")
+    ProductCreatedEvent.AttributeValue toAttributeValue(AttributeValue attributeValue);
 
     @Mapping(target = "productId", source = "productId")
     @Mapping(target = "createdAt", ignore = true)

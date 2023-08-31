@@ -1,0 +1,39 @@
+server:
+  port: 8095
+spring:
+  main:
+    banner-mode: off
+  data:
+    mongodb:
+      database: ${PRODUCT_QUERY_DATABASE_NAME:productqueryDB}
+      port: ${PRODUCT_QUERY_PORT:27017}
+      host: ${PRODUCT_QUERY_HOST:localhost}
+      username: ${PRODUCT_QUERY_USER:mongoUser}
+      password: ${PRODUCT_QUERY_PASSWORD:strongpassword}
+  rabbitmq:
+    username: ${PRODUCT_QUERY_RABBITMQ_USERNAME:rmq_user}
+    password: ${PRODUCT_QUERY_RABBITMQ_PASSWORD:rmq_password}
+    port: ${PRODUCT_QUERY_RABBITMQ_PORT:5672}
+mongock:
+  migration-scan-package:
+    - com.intexsoft.webshop.productqueryservice.changeunit
+rmq:
+  event:
+    shop:
+      queue: shop.to.productquery.event.queue
+      exchange: shop.event.exchange
+      routing: routing.shop.event.#
+    product:
+      queue: product.to.productquery.event.queue
+      exchange: product.event.exchange
+      routing: routing.product.event.#
+logging:
+  pattern:
+    console: "%clr(%d{ISO8601}){faint} %clr(%5p) %clr([%30.30t]){faint} %clr(%-40.40logger{36}.%M){cyan} %clr(:){faint} %m%n"
+  level:
+    org:
+      springframework:
+        data:
+          mongodb:
+            core:
+              MongoTemplate: DEBUG
