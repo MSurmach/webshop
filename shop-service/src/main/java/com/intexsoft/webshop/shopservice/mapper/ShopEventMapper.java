@@ -53,10 +53,11 @@ public interface ShopEventMapper {
                 .collect(Collectors.toSet());
     }
 
-    @Mapping(target = "shopId", source = "shop.id")
-    @Mapping(target = "productId", source = "product.id")
-    @Mapping(target = "quantity", source = "quantity")
-    @Mapping(target = "price", source = "price")
+    @Mapping(target = "shopId", source = "shopProductLink.shop.id")
+    @Mapping(target = "shopName", source = "shopName")
+    @Mapping(target = "productId", source = "shopProductLink.product.id")
+    @Mapping(target = "quantity", source = "shopProductLink.quantity")
+    @Mapping(target = "price", source = "shopProductLink.price")
     @Mapping(target = "createdAt", ignore = true)
-    ShopProductLinkCreatedEvent toShopProductLinkCreatedEvent(ShopProductLink shopProductLink);
+    ShopProductLinkCreatedEvent toShopProductLinkCreatedEvent(ShopProductLink shopProductLink, String shopName);
 }

@@ -8,8 +8,10 @@ import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -41,6 +43,22 @@ public class ApiExceptionHandler {
         ApiExceptionDto exceptionDto = ApiExceptionDto.builder()
                 .exceptionMessage(exception.getConstraintViolations().stream()
                         .map(ConstraintViolation::getMessage)
+                        .collect(Collectors.joining("; ")))
+                .exceptionTimestamp(LocalDateTime.now())
+                .status(HttpStatus.BAD_REQUEST)
+                .statusCode(HttpStatus.BAD_REQUEST.value())
+                .build();
+        log.error("Constraints violation. Request url = {}, response body = {}",
+                request.getRequestURL(), JsonUtils.getAsString(exceptionDto));
+        return ResponseEntity.badRequest().body(exceptionDto);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ApiExceptionDto> handleMethodArgumentNotValidException(HttpServletRequest request,
+                                                                                 MethodArgumentNotValidException exception) {
+        ApiExceptionDto exceptionDto = ApiExceptionDto.builder()
+                .exceptionMessage(exception.getBindingResult().getAllErrors().stream()
+                        .map(DefaultMessageSourceResolvable::getDefaultMessage)
                         .collect(Collectors.joining("; ")))
                 .exceptionTimestamp(LocalDateTime.now())
                 .status(HttpStatus.BAD_REQUEST)

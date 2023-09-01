@@ -51,7 +51,7 @@ public class ShopProductLinkServiceImpl implements ShopProductLinkService {
         log.info("OUT: new new link between product with id = {} and shop with id = {} saved successfully.",
                 productId, shopId);
         shopEventProducer.produceShopProductLinkCreatedEvent(
-                shopEventMapper.toShopProductLinkCreatedEvent(savedShopProductLink));
+                shopEventMapper.toShopProductLinkCreatedEvent(savedShopProductLink, foundShop.getName()));
         return shopProductLinkDto;
     }
 }

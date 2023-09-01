@@ -20,8 +20,9 @@ public class InitShopProductLinksCollection {
         mongoTemplate.createCollection("shopProductLinks", CollectionOptions.empty()
                 .validator(Validator.schema(MongoJsonSchema.builder()
                         .properties(
-                                JsonSchemaProperty.int64("shopId"),
                                 JsonSchemaProperty.int64("productId"),
+                                JsonSchemaProperty.int64("shopId"),
+                                JsonSchemaProperty.string("shopName"),
                                 JsonSchemaProperty.int32("quantity"),
                                 JsonSchemaProperty.decimal128("price")
                         )

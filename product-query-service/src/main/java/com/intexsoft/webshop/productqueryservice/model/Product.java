@@ -2,7 +2,6 @@ package com.intexsoft.webshop.productqueryservice.model;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
@@ -12,9 +11,8 @@ import java.util.List;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Product {
-    @Id
-    Long id;
-    String name;
+    Long productId;
+    String productName;
     Vendor vendor;
     Subcategory subcategory;
     List<Image> images;
@@ -23,46 +21,46 @@ public class Product {
     @Getter
     @Setter
     public static class Vendor {
-        Long id;
-        String name;
+        Long vendorId;
+        String vendorName;
         String about;
     }
 
     @Getter
     @Setter
     public static class Subcategory {
-        Long id;
-        String name;
+        Long subcategoryId;
+        String subcategoryName;
         String description;
         Category category;
         List<Attribute> attributes;
-    }
 
-    @Getter
-    @Setter
-    public static class Category {
-        Long id;
-        String name;
-    }
+        @Getter
+        @Setter
+        public static class Category {
+            Long categoryId;
+            String categoryName;
+        }
 
-    @Getter
-    @Setter
-    public static class Attribute {
-        Long id;
-        String label;
+        @Getter
+        @Setter
+        public static class Attribute {
+            Long attributeId;
+            String label;
+        }
     }
 
     @Getter
     @Setter
     public static class Image {
-        Long id;
+        Long imageId;
         String filePath;
     }
 
     @Getter
     @Setter
     public static class AttributeValue {
-        Long id;
+        Long attributeValueId;
         String value;
         Long attributeId;
     }

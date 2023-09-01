@@ -11,8 +11,8 @@ import java.util.List;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ProductDto {
-    Long id;
-    String name;
+    Long productId;
+    String productName;
     @JsonProperty("subcategory")
     SubcategoryDto subcategoryDto;
     @JsonProperty("vendor")
@@ -25,8 +25,8 @@ public class ProductDto {
     @Getter
     @Setter
     public static class SubcategoryDto {
-        Long id;
-        String name;
+        Long subcategoryId;
+        String subcategoryName;
         String description;
         @JsonProperty("category")
         CategoryDto categoryDto;
@@ -36,14 +36,14 @@ public class ProductDto {
         @Getter
         @Setter
         public static class CategoryDto {
-            Long id;
-            String name;
+            Long categoryId;
+            String categoryName;
         }
 
         @Getter
         @Setter
         public static class AttributeDto {
-            Long id;
+            Long attributeId;
             String label;
         }
     }
@@ -51,15 +51,15 @@ public class ProductDto {
     @Getter
     @Setter
     public static class VendorDto {
-        Long id;
-        String name;
+        Long vendorId;
+        String vendorName;
         String about;
     }
 
     @Getter
     @Setter
     public static class AttributeValueDto {
-        Long id;
+        Long attributeValueId;
         String value;
         Long attributeId;
     }
@@ -67,7 +67,7 @@ public class ProductDto {
     @Getter
     @Setter
     public static class ImageDto {
-        Long id;
+        Long imageId;
         String filePath;
     }
 }

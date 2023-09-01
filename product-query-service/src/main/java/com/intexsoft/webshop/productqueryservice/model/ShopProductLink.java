@@ -15,8 +15,9 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ShopProductLink {
-    Long shopId;
     Long productId;
+    Long shopId;
+    String shopName;
     Short quantity;
     @Field(targetType = FieldType.DECIMAL128)
     BigDecimal price;

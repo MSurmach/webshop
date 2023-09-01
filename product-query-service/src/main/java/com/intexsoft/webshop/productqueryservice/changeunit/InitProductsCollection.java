@@ -20,23 +20,23 @@ public class InitProductsCollection {
         mongoTemplate.createCollection("products", CollectionOptions.empty()
                 .validator(Validator.schema(MongoJsonSchema.builder()
                         .properties(
-                                JsonSchemaProperty.int64("id"),
-                                JsonSchemaProperty.string("name"),
+                                JsonSchemaProperty.int64("productId"),
+                                JsonSchemaProperty.string("productName"),
                                 JsonSchemaProperty.object("vendor")
                                         .properties(
-                                                JsonSchemaProperty.int64("id"),
-                                                JsonSchemaProperty.string("name"),
+                                                JsonSchemaProperty.int64("vendorId"),
+                                                JsonSchemaProperty.string("vendorName"),
                                                 JsonSchemaProperty.string("about")
                                         ),
                                 JsonSchemaProperty.object("subcategory")
                                         .properties(
-                                                JsonSchemaProperty.int64("id"),
-                                                JsonSchemaProperty.string("name"),
+                                                JsonSchemaProperty.int64("subcategoryId"),
+                                                JsonSchemaProperty.string("subcategoryName"),
                                                 JsonSchemaProperty.string("description"),
                                                 JsonSchemaProperty.object("category")
                                                         .properties(
-                                                                JsonSchemaProperty.int64("id"),
-                                                                JsonSchemaProperty.string("name")
+                                                                JsonSchemaProperty.int64("categoryId"),
+                                                                JsonSchemaProperty.string("categoryName")
                                                         ),
                                                 JsonSchemaProperty.array("attributes")
                                         ),

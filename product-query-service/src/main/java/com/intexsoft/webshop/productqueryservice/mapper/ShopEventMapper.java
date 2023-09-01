@@ -9,6 +9,7 @@ import org.mapstruct.*;
         nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface ShopEventMapper {
     @Mapping(target = "shopId", source = "shopId")
+    @Mapping(target = "shopName", source = "shopName")
     @Mapping(target = "productId", source = "productId")
     @Mapping(target = "quantity", source = "quantity")
     @Mapping(target = "price", source = "price")

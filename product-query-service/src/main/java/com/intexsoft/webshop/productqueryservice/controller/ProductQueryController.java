@@ -1,8 +1,10 @@
 package com.intexsoft.webshop.productqueryservice.controller;
 
 import com.intexsoft.webshop.productqueryservice.dto.ProductDto;
+import com.intexsoft.webshop.productqueryservice.dto.ProductSearchDto;
 import com.intexsoft.webshop.productqueryservice.service.ProductQueryService;
 import com.intexsoft.webshop.productqueryservice.util.JsonUtils;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,8 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 import static java.lang.Integer.MAX_VALUE;
 
@@ -25,14 +27,12 @@ import static java.lang.Integer.MAX_VALUE;
 public class ProductQueryController {
     private final ProductQueryService productQueryService;
 
-    @GetMapping("/search")
+    @PostMapping("/search")
     public ResponseEntity<List<ProductDto>> findProducts(@PageableDefault(size = MAX_VALUE) Pageable pageable,
-                                                         @RequestParam(required = false) @Positive Long shopId) {
+                                                         @Valid @RequestBody ProductSearchDto productSearchDto) {
         log.info("IN: request to find products received. Page size = {}, page number = {}",
                 pageable.getPageSize(), pageable.getPageNumber());
-        List<ProductDto> productDtos = Objects.isNull(shopId) ?
-                productQueryService.findProducts(pageable) :
-                productQueryService.findProductsByShopId(pageable, shopId);
+        List<ProductDto> productDtos = productQueryService.findProducts(productSearchDto, pageable);
         log.info("OUT: response will return {} products", productDtos.size());
         return ResponseEntity.ok(productDtos);
     }

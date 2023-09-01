@@ -29,6 +29,7 @@ public interface ShopMapper {
     @Mapping(target = "about", source = "about")
     @Mapping(target = "shopProductLinks", ignore = true)
     @Mapping(target = "pickupPoints", source = "pickupPointCreateDtos")
+    @Mapping(target = "orderRequests", ignore = true)
     Shop toShop(ShopCreateDto shopCreateDto);
 
     @Mapping(target = "id", source = "id")
