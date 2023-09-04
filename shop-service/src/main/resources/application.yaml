@@ -1,6 +1,12 @@
 server:
   port: 8091
 spring:
+  jpa:
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+        use_sql_comments: true
   main:
     banner-mode: off
   liquibase:
@@ -15,11 +21,16 @@ spring:
     port: ${SHOP_RABBITMQ_PORT:5672}
 rmq:
   event:
+    product:
+      queue: product.to.shop.event.queue
+      exchange: product.event.exchange
+      routing: routing.product.event.#
     shop:
       exchange: shop.event.exchange
       routing-prefix: routing.shop.event.
       routing-keys:
         shop_created: shop_created
+        shop_product_link_created: shop_product_link_created
         shop_checked: shop_checked
         pickup_point_checked: pickup_point_checked
         order_product_checked: order_product_checked
@@ -31,3 +42,5 @@ rmq:
 logging:
   pattern:
     console: "%clr(%d{ISO8601}){faint} %clr(%5p) %clr([%30.30t]){faint} %clr(%-40.40logger{36}.%M){cyan} %clr(:){faint} %m%n"
+  level:
+    org.hibernate: INFO

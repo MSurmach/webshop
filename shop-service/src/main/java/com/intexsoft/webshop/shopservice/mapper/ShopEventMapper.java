@@ -4,10 +4,8 @@ import com.intexsoft.webshop.messagecommon.command.orderorchestrator.CheckOrderP
 import com.intexsoft.webshop.messagecommon.command.orderorchestrator.CheckOrderProductCommand;
 import com.intexsoft.webshop.messagecommon.command.orderorchestrator.CheckOrderShopCommand;
 import com.intexsoft.webshop.messagecommon.command.orderorchestrator.OrderRequestToShopCommand;
-import com.intexsoft.webshop.messagecommon.event.shop.impl.OrderRequestToShopAddedEvent;
-import com.intexsoft.webshop.messagecommon.event.shop.impl.ProductCheckedEvent;
-import com.intexsoft.webshop.messagecommon.event.shop.impl.PickupPointCheckedEvent;
-import com.intexsoft.webshop.messagecommon.event.shop.impl.ShopCheckedEvent;
+import com.intexsoft.webshop.messagecommon.event.shop.impl.*;
+import com.intexsoft.webshop.shopservice.model.ShopProductLink;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -41,6 +39,7 @@ public interface ShopEventMapper {
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "productIds", source = "checkOrderProductCommand.orderProductDetails", qualifiedByName = "getProductIds")
     ProductCheckedEvent toOrderProductCheckedEvent(boolean result, CheckOrderProductCommand checkOrderProductCommand);
+
     @Mapping(target = "orderId", source = "orderRequestToShopCommand.orderId")
     @Mapping(target = "shopId", source = "orderRequestToShopCommand.shopId")
     @Mapping(target = "result", source = "result")
@@ -53,4 +52,12 @@ public interface ShopEventMapper {
                 .map(CheckOrderProductCommand.OrderProductDetail::getProductId)
                 .collect(Collectors.toSet());
     }
+
+    @Mapping(target = "shopId", source = "shopProductLink.shop.id")
+    @Mapping(target = "shopName", source = "shopName")
+    @Mapping(target = "productId", source = "shopProductLink.product.id")
+    @Mapping(target = "quantity", source = "shopProductLink.quantity")
+    @Mapping(target = "price", source = "shopProductLink.price")
+    @Mapping(target = "createdAt", ignore = true)
+    ShopProductLinkCreatedEvent toShopProductLinkCreatedEvent(ShopProductLink shopProductLink, String shopName);
 }

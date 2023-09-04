@@ -1,8 +1,5 @@
 package com.intexsoft.webshop.productservice.mapper;
 
-import com.intexsoft.webshop.messagecommon.event.product.impl.ProductCreatedEvent;
-import com.intexsoft.webshop.messagecommon.event.product.impl.ProductDeletedEvent;
-import com.intexsoft.webshop.messagecommon.event.product.impl.ProductUpdatedEvent;
 import com.intexsoft.webshop.productservice.dto.product.ProductCreateDto;
 import com.intexsoft.webshop.productservice.dto.product.ProductDto;
 import com.intexsoft.webshop.productservice.dto.product.ProductUpdateDto;
@@ -22,6 +19,7 @@ public interface ProductMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "name", source = "productCreateDto.name")
+    @Mapping(target = "orderQuantity", ignore = true)
     @Mapping(target = "subcategory", source = "subcategory")
     @Mapping(target = "vendor", source = "vendor")
     @Mapping(target = "images", source = "productCreateDto.imageCreateDtos")
@@ -41,10 +39,11 @@ public interface ProductMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "name", source = "productUpdateDto.name")
+    @Mapping(target = "orderQuantity", ignore = true)
     @Mapping(target = "subcategory", source = "subcategory")
     @Mapping(target = "vendor", source = "vendor")
     @Mapping(target = "images", ignore = true)
-    @Mapping(target = "attributeValues",ignore = true)
+    @Mapping(target = "attributeValues", ignore = true)
     Product updateProduct(@MappingTarget Product product, ProductUpdateDto productUpdateDto, Vendor vendor,
                           Subcategory subcategory);
 }

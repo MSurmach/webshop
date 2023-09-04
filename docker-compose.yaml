@@ -24,6 +24,16 @@ services:
     environment:
       - POSTGRES_PASSWORD=productservice
       - POSTGRES_DB=productDB
+  product-query-service-db:
+    image: mongo
+    container_name: product-query-service-mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: productqueryDB
+    volumes:
+        - ./mongo-entrypoint/:/docker-entrypoint-initdb.d/
   order-service-db:
     image: postgres:14.2-alpine
     container_name: order-service-postgres

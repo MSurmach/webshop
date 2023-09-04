@@ -22,8 +22,8 @@ public class Product {
     Long id;
     @Column(name = "name", nullable = false)
     String name;
-    @Column(name = "order_quantity", nullable = false)
-    Short orderQuantity;
+    @Column(name = "order_quantity")
+    short orderQuantity;
     @ManyToOne(fetch = FetchType.LAZY)
     @ToString.Exclude
     Subcategory subcategory;

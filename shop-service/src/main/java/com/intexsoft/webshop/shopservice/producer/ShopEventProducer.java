@@ -9,4 +9,5 @@ public interface ShopEventProducer {
     void producePickupPointCheckedEvent(PickupPointCheckedEvent pickupPointCheckedEvent);
     void produceOrderProductCheckedEvent(ProductCheckedEvent productCheckedEvent);
     void produceOrderRequestToShopAddedEvent(OrderRequestToShopAddedEvent orderRequestToShopAddedEvent);
+    void produceShopProductLinkCreatedEvent(ShopProductLinkCreatedEvent shopProductLinkCreatedEvent);
 }
