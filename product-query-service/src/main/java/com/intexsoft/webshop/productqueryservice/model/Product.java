@@ -31,6 +31,7 @@ public class Product {
 
     @Getter
     @Setter
+    @FieldNameConstants
     public static class Subcategory {
         Long subcategoryId;
         String subcategoryName;
@@ -40,6 +41,7 @@ public class Product {
 
         @Getter
         @Setter
+        @FieldNameConstants
         public static class Category {
             Long categoryId;
             String categoryName;
@@ -47,6 +49,7 @@ public class Product {
 
         @Getter
         @Setter
+        @FieldNameConstants
         public static class Attribute {
             Long attributeId;
             String label;
@@ -55,6 +58,7 @@ public class Product {
 
     @Getter
     @Setter
+    @FieldNameConstants
     public static class Image {
         Long imageId;
         String filePath;
@@ -62,6 +66,7 @@ public class Product {
 
     @Getter
     @Setter
+    @FieldNameConstants
     public static class AttributeValue {
         Long attributeValueId;
         String value;

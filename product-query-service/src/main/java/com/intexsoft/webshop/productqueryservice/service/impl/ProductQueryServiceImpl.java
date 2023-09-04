@@ -7,6 +7,7 @@ import com.intexsoft.webshop.productqueryservice.exception.notfound.ProductNotFo
 import com.intexsoft.webshop.productqueryservice.mapper.ProductEventMapper;
 import com.intexsoft.webshop.productqueryservice.mapper.ProductMapper;
 import com.intexsoft.webshop.productqueryservice.model.Product;
+import com.intexsoft.webshop.productqueryservice.model.ShopProductLink;
 import com.intexsoft.webshop.productqueryservice.repository.ProductRepository;
 import com.intexsoft.webshop.productqueryservice.service.ProductCriteriaBuilder;
 import com.intexsoft.webshop.productqueryservice.service.ProductQueryService;
@@ -46,8 +47,8 @@ public class ProductQueryServiceImpl implements ProductQueryService {
         Criteria criteria = productCriteriaBuilder.buildCriteria(productSearchDto.getFilterConditionDtos());
         LookupOperation lookupOperation = LookupOperation.newLookup()
                 .from(SHOP_PRODUCT_LINK_COLLECTION_NAME)
-                .localField("productId")
-                .foreignField("productId")
+                .localField(Product.Fields.productId)
+                .foreignField(ShopProductLink.Fields.productId)
                 .as("productShopLink");
         MatchOperation matchOperation = Aggregation.match(criteria);
         SkipOperation skipOperation = Aggregation.skip((long) pageable.getPageNumber() * pageable.getPageSize());

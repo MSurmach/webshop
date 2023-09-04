@@ -1,6 +1,8 @@
 package com.intexsoft.webshop.productqueryservice.validator;
 
 import com.intexsoft.webshop.productqueryservice.dto.FilterConditionDto;
+import com.intexsoft.webshop.productqueryservice.model.Product;
+import com.intexsoft.webshop.productqueryservice.model.ShopProductLink;
 import com.intexsoft.webshop.productqueryservice.service.FilterOperation;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
@@ -16,9 +18,9 @@ public class ProductFilterConditionValidator implements
         ConstraintValidator<ValidSearchFilter, List<FilterConditionDto>> {
     private static final Map<String, Set<FilterOperation>> FIELD_NAME_AVAILABLE_OPERATION_MAP
             = Map.of(
-            "shopName", Set.of(EQUAL, NOT_EQUAL),
-            "productName", Set.of(EQUAL, NOT_EQUAL),
-            "price", Set.of(EQUAL, NOT_EQUAL, GREATER_THAN, GREATER_THAN_OR_EQUAL_TO, LESS_THAN, LESSTHAN_OR_EQUAL_TO)
+            ShopProductLink.Fields.shopName, Set.of(EQUAL, NOT_EQUAL),
+            Product.Fields.productName, Set.of(EQUAL, NOT_EQUAL),
+            ShopProductLink.Fields.price, Set.of(EQUAL, NOT_EQUAL, GREATER_THAN, GREATER_THAN_OR_EQUAL_TO, LESS_THAN, LESSTHAN_OR_EQUAL_TO)
     );
 
     @Override

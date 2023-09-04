@@ -1,6 +1,8 @@
 package com.intexsoft.webshop.productqueryservice.service;
 
 import com.intexsoft.webshop.productqueryservice.dto.FilterConditionDto;
+import com.intexsoft.webshop.productqueryservice.model.ShopProductLink;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Component;
 
@@ -29,9 +31,8 @@ public class ProductCriteriaBuilder {
     }
 
     private static final Map<String, String> FIELD_NAME_DOCUMENT_PATH_PREFIX = Map.of(
-            "productName", "",
-            "shopName", "productShopLink.",
-            "price", "productShopLink."
+            ShopProductLink.Fields.shopName, "productShopLink.",
+            ShopProductLink.Fields.price, "productShopLink."
     );
 
     public Criteria buildCriteria(List<FilterConditionDto> filterConditionDtos) {
@@ -48,7 +49,7 @@ public class ProductCriteriaBuilder {
     }
 
     private static Criteria buildWhereCriteria(String fieldName) {
-        String documentPathPrefix = FIELD_NAME_DOCUMENT_PATH_PREFIX.get(fieldName);
+        String documentPathPrefix = FIELD_NAME_DOCUMENT_PATH_PREFIX.getOrDefault(fieldName, StringUtils.EMPTY);
         return Criteria.where(documentPathPrefix + fieldName);
     }
 }
