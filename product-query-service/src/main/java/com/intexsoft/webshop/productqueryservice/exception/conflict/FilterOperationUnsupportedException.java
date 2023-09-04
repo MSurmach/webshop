@@ -1,4 +1,4 @@
-package com.intexsoft.webshop.productqueryservice.exception.conflict409;
+package com.intexsoft.webshop.productqueryservice.exception.conflict;
 
 import com.intexsoft.webshop.productqueryservice.exception.HttpStatusException;
 import org.springframework.http.HttpStatus;

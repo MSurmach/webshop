@@ -1,4 +1,4 @@
-package com.intexsoft.webshop.productservice.exception.conflict409;
+package com.intexsoft.webshop.productservice.exception.conflict;
 
 import com.intexsoft.webshop.productservice.exception.Resource;
 

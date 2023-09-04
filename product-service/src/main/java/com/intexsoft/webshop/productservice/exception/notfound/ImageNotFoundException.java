@@ -1,4 +1,4 @@
-package com.intexsoft.webshop.productservice.exception.notfound404;
+package com.intexsoft.webshop.productservice.exception.notfound;
 
 import com.intexsoft.webshop.productservice.exception.Resource;
 

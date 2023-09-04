@@ -1,7 +1,7 @@
-package com.intexsoft.webshop.productservice.exception.notfound404;
+package com.intexsoft.webshop.productqueryservice.exception.notfound;
 
-import com.intexsoft.webshop.productservice.exception.Resource;
-import com.intexsoft.webshop.productservice.exception.HttpStatusException;
+import com.intexsoft.webshop.productqueryservice.exception.HttpStatusException;
+import com.intexsoft.webshop.productqueryservice.exception.Resource;
 import org.springframework.http.HttpStatus;
 
 public abstract class ResourceNotFoundException extends HttpStatusException {

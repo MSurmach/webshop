@@ -1,6 +1,6 @@
-package com.intexsoft.webshop.productqueryservice.exception.notfound404;
+package com.intexsoft.webshop.productservice.exception.notfound;
 
-import com.intexsoft.webshop.productqueryservice.exception.Resource;
+import com.intexsoft.webshop.productservice.exception.Resource;
 
 public class ProductNotFoundException extends ResourceNotFoundException {
 

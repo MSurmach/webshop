@@ -2,6 +2,7 @@ package com.intexsoft.webshop.productqueryservice.model;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import lombok.experimental.FieldNameConstants;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@FieldNameConstants
 public class Product {
     Long productId;
     String productName;
@@ -20,6 +22,7 @@ public class Product {
 
     @Getter
     @Setter
+    @FieldNameConstants
     public static class Vendor {
         Long vendorId;
         String vendorName;

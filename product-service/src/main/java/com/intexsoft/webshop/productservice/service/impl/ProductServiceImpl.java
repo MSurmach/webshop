@@ -6,7 +6,7 @@ import com.intexsoft.webshop.productservice.dto.image.ImageUpdateDto;
 import com.intexsoft.webshop.productservice.dto.product.ProductCreateDto;
 import com.intexsoft.webshop.productservice.dto.product.ProductDto;
 import com.intexsoft.webshop.productservice.dto.product.ProductUpdateDto;
-import com.intexsoft.webshop.productservice.exception.notfound404.*;
+import com.intexsoft.webshop.productservice.exception.notfound.*;
 import com.intexsoft.webshop.productservice.mapper.ImageMapper;
 import com.intexsoft.webshop.productservice.mapper.ProductEventMapper;
 import com.intexsoft.webshop.productservice.mapper.ProductMapper;
@@ -25,7 +25,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
