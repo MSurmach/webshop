@@ -6,4 +6,6 @@
     <include file="v.0.1/2023-25-07-create-table-users-replica.xml" relativeToChangelogFile="true"/>
     <include file="v.0.1/2023-25-07-create-table-product-feedback.xml" relativeToChangelogFile="true"/>
     <include file="v.0.1/2023-25-07-create-table-shop-feedback.xml" relativeToChangelogFile="true"/>
+    <include file="v.0.2/2023-05-09-drop-table-product-feedback-and-shop-feedback.xml" relativeToChangelogFile="true"/>
+    <include file="v.0.2/2023-05-09-create-table-feedback.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

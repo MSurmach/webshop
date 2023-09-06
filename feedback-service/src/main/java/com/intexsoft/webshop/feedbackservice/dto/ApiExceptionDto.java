@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class FeedbackApiExceptionDto {
+public class ApiExceptionDto {
     @JsonProperty("timestamp")
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     LocalDateTime exceptionTimestamp;

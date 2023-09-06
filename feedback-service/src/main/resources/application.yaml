@@ -13,6 +13,13 @@ spring:
     username: ${FEEDBACK_RABBITMQ_USERNAME:rmq_user}
     password: ${FEEDBACK_RABBITMQ_PASSWORD:rmq_password}
     port: ${FEEDBACK_RABBITMQ_PORT:5672}
+  jpa:
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+        use_sql_comments: true
+        generate_statistics: true
 rmq:
   event:
     feedback:
