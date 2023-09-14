@@ -1,0 +1,7 @@
+package com.intexsoft.webshop.productservicekt.consumer
+
+import com.intexsoft.webshop.messagecommon.command.orderorchestrator.ChangeProductOrderQuantityCommand
+
+interface ProductCommandConsumer {
+    fun receiveChangeProductOrderQuantityCommand(changeProductOrderQuantityCommand: ChangeProductOrderQuantityCommand)
+}

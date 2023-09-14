@@ -1,0 +1,34 @@
+server:
+  port: 8920
+spring:
+  main:
+    banner-mode: off
+#  liquibase:
+#    change-log: db/changelog-master.xml
+  datasource:
+    url: ${PRODUCT_DATASOURCE_URL:jdbc:postgresql://localhost:5442/productDB}
+    username: ${PRODUCT_DATASOURCE_USERNAME:postgres}
+    password: ${PRODUCT_DATASOURCE_PASSWORD:productservice}
+  rabbitmq:
+    username: ${PRODUCT_RABBITMQ_USERNAME:rmq_user}
+    password: ${PRODUCT_RABBITMQ_PASSWORD:rmq_password}
+    port: ${PRODUCT_RABBITMQ_PORT:5672}
+rmq:
+  event:
+    product:
+      exchange: product.event.exchange
+      routing-prefix: routing.product.event.
+      routing-keys:
+        product_created: product_created
+        product_deleted: product_deleted
+        product_updated: product_updated
+        product_order_quantity_incremented: product_order_quantity_incremented
+  command:
+    queue: product.command.queue
+    exchange: product.command.exchange
+    routing: routing.product.command.*
+logging:
+  pattern:
+    console: "%clr(%d{ISO8601}){faint} %clr(%5p) %clr([%30.30t]){faint} %clr(%-40.40logger{36}.%M){cyan} %clr(:){faint} %m%n"
+  level:
+    org.hibernate: INFO
