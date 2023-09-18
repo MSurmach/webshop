@@ -1,0 +1,7 @@
+package com.intexsoft.webshop.productservicekt.service
+
+import com.intexsoft.webshop.messagecommon.command.orderorchestrator.ChangeProductOrderQuantityCommand
+
+interface ProductCommandProcessor {
+    fun processChangeProductOrderQuantityCommand(changeProductOrderQuantityCommand: ChangeProductOrderQuantityCommand)
+}
