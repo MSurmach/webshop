@@ -22,7 +22,7 @@ class VendorServiceImpl(
 ) : VendorService {
     @Transactional
     override fun createVendor(vendorCreateDto: VendorCreateDto): VendorDto {
-        val name: String = vendorCreateDto.name
+        val name: String = vendorCreateDto.name!!
         log.info("IN: trying to save a new vendor. New vendor details = $vendorCreateDto")
         if (vendorRepository.findByNameIgnoreCase(name) != null) throw VendorExistsException(name)
         val savedVendor: Vendor = vendorRepository.save(vendorMapper.toVendor(vendorCreateDto))

@@ -21,7 +21,7 @@ class CategoryServiceImpl(
 ) : CategoryService {
 
     override fun createCategory(categoryCreateDto: CategoryCreateDto): CategoryDto {
-        val categoryName: String = categoryCreateDto.name
+        val categoryName: String = categoryCreateDto.name!!
         log.info("IN: trying to find a category with name = $categoryName")
         if (categoryRepository.findByNameIgnoreCase(categoryName) != null) throw CategoryExistsException(categoryName)
         log.info(

@@ -20,7 +20,7 @@ class CategoryController(
     private val categoryService: CategoryService
 ) {
     @PostMapping
-    fun createCategory(@RequestBody categoryCreateDto: @Valid CategoryCreateDto): ResponseEntity<CategoryDto> {
+    fun createCategory(@RequestBody @Valid categoryCreateDto: CategoryCreateDto): ResponseEntity<CategoryDto> {
         log.info("IN: request to create a new category received. Request body = $categoryCreateDto")
         val createdCategoryDto: CategoryDto = categoryService.createCategory(categoryCreateDto)
         log.info("OUT: new category created successfully. Response body = $createdCategoryDto")
@@ -39,7 +39,7 @@ class CategoryController(
     }
 
     @GetMapping("/{categoryId}")
-    fun findCategoryById(@PathVariable categoryId: @Positive Long): ResponseEntity<CategoryDto> {
+    fun findCategoryById(@PathVariable @Positive categoryId: Long): ResponseEntity<CategoryDto> {
         log.info("IN: request to find a category by id = $categoryId received")
         val categoryDto: CategoryDto = categoryService.findCategoryById(categoryId)
         log.info("OUT: the category with id = $categoryId found successfully. Response body = $categoryDto")
@@ -48,8 +48,8 @@ class CategoryController(
 
     @PutMapping("/{categoryId}")
     fun updateCategory(
-        @PathVariable categoryId: @Positive Long,
-        @RequestBody categoryUpdateDto: @Valid CategoryUpdateDto
+        @PathVariable @Positive categoryId: Long,
+        @RequestBody @Valid categoryUpdateDto: CategoryUpdateDto
     ): ResponseEntity<CategoryDto> {
         log.info("IN: request to update a category with id = $categoryId received. Request body = $categoryUpdateDto")
         val updatedCategoryDto: CategoryDto = categoryService.updateCategory(categoryId, categoryUpdateDto)
@@ -58,7 +58,7 @@ class CategoryController(
     }
 
     @DeleteMapping("/{categoryId}")
-    fun deleteCategoryById(@PathVariable categoryId: @Positive Long): ResponseEntity<Unit> {
+    fun deleteCategoryById(@PathVariable @Positive categoryId: Long): ResponseEntity<Unit> {
         log.info("IN: request to delete a category by id = $categoryId received")
         categoryService.deleteCategoryById(categoryId)
         log.info("OUT: the category with id = $categoryId deleted successfully")

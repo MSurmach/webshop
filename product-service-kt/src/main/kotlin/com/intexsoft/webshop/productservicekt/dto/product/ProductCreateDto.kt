@@ -1,24 +1,29 @@
 package com.intexsoft.webshop.productservicekt.dto.product
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.intexsoft.webshop.productservicekt.dto.attributevalue.AttributeValueCreateDto
 import com.intexsoft.webshop.productservicekt.dto.image.ImageCreateDto
+import jakarta.validation.Valid
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Positive
 import jakarta.validation.constraints.Size
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class ProductCreateDto(
-    @NotBlank
-    @Size(max = 255)
-    val name: String,
-    @Positive
+    @field:NotBlank
+    @field:Size(max = 255)
+    val name: String?,
+    @field:Positive
     val subcategoryId: Long,
-    @Positive
+    @field:Positive
     val vendorId: Long,
     @JsonProperty("images")
-    @Size(min = 1)
-    val imageCreateDtos: MutableList<ImageCreateDto>?,
+    @field:Valid
+    @field:Size(min = 1)
+    val imageCreateDtos: List<ImageCreateDto>?,
     @JsonProperty("attributeValues")
-    @Size(min = 1)
-    val attributeValueCreateDtos: MutableList<AttributeValueCreateDto>?
+    @field:Valid
+    @field:Size(min = 1)
+    val attributeValueCreateDtos: List<AttributeValueCreateDto>?
 )

@@ -15,17 +15,13 @@ class Subcategory(
     @ManyToOne(fetch = FetchType.LAZY)
     var category: Category,
     @OneToMany(mappedBy = "subcategory", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
-    val attributes: MutableSet<Attribute> = LinkedHashSet(),
+    var attributes: MutableList<Attribute>?,
     @OneToMany(mappedBy = "subcategory", fetch = FetchType.LAZY)
-    val products: MutableSet<Product> = LinkedHashSet()
+    var products: MutableList<Product>?
 ) {
     fun addAttribute(attribute: Attribute) {
-        attributes.add(attribute)
+        if (attributes == null) attributes = mutableListOf()
+        attributes!!.add(attribute)
         attribute.subcategory = this
-    }
-
-    fun removeAttribute(attribute: Attribute) {
-        attributes.remove(attribute)
-        attribute.subcategory = null
     }
 }

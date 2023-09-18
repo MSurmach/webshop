@@ -17,27 +17,29 @@ class Product(
     @ManyToOne(fetch = FetchType.LAZY)
     var vendor: Vendor,
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = [CascadeType.ALL], orphanRemoval = true)
-    val images: MutableSet<Image> = LinkedHashSet(),
+    var images: MutableList<Image>?,
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
-    val attributeValues: MutableSet<AttributeValue> = LinkedHashSet()
+    var attributeValues: MutableList<AttributeValue>?
 ) {
     fun addImage(image: Image) {
-        images.add(image)
+        if (images == null) images = mutableListOf()
+        images!!.add(image)
         image.product = this
     }
 
     fun removeImage(image: Image) {
-        images.remove(image)
+        images?.remove(image)
         image.product = null
     }
 
     fun addAttributeValue(attributeValue: AttributeValue) {
-        attributeValues.add(attributeValue)
+        if (attributeValues == null) attributeValues = mutableListOf()
+        attributeValues!!.add(attributeValue)
         attributeValue.product = this
     }
 
     fun removeAttributeValue(attributeValue: AttributeValue) {
-        attributeValues.remove(attributeValue)
+        attributeValues?.remove(attributeValue)
         attributeValue.product = null
     }
 }

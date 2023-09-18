@@ -25,7 +25,7 @@ class SubcategoryServiceImpl(
 ) : SubcategoryService {
 
     override fun createSubcategory(subcategoryCreateDto: SubcategoryCreateDto): SubcategoryDto {
-        val subcategoryName: String = subcategoryCreateDto.name
+        val subcategoryName: String = subcategoryCreateDto.name!!
         log.info("IN: trying to find a subcategory with name = $subcategoryName")
         if (subcategoryRepository.findByNameIgnoreCase(subcategoryName) != null)
             throw SubcategoryExistsException(subcategoryName)
@@ -36,9 +36,9 @@ class SubcategoryServiceImpl(
         val categoryId: Long = subcategoryCreateDto.categoryId
         val category: Category =
             categoryRepository.findByIdOrNull(categoryId) ?: throw CategoryNotFoundException(categoryId)
-        val savedSubcategory: Subcategory = subcategoryRepository.save(
-            subcategoryMapper.toSubcategory(subcategoryCreateDto, category)
-        )
+        val newSubcategory = subcategoryMapper.toSubcategory(subcategoryCreateDto, category)
+        subcategoryMapper.linkAttributesToSubcategory(newSubcategory, subcategoryCreateDto)
+        val savedSubcategory: Subcategory = subcategoryRepository.save(newSubcategory)
         log.info("OUT: the subcategory saved successfully. The saved subcategory details = $savedSubcategory")
         return subcategoryMapper.toSubcategoryDto(savedSubcategory)
     }

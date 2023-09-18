@@ -18,9 +18,15 @@ interface SubcategoryMapper {
     @Mapping(target = "name", source = "subcategoryCreateDto.name")
     @Mapping(target = "description", source = "subcategoryCreateDto.description")
     @Mapping(target = "category", source = "category")
-    @Mapping(target = "attributes", source = "subcategoryCreateDto.attributeCreateDtos")
+    @Mapping(target = "attributes", ignore = true)
     @Mapping(target = "products", ignore = true)
     fun toSubcategory(subcategoryCreateDto: SubcategoryCreateDto, category: Category): Subcategory
+
+    @Mapping(target = "subcategory.attributes", source = "subcategoryCreateDto.attributeCreateDtos")
+    fun linkAttributesToSubcategory(
+        @MappingTarget subcategory: Subcategory,
+        subcategoryCreateDto: SubcategoryCreateDto
+    )
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "name", source = "subcategoryUpdateDto.name")

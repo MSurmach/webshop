@@ -17,10 +17,5 @@ class Vendor(
         fetch = FetchType.LAZY,
         cascade = [CascadeType.PERSIST, CascadeType.MERGE]
     )
-    val products: MutableSet<Product> = LinkedHashSet()
-) {
-    fun addProduct(product: Product) {
-        products.add(product)
-        product.vendor = this
-    }
-}
+    val products: MutableList<Product>?
+)

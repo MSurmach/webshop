@@ -11,5 +11,5 @@ class Category(
     @Column(name = "name", nullable = false, unique = true)
     var name: String,
     @OneToMany(mappedBy = "category", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
-    val subcategories: MutableSet<Subcategory> = LinkedHashSet()
+    val subcategories: MutableList<Subcategory>?
 )

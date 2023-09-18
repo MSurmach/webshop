@@ -13,5 +13,5 @@ class Attribute(
     @ManyToOne(fetch = FetchType.LAZY)
     var subcategory: Subcategory?,
     @OneToMany(mappedBy = "attribute", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
-    val attributeValues: MutableSet<AttributeValue> = LinkedHashSet()
+    val attributeValues: MutableList<AttributeValue>?
 )

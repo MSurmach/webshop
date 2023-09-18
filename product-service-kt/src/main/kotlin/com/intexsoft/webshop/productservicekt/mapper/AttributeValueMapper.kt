@@ -12,8 +12,6 @@ import org.mapstruct.MappingConstants
     injectionStrategy = InjectionStrategy.CONSTRUCTOR
 )
 interface AttributeValueMapper {
-    fun toAttributeDtoList(attributeValues: MutableSet<AttributeValue>): MutableList<AttributeValueDto>
-
     @Mapping(target = "id", source = "id")
     @Mapping(target = "value", source = "value")
     @Mapping(target = "attributeId", source = "attributeValue.attribute.id")

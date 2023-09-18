@@ -29,6 +29,4 @@ interface AttributeMapper {
     @Mapping(target = "id", source = "id")
     @Mapping(target = "label", source = "label")
     fun toAttributeDto(attribute: Attribute): AttributeDto
-
-    fun toAttributeDtoList(attributes: MutableSet<Attribute>): MutableList<AttributeDto>
 }

@@ -20,11 +20,11 @@ class ProductController(
     private val productService: ProductService
 ) {
     @PostMapping
-    fun createProduct(@RequestBody productCreateDto: @Valid ProductCreateDto): ResponseEntity<ProductDto> {
+    fun createProduct(@RequestBody @Valid productCreateDto: ProductCreateDto): ResponseEntity<ProductDto> {
         log.info("IN: request to create a new product received. Request body = $productCreateDto")
         val createdProductDto: ProductDto = productService.createProduct(productCreateDto)
         log.info("OUT: new product created successfully. Response body = $createdProductDto")
-        return ResponseEntity.ok<ProductDto>(createdProductDto)
+        return ResponseEntity.ok(createdProductDto)
     }
 
     @GetMapping
@@ -39,7 +39,7 @@ class ProductController(
     }
 
     @GetMapping("/{productId}")
-    fun findProductById(@PathVariable productId: @Positive Long): ResponseEntity<ProductDto> {
+    fun findProductById(@PathVariable @Positive productId: Long): ResponseEntity<ProductDto> {
         log.info("IN: request to find a product by id = $productId received")
         val productDto: ProductDto = productService.findProductById(productId)
         log.info("OUT: the category with id = $productId found successfully. Response body = $productDto")
@@ -48,8 +48,8 @@ class ProductController(
 
     @PutMapping("/{productId}")
     fun updateProduct(
-        @PathVariable productId: @Positive Long,
-        @RequestBody productUpdateDto: @Valid ProductUpdateDto
+        @PathVariable @Positive productId: Long,
+        @RequestBody @Valid productUpdateDto: ProductUpdateDto
     ): ResponseEntity<ProductDto> {
         log.info("IN: request to update a product with id = $productId received. Request body = $productUpdateDto")
         val updatedProductDto: ProductDto = productService.updateProduct(productId, productUpdateDto)
@@ -58,7 +58,7 @@ class ProductController(
     }
 
     @DeleteMapping("/{productId}")
-    fun deleteProductById(@PathVariable productId: @Positive Long): ResponseEntity<Unit> {
+    fun deleteProductById(@PathVariable @Positive productId: Long): ResponseEntity<Unit> {
         log.info("IN: request to delete a product by id = $productId received")
         productService.deleteProductById(productId)
         log.info("OUT: the product with id = $productId deleted successfully")

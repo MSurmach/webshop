@@ -45,8 +45,10 @@ class ProductServiceImpl(
         val subcategory: Subcategory =
             subcategoryRepository.findByIdOrNull(subcategoryId) ?: throw SubcategoryNotFoundException(subcategoryId)
         val attributeValues: List<AttributeValue> = createAttributeValues(productCreateDto)
-        val product: Product = productMapper.toProduct(productCreateDto, vendor, subcategory, attributeValues)
-        val savedProduct: Product = productRepository.save(product)
+        val newProduct: Product = productMapper.toProduct(productCreateDto, vendor, subcategory)
+        productCreateDto.imageCreateDtos!!.forEach { newProduct.addImage(imageMapper.toImage(it)) }
+        attributeValues.forEach { newProduct.addAttributeValue(it) }
+        val savedProduct: Product = productRepository.save(newProduct)
         log.info("OUT: the product saved successfully. The saved product details = $savedProduct")
         productEventProducer.produceProductEventCreated(productEventMapper.toProductEventCreated(savedProduct))
         return productMapper.toProductDto(savedProduct)
@@ -113,7 +115,7 @@ class ProductServiceImpl(
     ): List<AttributeValue> {
         val attributeIdAttributeMap: Map<Long, Attribute> = attributes.associateBy { it.id }
         return attributeValueCreateDtos.map {
-            AttributeValue(value = it.value, attribute = attributeIdAttributeMap[it.attributeId])
+            AttributeValue(value = it.value!!, attribute = attributeIdAttributeMap[it.attributeId])
         }
     }
 
@@ -129,14 +131,14 @@ class ProductServiceImpl(
 
     private fun updateProductImages(productForImagesUpdate: Product, productUpdateDto: ProductUpdateDto): Product {
         val imageUpdateDtos: List<ImageUpdateDto> = productUpdateDto.imageUpdateDtos ?: return productForImagesUpdate
-        val productImageIdImageMap: Map<Long, Image> = productForImagesUpdate.images.associateBy { it.id }
+        val productImageIdImageMap: Map<Long, Image>? = productForImagesUpdate.images?.associateBy { it.id }
         imageUpdateDtos.forEach {
             val imageId: Long? = it.id
             if (imageId == null) {
                 productForImagesUpdate.addImage(imageMapper.toImage(it))
                 return@forEach
             }
-            val image: Image = productImageIdImageMap[imageId] ?: throw ImageNotFoundException(imageId)
+            val image: Image = productImageIdImageMap?.get(imageId) ?: throw ImageNotFoundException(imageId)
             productForImagesUpdate.removeImage(image)
             val filePath: String? = it.filePath
             if (filePath != null) {
@@ -153,11 +155,11 @@ class ProductServiceImpl(
     ): Product {
         val attributeValueUpdateDtos: List<AttributeValueUpdateDto> =
             productUpdateDto.attributeValueUpdateDtos ?: return productForAttributesUpdate
-        val productAttributeIdAttributeValueMap: Map<Long, AttributeValue> =
-            productForAttributesUpdate.attributeValues.associateBy { it.id }
+        val productAttributeIdAttributeValueMap: Map<Long, AttributeValue>? =
+            productForAttributesUpdate.attributeValues?.associateBy { it.id }
         attributeValueUpdateDtos.forEach {
             val attributeId: Long = it.attributeId
-            val attributeValue: AttributeValue? = productAttributeIdAttributeValueMap[attributeId]
+            val attributeValue: AttributeValue? = productAttributeIdAttributeValueMap?.get(attributeId)
             if (attributeValue == null) {
                 val existedAttribute: Attribute = attributeRepository.findByIdOrNull(attributeId)
                     ?: throw AttributeNotFoundException(attributeId)

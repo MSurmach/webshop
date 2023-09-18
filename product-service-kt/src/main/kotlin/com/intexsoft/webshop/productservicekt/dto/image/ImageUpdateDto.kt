@@ -1,13 +1,14 @@
 package com.intexsoft.webshop.productservicekt.dto.image
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Positive
 import jakarta.validation.constraints.Size
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class ImageUpdateDto(
-    @Positive
+    @field:Positive
     val id: Long?,
-    @NotBlank
-    @Size(max = 512)
+    @field:NotBlank
+    @field:Size(max = 512)
     val filePath: String?
 )

@@ -4,7 +4,6 @@ import com.intexsoft.webshop.productservicekt.dto.vendor.VendorCreateDto
 import com.intexsoft.webshop.productservicekt.dto.vendor.VendorDto
 import com.intexsoft.webshop.productservicekt.dto.vendor.VendorUpdateDto
 import com.intexsoft.webshop.productservicekt.log
-import com.intexsoft.webshop.productservicekt.mapper.VendorMapper
 import com.intexsoft.webshop.productservicekt.service.VendorService
 import jakarta.validation.Valid
 import jakarta.validation.constraints.Positive
@@ -19,10 +18,9 @@ import org.springframework.web.bind.annotation.*
 @Validated
 class VendorController(
     private val vendorService: VendorService,
-    private val vendorMapper: VendorMapper
 ) {
     @PostMapping
-    fun createVendor(@RequestBody vendorCreateDto: @Valid VendorCreateDto): ResponseEntity<VendorDto> {
+    fun createVendor(@RequestBody @Valid vendorCreateDto: VendorCreateDto): ResponseEntity<VendorDto> {
         log.info("IN: request to create a new vendor received. Request body = $vendorCreateDto")
         val createdVendor: VendorDto = vendorService.createVendor(vendorCreateDto)
         log.info("OUT: new vendor created successfully. Response body = $createdVendor")
@@ -38,7 +36,7 @@ class VendorController(
     }
 
     @GetMapping("/{vendorId}")
-    fun findVendorById(@PathVariable vendorId: @Positive Long): ResponseEntity<VendorDto> {
+    fun findVendorById(@PathVariable @Positive vendorId: Long): ResponseEntity<VendorDto> {
         log.info("IN: request to find a vendor by id = $vendorId received")
         val vendorDto: VendorDto = vendorService.findVendorById(vendorId)
         log.info("OUT: the vendor with id = $vendorId found successfully. Response body = $vendorDto")
@@ -47,8 +45,8 @@ class VendorController(
 
     @PutMapping("/{vendorId}")
     fun updateVendor(
-        @PathVariable vendorId: @Positive Long,
-        @RequestBody vendorUpdateDto: @Valid VendorUpdateDto
+        @PathVariable @Positive vendorId: Long,
+        @RequestBody @Valid vendorUpdateDto: VendorUpdateDto
     ): ResponseEntity<VendorDto> {
         log.info("IN: request to update a vendor with id = $vendorId received. Request body = $vendorUpdateDto")
         val updatedVendorDto: VendorDto = vendorService.updateVendor(vendorId, vendorUpdateDto)
@@ -57,7 +55,7 @@ class VendorController(
     }
 
     @DeleteMapping("/{vendorId}")
-    fun deleteProductById(@PathVariable vendorId: @Positive Long): ResponseEntity<Unit> {
+    fun deleteProductById(@PathVariable @Positive vendorId: Long): ResponseEntity<Unit> {
         log.info("IN: request to delete a category by id = $vendorId received")
         vendorService.deleteVendorById(vendorId)
         log.info("OUT: the vendor with id = $vendorId deleted successfully")

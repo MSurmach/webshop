@@ -3,7 +3,6 @@ package com.intexsoft.webshop.productservicekt.mapper
 import com.intexsoft.webshop.productservicekt.dto.product.ProductCreateDto
 import com.intexsoft.webshop.productservicekt.dto.product.ProductDto
 import com.intexsoft.webshop.productservicekt.dto.product.ProductUpdateDto
-import com.intexsoft.webshop.productservicekt.model.AttributeValue
 import com.intexsoft.webshop.productservicekt.model.Product
 import com.intexsoft.webshop.productservicekt.model.Subcategory
 import com.intexsoft.webshop.productservicekt.model.Vendor
@@ -21,11 +20,10 @@ interface ProductMapper {
     @Mapping(target = "orderQuantity", ignore = true)
     @Mapping(target = "subcategory", source = "subcategory")
     @Mapping(target = "vendor", source = "vendor")
-    @Mapping(target = "images", source = "productCreateDto.imageCreateDtos")
-    @Mapping(target = "attributeValues", source = "attributeValues")
+    @Mapping(target = "images", ignore = true)
+    @Mapping(target = "attributeValues", ignore = true)
     fun toProduct(
-        productCreateDto: ProductCreateDto, vendor: Vendor,
-        subcategory: Subcategory, attributeValues: List<AttributeValue>
+        productCreateDto: ProductCreateDto, vendor: Vendor, subcategory: Subcategory
     ): Product
 
     @Mapping(target = "id", source = "id")
@@ -35,7 +33,7 @@ interface ProductMapper {
     @Mapping(target = "imageDtos", source = "images")
     @Mapping(target = "attributeValueDtos", source = "attributeValues")
     fun toProductDto(product: Product): ProductDto
-    fun toProductDtos(productList: List<Product?>): List<ProductDto>
+    fun toProductDtos(productList: List<Product>): List<ProductDto>
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "name", source = "productUpdateDto.name")

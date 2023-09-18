@@ -27,5 +27,4 @@ interface ImageMapper {
     @Mapping(target = "id", source = "id")
     @Mapping(target = "filePath", source = "filePath")
     fun toImageDto(image: Image): ImageDto
-    fun toImageDtoList(set: MutableSet<Image>): MutableList<ImageDto>
 }

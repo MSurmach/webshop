@@ -20,7 +20,7 @@ class SubcategoryController(
     private val subcategoryService: SubcategoryService
 ) {
     @PostMapping
-    fun createSubcategory(@RequestBody subcategoryCreateDto: @Valid SubcategoryCreateDto): ResponseEntity<SubcategoryDto> {
+    fun createSubcategory(@RequestBody @Valid subcategoryCreateDto: SubcategoryCreateDto): ResponseEntity<SubcategoryDto> {
         log.info("IN: request to create a new subcategory received. Request body = $subcategoryCreateDto")
         val createdSubCategoryDto: SubcategoryDto = subcategoryService.createSubcategory(subcategoryCreateDto)
         log.info("OUT: new subcategory created successfully. Response body = $createdSubCategoryDto")
@@ -39,7 +39,7 @@ class SubcategoryController(
     }
 
     @GetMapping("/{subcategoryId}")
-    fun findSubcategoryById(@PathVariable subcategoryId: @Positive Long): ResponseEntity<SubcategoryDto> {
+    fun findSubcategoryById(@PathVariable @Positive subcategoryId: Long): ResponseEntity<SubcategoryDto> {
         log.info("IN: request to find a subcategory by id = $subcategoryId received")
         val subcategoryDto: SubcategoryDto = subcategoryService.findSubcategoryById(subcategoryId)
         log.info("OUT: the subcategory with id = $subcategoryId found successfully. Response body = $subcategoryDto")
@@ -48,8 +48,8 @@ class SubcategoryController(
 
     @PutMapping("/{subcategoryId}")
     fun updateSubcategory(
-        @PathVariable subcategoryId: @Positive Long,
-        @RequestBody subcategoryUpdateDto: @Valid SubcategoryUpdateDto
+        @PathVariable @Positive subcategoryId: Long,
+        @RequestBody @Valid subcategoryUpdateDto: SubcategoryUpdateDto
     ): ResponseEntity<SubcategoryDto> {
         log.info(
             "IN: request to update a subcategory with id = $subcategoryId received." +
@@ -65,7 +65,7 @@ class SubcategoryController(
     }
 
     @DeleteMapping("/{subcategoryId}")
-    fun deleteSubcategoryById(@PathVariable subcategoryId: @Positive Long): ResponseEntity<Unit> {
+    fun deleteSubcategoryById(@PathVariable @Positive subcategoryId: Long): ResponseEntity<Unit> {
         log.info("IN: request to delete a subcategory by id = $subcategoryId received")
         subcategoryService.deleteSubcategoryById(subcategoryId)
         log.info("OUT: the subcategory with id = $subcategoryId deleted successfully")
