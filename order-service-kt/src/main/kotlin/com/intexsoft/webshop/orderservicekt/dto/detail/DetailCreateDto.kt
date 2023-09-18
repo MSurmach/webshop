@@ -4,10 +4,10 @@ import jakarta.validation.constraints.Positive
 import java.math.BigDecimal
 
 data class DetailCreateDto(
-    @Positive
+    @field:Positive
     val productId: Long,
-    @Positive
+    @field:Positive
     val productPrice: BigDecimal,
-    @Positive
+    @field:Positive
     val quantity: Short
 )

@@ -21,7 +21,7 @@ class Order(
     var userId: Long,
     @CreationTimestamp(source = SourceType.DB)
     @Column(name = "created_at", nullable = false)
-    var createdAt: LocalDateTime,
+    var createdAt: LocalDateTime?,
     @Column(name = "total_price", nullable = false)
     var totalPrice: BigDecimal,
     @Column(name = "payment_method", nullable = false, length = 15)
@@ -30,28 +30,30 @@ class Order(
     @Column(name = "comment")
     var comment: String?,
     @OneToMany(mappedBy = "order", cascade = [CascadeType.ALL], fetch = FetchType.LAZY, orphanRemoval = true)
-    var orderDetails: MutableSet<Detail> = LinkedHashSet(),
+    var orderDetails: MutableList<Detail>?,
     @OneToMany(mappedBy = "order", cascade = [CascadeType.ALL], fetch = FetchType.LAZY, orphanRemoval = true)
-    var statuses: MutableSet<Status> = LinkedHashSet()
+    var statuses: MutableList<Status>?
 
 ) {
     fun addDetail(detail: Detail) {
-        orderDetails.add(detail)
+        if (orderDetails == null) orderDetails = mutableListOf()
+        orderDetails!!.add(detail)
         detail.order = this
     }
 
     fun removeDetail(detail: Detail) {
-        orderDetails.remove(detail)
+        orderDetails?.remove(detail)
         detail.order = null
     }
 
     fun addStatus(status: Status) {
-        statuses.add(status)
+        if (statuses == null) statuses = mutableListOf()
+        statuses!!.add(status)
         status.order = this
     }
 
     fun removeStatus(status: Status) {
-        statuses.remove(status)
+        statuses?.remove(status)
         status.order = null
     }
 }

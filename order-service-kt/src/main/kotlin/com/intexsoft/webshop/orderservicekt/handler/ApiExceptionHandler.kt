@@ -22,7 +22,9 @@ class ApiExceptionHandler {
     ): ResponseEntity<ApiExceptionDto> {
         val exceptionDto = ApiExceptionDto(
             exceptionMessage = exception.bindingResult.allErrors
-                .joinToString(separator = "; ") { it.defaultMessage!! },
+                .joinToString(separator = "; ") {
+                    "${it.codes?.first()?.split(".")?.last()} : ${it.defaultMessage!!}"
+                },
             status = HttpStatus.BAD_REQUEST,
             statusCode = HttpStatus.BAD_REQUEST.value(),
             exceptionTimestamp = LocalDateTime.now()

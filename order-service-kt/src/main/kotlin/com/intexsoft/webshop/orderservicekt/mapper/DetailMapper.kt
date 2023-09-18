@@ -4,12 +4,14 @@ import com.intexsoft.webshop.messagecommon.event.order.OrderInitializedEvent
 import com.intexsoft.webshop.orderservicekt.dto.detail.DetailCreateDto
 import com.intexsoft.webshop.orderservicekt.dto.detail.DetailDto
 import com.intexsoft.webshop.orderservicekt.model.Detail
-import org.mapstruct.*
+import org.mapstruct.InjectionStrategy
+import org.mapstruct.Mapper
+import org.mapstruct.Mapping
+import org.mapstruct.MappingConstants
 
 @Mapper(
     componentModel = MappingConstants.ComponentModel.SPRING,
     injectionStrategy = InjectionStrategy.CONSTRUCTOR,
-    nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE
 )
 interface DetailMapper {
     @Mapping(target = "order", ignore = true)

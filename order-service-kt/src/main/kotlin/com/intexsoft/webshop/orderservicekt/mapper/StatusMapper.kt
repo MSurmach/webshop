@@ -4,12 +4,14 @@ import com.intexsoft.webshop.orderservicekt.dto.status.StatusDto
 import com.intexsoft.webshop.orderservicekt.model.Order
 import com.intexsoft.webshop.orderservicekt.model.Status
 import com.intexsoft.webshop.orderservicekt.model.enums.StatusName
-import org.mapstruct.*
+import org.mapstruct.InjectionStrategy
+import org.mapstruct.Mapper
+import org.mapstruct.Mapping
+import org.mapstruct.MappingConstants
 
 @Mapper(
     componentModel = MappingConstants.ComponentModel.SPRING,
     injectionStrategy = InjectionStrategy.CONSTRUCTOR,
-    nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE
 )
 interface StatusMapper {
     @Mapping(target = "id", source = "id")

@@ -19,7 +19,7 @@ class OrderController(
     private val orderService: OrderService
 ) {
     @PostMapping
-    fun createOrder(@RequestBody orderCreateDto: @Valid OrderCreateDto): ResponseEntity<OrderDto> {
+    fun createOrder(@RequestBody @Valid orderCreateDto:  OrderCreateDto): ResponseEntity<OrderDto> {
         log.info("IN: request to create a new order received. Request body = $orderCreateDto")
         val createdOrderDto: OrderDto = orderService.saveOrder(orderCreateDto)
         log.info("OUT: new order created successfully. Response body = $createdOrderDto")

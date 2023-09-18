@@ -4,15 +4,15 @@ import com.intexsoft.webshop.messagecommon.event.order.OrderInitializedEvent
 import com.intexsoft.webshop.orderservicekt.dto.order.OrderCreateDto
 import com.intexsoft.webshop.orderservicekt.dto.order.OrderDto
 import com.intexsoft.webshop.orderservicekt.model.Order
-import com.intexsoft.webshop.orderservicekt.model.Status
-import org.mapstruct.*
+import org.mapstruct.InjectionStrategy
+import org.mapstruct.Mapper
+import org.mapstruct.Mapping
+import org.mapstruct.MappingConstants
 import java.math.BigDecimal
 
 @Mapper(
     componentModel = MappingConstants.ComponentModel.SPRING,
     injectionStrategy = InjectionStrategy.CONSTRUCTOR,
-    nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
-    collectionMappingStrategy = CollectionMappingStrategy.ADDER_PREFERRED,
     uses = [DetailMapper::class, StatusMapper::class]
 )
 interface OrderMapper {
@@ -24,9 +24,9 @@ interface OrderMapper {
     @Mapping(target = "totalPrice", source = "totalPrice")
     @Mapping(target = "paymentMethod", source = "orderCreateDto.paymentMethod")
     @Mapping(target = "comment", source = "orderCreateDto.comment")
-    @Mapping(target = "orderDetails", source = "orderCreateDto.detailCreateDtos")
-    @Mapping(target = "statuses", source = "status")
-    fun toOrder(orderCreateDto: OrderCreateDto, status: Status, totalPrice: BigDecimal): Order
+    @Mapping(target = "orderDetails", ignore = true)
+    @Mapping(target = "statuses", ignore = true)
+    fun toOrder(orderCreateDto: OrderCreateDto, totalPrice: BigDecimal): Order
 
     @Mapping(target = "id", source = "id")
     @Mapping(target = "pickupPointId", source = "pickupPointId")
