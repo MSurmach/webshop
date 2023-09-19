@@ -1,4 +1,4 @@
-package com.intexsoft.webshop.messagecommon.event;
+package com.intexsoft.webshop.messagecommon;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AccessLevel;
