@@ -1,0 +1,35 @@
+server:
+  port: 8000
+spring:
+  main:
+    banner-mode: off
+  liquibase:
+    change-log: db/changelog-master.xml
+  datasource:
+    url: ${EVENTBUS_DATASOURCE_URL:jdbc:postgresql://localhost:5400/eventDB}
+    username: ${EVENTBUS_DATASOURCE_USERNAME:postgres}
+    password: ${EVENTBUS_DATASOURCE_PASSWORD:eventbus}
+  rabbitmq:
+    username: ${EVENTBUS_RABBITMQ_USERNAME:rmq_user}
+    password: ${EVENTBUS_RABBITMQ_PASSWORD:rmq_password}
+    port: ${EVENTBUS_RABBITMQ_PORT:5672}
+rmq:
+  order:
+    queue: order.to.eventbus.event.queue
+    routing: routing.order.#
+    exchange: order.event.exchange
+  shop:
+    queue: shop.to.eventbus.event.queue
+    routing: routing.shop.#
+    exchange: shop.event.exchange
+  user:
+    queue: user.to.eventbus.event.queue
+    routing: routing.user.#
+    exchange: user.event.exchange
+  product:
+    queue: order.to.eventbus.event.queue
+    routing: routing.product.#
+    exchange: product.event.exchange
+logging:
+  pattern:
+    console: "%clr(%d{ISO8601}){faint} %clr(%5p) %clr([%30.30t]){faint} %clr(%-40.40logger{36}.%M){cyan} %clr(:){faint} %m%n"
