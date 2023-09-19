@@ -13,16 +13,10 @@ import org.springframework.stereotype.Service;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-@RabbitListener(bindings = {
-        @QueueBinding(
-                value = @Queue(name = "${rmq.order.queue}"),
-                exchange = @Exchange(name = "${rmq.order.event.exchange}", type = ExchangeTypes.TOPIC),
-                key = "${rmq.order.routing}"),
-        @QueueBinding(
-                value = @Queue(name = "${rmq.order.queue}"),
-                exchange = @Exchange(name = "${rmq.order.command.exchange}", type = ExchangeTypes.TOPIC),
-                key = "${rmq.order.routing}"),
-}
+@RabbitListener(bindings = @QueueBinding(
+        value = @Queue(name = "${rmq.order.queue}"),
+        exchange = @Exchange(name = "${rmq.order.exchange}", type = ExchangeTypes.TOPIC),
+        key = "${rmq.order.routing}")
 )
 public class OrderEventConsumerImpl implements EventConsumer {
     private final EventService eventService;

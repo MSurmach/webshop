@@ -17,31 +17,19 @@ rmq:
   order:
     queue: order.to.eventbus.event.queue
     routing: routing.order.#
-    event:
-      exchange: order.event.exchange
-    command:
-      exchange: order.command.exchange
+    exchange: order.event.exchange
   shop:
     queue: shop.to.eventbus.event.queue
     routing: routing.shop.#
-    event:
-      exchange: shop.event.exchange
-    command:
-      exchange: shop.command.exchange
+    exchange: shop.event.exchange
   user:
     queue: user.to.eventbus.event.queue
     routing: routing.user.#
-    event:
-      exchange: user.event.exchange
-    command:
-      exchange: user.command.exchange
+    exchange: user.event.exchange
   product:
     queue: order.to.eventbus.event.queue
     routing: routing.product.#
-    event:
-      exchange: product.event.exchange
-    command:
-      exchange: product.command.exchange
+    exchange: product.event.exchange
 logging:
   pattern:
     console: "%clr(%d{ISO8601}){faint} %clr(%5p) %clr([%30.30t]){faint} %clr(%-40.40logger{36}.%M){cyan} %clr(:){faint} %m%n"
