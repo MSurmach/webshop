@@ -18,6 +18,7 @@
         <maven.plugin>3.8.1</maven.plugin>
         <lombok.version>1.18.28</lombok.version>
         <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
+        <eureka.client.version>4.0.3</eureka.client.version>
     </properties>
 
     <dependencyManagement>
@@ -77,6 +78,11 @@
             <groupId>com.intexsoft.webshop</groupId>
             <artifactId>messagecommon</artifactId>
             <version>0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+            <version>${eureka.client.version}</version>
         </dependency>
     </dependencies>
 

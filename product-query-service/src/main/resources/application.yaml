@@ -1,5 +1,5 @@
 server:
-  port: 8095
+  port: 0
 spring:
   main:
     banner-mode: off
@@ -14,6 +14,8 @@ spring:
     username: ${PRODUCT_QUERY_RABBITMQ_USERNAME:rmq_user}
     password: ${PRODUCT_QUERY_RABBITMQ_PASSWORD:rmq_password}
     port: ${PRODUCT_QUERY_RABBITMQ_PORT:5672}
+  application:
+    name: product-query-service
 mongock:
   migration-scan-package:
     - com.intexsoft.webshop.productqueryservice.changeunit
@@ -37,3 +39,11 @@ logging:
           mongodb:
             core:
               MongoTemplate: DEBUG
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://${DISCOVERY_SERVICE_HOSTNAME:localhost}:${DISCOVERY_SERVICE_SERVER_PORT:8761}/eureka
+  instance:
+    prefer-ip-address: true

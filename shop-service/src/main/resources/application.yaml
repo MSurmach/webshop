@@ -1,5 +1,5 @@
 server:
-  port: 8091
+  port: 0
 spring:
   jpa:
     properties:
@@ -19,6 +19,8 @@ spring:
     username: ${SHOP_RABBITMQ_USERNAME:rmq_user}
     password: ${SHOP_RABBITMQ_PASSWORD:rmq_password}
     port: ${SHOP_RABBITMQ_PORT:5672}
+  application:
+    name: shop-service
 rmq:
   event:
     product:
@@ -44,3 +46,11 @@ logging:
     console: "%clr(%d{ISO8601}){faint} %clr(%5p) %clr([%30.30t]){faint} %clr(%-40.40logger{36}.%M){cyan} %clr(:){faint} %m%n"
   level:
     org.hibernate: INFO
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://${DISCOVERY_SERVICE_HOSTNAME:localhost}:${DISCOVERY_SERVICE_SERVER_PORT:8761}/eureka
+  instance:
+    prefer-ip-address: true

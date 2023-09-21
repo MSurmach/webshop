@@ -1,5 +1,5 @@
 server:
-  port: 8094
+  port: 0
 spring:
   main:
     banner-mode: off
@@ -20,6 +20,8 @@ spring:
         show_sql: true
         use_sql_comments: true
         generate_statistics: true
+  application:
+    name: feedback-service
 rmq:
   event:
     feedback:
@@ -35,3 +37,11 @@ rmq:
 logging:
   pattern:
     console: "%clr(%d{ISO8601}){faint} %clr(%5p) %clr([%30.30t]){faint} %clr(%-40.40logger{36}.%M){cyan} %clr(:){faint} %m%n"
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://${DISCOVERY_SERVICE_HOSTNAME:localhost}:${DISCOVERY_SERVICE_SERVER_PORT:8761}/eureka
+  instance:
+    prefer-ip-address: true
