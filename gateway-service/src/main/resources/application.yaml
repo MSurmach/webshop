@@ -1,0 +1,78 @@
+server:
+  port: 0
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: user-service-create
+          uri: lb://user-service
+          predicates:
+            - Path=/user
+            - Method=POST
+        - id: user-service-login
+          uri: lb://user-service
+          predicates:
+            - Path=/login
+            - Method=POST
+        - id: user-service
+          uri: lb://user-service
+          predicates:
+            - Path=/user/**
+            - Method=GET, PUT, DELETE
+            - Header=Authorization, Bearer (.*)
+          filters:
+            - AuthorizationHeaderFilter
+        - id: feedback-service
+          uri: lb://feedback-service
+          predicates:
+            - Path=/feedback/**
+            - Method=GET, POST, PUT, DELETE
+            - Header=Authorization, Bearer (.*)
+          filters:
+            - AuthorizationHeaderFilter
+        - id: order-service
+          uri: lb://order-service
+          predicates:
+            - Path=/order/**
+            - Method=GET, POST, PUT, DELETE
+            - Header=Authorization, Bearer (.*)
+          filters:
+            - AuthorizationHeaderFilter
+        - id: product-service
+          uri: lb://product-service
+          predicates:
+            - Path=/product/**
+            - Method=GET, POST, PUT, DELETE
+            - Header=Authorization, Bearer (.*)
+          filters:
+            - AuthorizationHeaderFilter
+        - id: product-query-service
+          uri: lb://product-query-service
+          predicates:
+            - Path=/product/**
+            - Method=GET, POST, PUT, DELETE
+            - Header=Authorization, Bearer (.*)
+          filters:
+            - AuthorizationHeaderFilter
+        - id: shop-service
+          uri: lb://shop-service
+          predicates:
+            - Path=/shop/**
+            - Method=GET, POST, PUT, DELETE
+            - Header=Authorization, Bearer (.*)
+          filters:
+            - AuthorizationHeaderFilter
+  application:
+    name: gateway-service
+  main:
+    banner-mode: off
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://${DISCOVERY_SERVICE_HOSTNAME:localhost}:${DISCOVERY_SERVICE_SERVER_PORT:8761}/eureka
+token:
+  secret: laRNEnZCCJiDFSjlLVvBaz9SQzA2ppmiahdxcw671iYVvwDfABJyBjgFKITOuVA
