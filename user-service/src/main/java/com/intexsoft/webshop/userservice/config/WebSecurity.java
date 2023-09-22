@@ -36,6 +36,8 @@ public class WebSecurity {
                 authorizeHttpRequests(authorizeHttpRequests ->
                         authorizeHttpRequests.requestMatchers(HttpMethod.POST, "/user").permitAll())
                 .addFilter(new AuthenticationFilter(authenticationManager, userService, environment))
+                .authorizeHttpRequests(authorizeHttpRequests ->
+                        authorizeHttpRequests.anyRequest().permitAll())
                 .authenticationManager(authenticationManager)
                 .sessionManagement(sessionManagementConfigurer
                         -> sessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
